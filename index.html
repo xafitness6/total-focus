@@ -783,8 +783,32 @@ async function submitDay(){
 function closeOverlay(){document.getElementById('overlay').classList.remove('show');}
 
 // Boot
-sb.auth.getSession().then(({data:{session}})=>{if(session){currentUser=session.user;afterLogin();}});
-sb.auth.onAuthStateChange((event,session)=>{if(event==='SIGNED_IN'&&session&&!currentUser){currentUser=session.user;afterLogin();}});
+async function bootApp() {
+  const hash = window.location.hash;
+  if (hash && hash.includes('access_token')) {
+    const { data: { session }, error } = await sb.auth.getSession();
+    if (session) {
+      currentUser = session.user;
+      window.location.hash = '';
+      await afterLogin();
+      return;
+    }
+  }
+  const { data: { session } } = await sb.auth.getSession();
+  if (session) {
+    currentUser = session.user;
+    await afterLogin();
+  }
+}
+
+sb.auth.onAuthStateChange(async (event, session) => {
+  if ((event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') && session && !currentUser) {
+    currentUser = session.user;
+    await afterLogin();
+  }
+});
+
+bootApp();
 </script>
 </body>
 </html>
