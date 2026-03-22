@@ -784,32 +784,25 @@ function closeOverlay(){document.getElementById('overlay').classList.remove('sho
 
 // Boot
 async function bootApp() {
-  const hash = window.location.hash;
-  if (hash && hash.includes('access_token')) {
-    const { data: { session }, error } = await sb.auth.getSession();
-    if (session) {
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    if (session && session.user) {
       currentUser = session.user;
-      window.location.hash = '';
       await afterLogin();
       return;
     }
-  }
-  const { data: { session } } = await sb.auth.getSession();
-  if (session) {
-    currentUser = session.user;
-    await afterLogin();
-  }
+  } catch(e) {}
+  showScreen('authScreen');
 }
 
 sb.auth.onAuthStateChange(async (event, session) => {
-  if ((event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') && session && !currentUser) {
+  if (event === 'SIGNED_IN' && session && session.user) {
     currentUser = session.user;
     await afterLogin();
   }
 });
 
 bootApp();
-  
 </script>
 </body>
 </html>
