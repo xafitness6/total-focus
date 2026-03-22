@@ -6,7 +6,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Flowstate">
-<title>Flowstate Venture</title>
+<link rel="apple-touch-icon" href="https://fav.farm/💰">
+<title>Flowstate</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
@@ -124,7 +125,7 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 .toggle.on{background:var(--green);border-color:var(--green2);}
 .toggle::after{content:'';width:18px;height:18px;border-radius:50%;background:#fff;position:absolute;top:2px;left:3px;transition:left .2s;}
 .toggle.on::after{left:21px;}
-.submit-btn{width:100%;padding:16px;background:var(--green);border:none;border-radius:var(--radius);color:#fff;font-size:16px;font-weight:700;cursor:pointer;margin-top:1rem;letter-spacing:-.01em;transition:opacity .15s;}
+.submit-btn{width:100%;padding:16px;background:var(--red);border:none;border-radius:var(--radius);color:#fff;font-size:16px;font-weight:700;cursor:pointer;margin-top:1rem;letter-spacing:-.01em;transition:background .3s, opacity .15s;}
 .submit-btn:active{opacity:.8;}
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);align-items:center;justify-content:center;z-index:999;padding:1rem;}
 .overlay.show{display:flex;}
@@ -146,7 +147,7 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 <body>
 
 <div id="authScreen" class="auth-screen">
-  <div class="auth-logo">Flowstate Venture</div>
+  <div class="auth-logo">💰 Flowstate</div>
   <div class="auth-sub">X's 90-Day Wealth Mandate<br>Sign in to sync your progress across all devices</div>
   <div class="auth-card">
     <div class="auth-title" id="authTitle">Sign in</div>
@@ -174,7 +175,7 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
   <div class="header">
     <div class="date-line" id="dateDisplay"></div>
     <div class="title-row">
-      <div class="app-title">Flowstate Venture</div>
+      <div class="app-title">💰 Flowstate</div>
       <div style="display:flex;align-items:center;gap:8px;">
         <div class="streak-badge" id="streakBadge">🔥 0 day streak</div>
         <div class="signout-btn" onclick="signOut()">Sign out</div>
@@ -293,7 +294,7 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
     <div class="notify-row"><div><div class="notify-label">End of day lockdown</div><div class="notify-sub">9:30 PM — Log wins, close strong</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
   </div>
 
-  <button class="submit-btn" onclick="submitDay()">Lock in day — no zero days</button>
+  <button class="submit-btn" id="submitBtn" onclick="submitDay()">I failed today</button>
   <div class="saving-indicator" id="savingIndicator">Saved to cloud ✓</div>
 
 </div>
@@ -342,12 +343,12 @@ const quotes=[
   {text:"A ship in harbor is safe, but that is not what ships are built for.",author:"John A. Shedd"},
   {text:"Stop wearing your wishbone where your backbone ought to be.",author:"Elizabeth Gilbert"},
   {text:"Success is walking from failure to failure with no loss of enthusiasm.",author:"Winston Churchill"},
-  {text:"The grind is real but so is the reward.",author:"Unknown"},
-  {text:"You are the average of the five people you spend the most time with.",author:"Jim Rohn"},
-  {text:"Do something today that your future self will thank you for.",author:"Unknown"},
   {text:"Work like there is someone working 24 hours a day to take it all away from you.",author:"Mark Cuban"},
   {text:"Chase the vision, not the money. The money will end up following you.",author:"Tony Hsieh"},
-  {text:"The secret of getting ahead is getting started.",author:"Mark Twain"}
+  {text:"The secret of getting ahead is getting started.",author:"Mark Twain"},
+  {text:"You are the average of the five people you spend the most time with.",author:"Jim Rohn"},
+  {text:"Do something today that your future self will thank you for.",author:"Unknown"},
+  {text:"The grind is real but so is the reward.",author:"Unknown"}
 ];
 
 const operatorQuotes=[
@@ -425,7 +426,6 @@ function toggleAuthMode(){
 function showError(msg){const e=document.getElementById('authError');e.textContent=msg;e.style.display='block';}
 function showMsg(msg){const e=document.getElementById('authMsg');e.textContent=msg;e.style.display='block';}
 function hideMessages(){document.getElementById('authError').style.display='none';document.getElementById('authMsg').style.display='none';}
-
 async function signOut(){await sb.auth.signOut();currentUser=null;document.getElementById('mainApp').style.display='none';document.getElementById('authScreen').style.display='flex';}
 
 async function showApp(){
@@ -516,7 +516,35 @@ function selectGym(btn,val){document.querySelectorAll('#gymTypeRow .gym-btn').fo
 function toggleSober(id){const el=document.getElementById(id);el.classList.toggle('clean');if(id==='soberAlcohol')state.soberAlcohol=el.classList.contains('clean');if(id==='soberSmoke')state.soberSmoke=el.classList.contains('clean');}
 function selectResult(type){document.getElementById('winBtn').className='result-btn'+(type==='win'?' win-selected':'');document.getElementById('missBtn').className='result-btn'+(type==='miss'?' miss-selected':'');state.selectedResult=type;const box=document.getElementById('consequenceBox');if(type==='miss'){const c=bizC[Math.floor(Math.random()*bizC.length)];document.getElementById('conLevel').textContent=c.level;document.getElementById('conLevel').className='con-level '+(c.level==='Brutal'?'con-brutal':'con-hard');document.getElementById('conText').textContent=c.text;document.getElementById('conAction').textContent=c.action;box.style.display='block';}else{box.style.display='none';}}
 function toggleCheck(id,cls){const chk=document.getElementById('chk-'+id);const lbl=document.getElementById('lbl-'+id);const isDone=chk.classList.contains(cls)||chk.classList.contains('done');chk.className='task-check'+(isDone?'':' '+cls);lbl.classList.toggle('done-text',!isDone);updateProgress();}
-function updateProgress(){const tasks=['src','out','fol','ana','trn','jus'];const targets={src:2,out:2,fol:2,ana:10};let done=0;tasks.forEach(id=>{const chk=document.getElementById('chk-'+id);const inp=document.getElementById('inp-'+id);let completed=chk.classList.contains('done')||chk.classList.contains('gym-done');if(inp&&targets[id]){const val=parseInt(inp.value)||0;if(val>=targets[id]){chk.className='task-check done';document.getElementById('lbl-'+id).classList.add('done-text');completed=true;}}if(completed)done++;});const pct=Math.round((done/tasks.length)*100);document.getElementById('progressBar').style.width=pct+'%';document.getElementById('progressLabel').textContent=done+' of '+tasks.length+' tasks complete';document.getElementById('completedPct').textContent=pct+'%';}
+
+function updateProgress(){
+  const tasks=['src','out','fol','ana','trn','jus'];
+  const targets={src:2,out:2,fol:2,ana:10};
+  let done=0;
+  tasks.forEach(id=>{
+    const chk=document.getElementById('chk-'+id);
+    const inp=document.getElementById('inp-'+id);
+    let completed=chk.classList.contains('done')||chk.classList.contains('gym-done');
+    if(inp&&targets[id]){const val=parseInt(inp.value)||0;if(val>=targets[id]){chk.className='task-check done';document.getElementById('lbl-'+id).classList.add('done-text');completed=true;}}
+    if(completed)done++;
+  });
+  const pct=Math.round((done/tasks.length)*100);
+  document.getElementById('progressBar').style.width=pct+'%';
+  document.getElementById('progressLabel').textContent=done+' of '+tasks.length+' tasks complete';
+  document.getElementById('completedPct').textContent=pct+'%';
+  const btn=document.getElementById('submitBtn');
+  if(!btn)return;
+  if(done===tasks.length&&state.streak>0){
+    btn.textContent='💰 Win — day '+(state.streak+1)+' locked in';
+    btn.style.background='var(--green)';
+  }else if(done===tasks.length){
+    btn.textContent='💰 Lock in day 1';
+    btn.style.background='var(--green)';
+  }else{
+    btn.textContent='I failed today';
+    btn.style.background='var(--red)';
+  }
+}
 
 async function submitDay(){
   updateProgress();
