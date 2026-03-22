@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Flowstate">
+<title>Flowstate Venture — Xavier Ellis Bey</title>
+<style>
+  :root {
+    --bg:#0a0a0a;--bg2:#111;--bg3:#1a1a1a;--card:#141414;
+    --border:rgba(255,255,255,0.08);--border2:rgba(255,255,255,0.14);
+    --text:#f0f0f0;--text2:#888;--text3:#555;
+    --green:#1D9E75;--green2:#0F6E56;--amber:#FAC775;--amber2:#412402;
+    --purple:#7F77DD;--coral:#D85A30;--red:#E24B4A;
+    --radius:12px;--radius-sm:8px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  html{background:var(--bg);}
+  body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:120px;}
+  .app{max-width:480px;margin:0 auto;padding:1.25rem 1rem;}
+  .header{margin-bottom:1.25rem;padding-top:env(safe-area-inset-top,0px);}
+  .date-line{font-size:12px;color:var(--text2);margin-bottom:4px;letter-spacing:.03em;}
+  .title-row{display:flex;align-items:center;justify-content:space-between;}
+  .app-title{font-size:22px;font-weight:600;letter-spacing:-.02em;}
+  .streak-badge{background:var(--amber);color:var(--amber2);font-size:12px;font-weight:600;padding:4px 12px;border-radius:99px;}
+  .metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:1rem;}
+  .metric{background:var(--bg2);border:.5px solid var(--border);border-radius:var(--radius-sm);padding:.65rem .5rem;text-align:center;}
+  .metric-label{font-size:10px;color:var(--text2);margin-bottom:3px;text-transform:uppercase;letter-spacing:.04em;}
+  .metric-val{font-size:22px;font-weight:600;}
+  .metric-sub{font-size:10px;color:var(--text3);margin-top:1px;}
+  .triple-streak{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:1rem;}
+  .ts-card{background:var(--bg2);border:.5px solid var(--border);border-radius:var(--radius-sm);padding:.75rem .5rem;text-align:center;}
+  .ts-val{font-size:24px;font-weight:600;margin-bottom:2px;}
+  .ts-lbl{font-size:10px;color:var(--text2);}
+  .ts-biz .ts-val{color:var(--green);}
+  .ts-body .ts-val{color:var(--coral);}
+  .ts-mind .ts-val{color:var(--purple);}
+  .section{background:var(--card);border:.5px solid var(--border);border-radius:var(--radius);padding:1rem 1.1rem;margin-bottom:.85rem;}
+  .section-title{font-size:10px;font-weight:600;color:var(--text3);margin-bottom:.75rem;text-transform:uppercase;letter-spacing:.07em;}
+  .identity-quote{font-size:14px;color:var(--text2);font-style:italic;border-left:2px solid var(--purple);padding-left:12px;margin-bottom:.75rem;line-height:1.6;}
+  .mood-row{display:flex;gap:6px;flex-wrap:wrap;}
+  .mood-btn{padding:7px 14px;border:.5px solid var(--border2);border-radius:99px;font-size:13px;cursor:pointer;background:var(--bg3);color:var(--text);transition:all .15s;}
+  .mood-btn.selected{background:var(--purple);border-color:var(--purple);color:#fff;}
+  .focus-input{font-size:13px;padding:8px 12px;border:.5px solid var(--border2);border-radius:var(--radius-sm);background:var(--bg3);color:var(--text);width:100%;margin-top:8px;outline:none;}
+  .focus-input::placeholder{color:var(--text3);}
+  .task-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:.5px solid var(--border);}
+  .task-row:last-of-type{border-bottom:none;padding-bottom:0;}
+  .task-check{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border2);cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+  .task-check.done{background:var(--green);border-color:var(--green);}
+  .task-check.done::after{content:'';display:block;width:5px;height:9px;border:2px solid white;border-top:none;border-left:none;transform:rotate(45deg) translateY(-1px);}
+  .task-check.gym-done{background:var(--coral);border-color:var(--coral);}
+  .task-check.gym-done::after{content:'';display:block;width:5px;height:9px;border:2px solid white;border-top:none;border-left:none;transform:rotate(45deg) translateY(-1px);}
+  .task-label{font-size:14px;color:var(--text);flex:1;line-height:1.3;}
+  .task-label.done-text{color:var(--text3);text-decoration:line-through;}
+  .task-badge{font-size:10px;padding:2px 7px;border-radius:99px;font-weight:600;flex-shrink:0;}
+  .badge-biz{background:rgba(29,158,117,.15);color:var(--green);}
+  .badge-body{background:rgba(216,90,48,.15);color:var(--coral);}
+  .task-input{width:46px;height:32px;border:.5px solid var(--border2);border-radius:var(--radius-sm);background:var(--bg3);color:var(--text);font-size:14px;text-align:center;outline:none;}
+  .task-target{font-size:12px;color:var(--text3);min-width:28px;text-align:right;}
+  .progress-wrap{background:var(--bg3);border-radius:99px;height:4px;margin-top:10px;overflow:hidden;}
+  .progress-fill{height:4px;border-radius:99px;background:var(--green);transition:width .3s;}
+  .progress-label{font-size:11px;color:var(--text3);margin-top:5px;}
+  .gym-type-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
+  .gym-btn{padding:5px 12px;border:.5px solid var(--border2);border-radius:99px;font-size:12px;cursor:pointer;background:var(--bg3);color:var(--text2);transition:all .15s;}
+  .gym-btn.selected{background:var(--coral);border-color:var(--coral);color:#fff;}
+  .sober-checks{display:flex;gap:10px;margin-top:8px;}
+  .sober-item{display:flex;align-items:center;gap:8px;padding:10px 14px;border:.5px solid var(--border2);border-radius:var(--radius-sm);cursor:pointer;flex:1;background:var(--bg3);transition:all .15s;}
+  .sober-item.clean{background:rgba(127,119,221,.15);border-color:var(--purple);}
+  .sober-item-text{font-size:13px;color:var(--text);}
+  .sober-item-sub{font-size:11px;color:var(--text3);}
+  .result-row{display:flex;gap:8px;}
+  .result-btn{flex:1;padding:12px;border:.5px solid var(--border2);border-radius:var(--radius-sm);font-size:14px;cursor:pointer;background:var(--bg3);color:var(--text);transition:all .15s;text-align:center;font-weight:500;}
+  .result-btn.win-selected{background:var(--green);border-color:var(--green);color:#fff;}
+  .result-btn.miss-selected{background:var(--red);border-color:var(--red);color:#fff;}
+  .consequence-box{margin-top:.75rem;border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:1rem 1.1rem;border-left:3px solid var(--red);background:#1a0808;}
+  .con-level{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px;}
+  .con-hard{color:var(--red);}
+  .con-brutal{color:#F09595;}
+  .con-text{font-size:14px;color:#ddd;line-height:1.6;font-weight:500;margin-bottom:8px;}
+  .con-action{font-size:12px;color:#666;padding-top:8px;border-top:.5px solid #333;line-height:1.5;}
+  .tier-row{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:.5px solid var(--border);}
+  .tier-row:last-child{border-bottom:none;padding-bottom:0;}
+  .tier-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:3px;}
+  .tier-info{flex:1;}
+  .tier-name{font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px;}
+  .tier-desc{font-size:12px;color:var(--text3);margin-bottom:2px;}
+  .tier-reward{font-size:12px;color:var(--green);font-weight:500;}
+  .tier-status{font-size:11px;font-weight:600;padding:3px 9px;border-radius:99px;flex-shrink:0;}
+  .locked{background:var(--bg3);color:var(--text3);}
+  .unlocked{background:rgba(29,158,117,.2);color:var(--green);}
+  .streak-grid{display:flex;gap:3px;flex-wrap:wrap;margin-top:8px;}
+  .sdot{width:15px;height:15px;border-radius:3px;background:var(--bg3);border:.5px solid var(--border);}
+  .sdot.filled{background:var(--green);border-color:var(--green2);}
+  .sdot.today{background:var(--amber);border-color:#BA7517;}
+  .notify-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:.5px solid var(--border);}
+  .notify-row:last-child{border-bottom:none;}
+  .notify-label{font-size:14px;color:var(--text);}
+  .notify-sub{font-size:11px;color:var(--text3);margin-top:1px;}
+  .toggle{width:42px;height:24px;background:var(--bg3);border:.5px solid var(--border2);border-radius:99px;cursor:pointer;position:relative;transition:background .2s;flex-shrink:0;}
+  .toggle.on{background:var(--green);border-color:var(--green2);}
+  .toggle::after{content:'';width:18px;height:18px;border-radius:50%;background:#fff;position:absolute;top:2px;left:3px;transition:left .2s;}
+  .toggle.on::after{left:21px;}
+  .submit-btn{width:100%;padding:16px;background:var(--green);border:none;border-radius:var(--radius);color:#fff;font-size:16px;font-weight:600;cursor:pointer;margin-top:1rem;letter-spacing:-.01em;transition:opacity .15s;}
+  .submit-btn:active{opacity:.8;}
+  .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);align-items:center;justify-content:center;z-index:999;padding:1rem;}
+  .overlay.show{display:flex;}
+  .overlay-card{background:var(--card);border:.5px solid var(--border2);border-radius:var(--radius);padding:2rem 1.5rem;text-align:center;max-width:340px;width:100%;}
+  .overlay-card.brutal{background:#0d0505;border-color:var(--red);}
+  .overlay-card.sober{background:#080812;border-color:var(--purple);}
+  .ov-icon{font-size:40px;margin-bottom:12px;}
+  .ov-title{font-size:18px;font-weight:700;margin-bottom:10px;letter-spacing:-.02em;}
+  .ov-text{font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:10px;white-space:pre-line;}
+  .ov-action{font-size:12px;color:var(--red);font-weight:600;margin-bottom:1.25rem;line-height:1.5;}
+  .ov-close{padding:12px 32px;background:var(--green);border:none;border-radius:var(--radius-sm);color:#fff;font-size:15px;font-weight:600;cursor:pointer;}
+  .overlay-card.brutal .ov-close{background:var(--red);}
+  .overlay-card.sober .ov-close{background:var(--purple);}
+  .sober-note{font-size:12px;color:var(--text3);font-style:italic;margin-top:8px;line-height:1.5;}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <div class="date-line" id="dateDisplay"></div>
+    <div class="title-row">
+      <div class="app-title">Flowstate Venture</div>
+      <div class="streak-badge" id="streakBadge">🔥 0 day streak</div>
+    </div>
+  </div>
+  <div class="metrics">
+    <div class="metric"><div class="metric-label">Day</div><div class="metric-val" id="dayCount">1</div><div class="metric-sub">of 90</div></div>
+    <div class="metric"><div class="metric-label">Done</div><div class="metric-val" id="completedPct">0%</div><div class="metric-sub">today</div></div>
+    <div class="metric"><div class="metric-label">Sober</div><div class="metric-val" id="soberDays">0</div><div class="metric-sub">days</div></div>
+    <div class="metric"><div class="metric-label">Gym</div><div class="metric-val" id="gymDays">0</div><div class="metric-sub">days</div></div>
+  </div>
+  <div class="triple-streak">
+    <div class="ts-card ts-biz"><div class="ts-val" id="bizStreak">0</div><div class="ts-lbl">Business streak</div></div>
+    <div class="ts-card ts-body"><div class="ts-val" id="gymStreak">0</div><div class="ts-lbl">Movement streak</div></div>
+    <div class="ts-card ts-mind"><div class="ts-val" id="soberStreak">0</div><div class="ts-lbl">Sobriety streak</div></div>
+  </div>
+  <div class="section">
+    <div class="section-title">Identity check-in</div>
+    <div class="identity-quote" id="quoteDisplay"></div>
+    <div class="mood-row" id="moodRow">
+      <button class="mood-btn" onclick="selectMood(this)">Locked in</button>
+      <button class="mood-btn" onclick="selectMood(this)">Focused</button>
+      <button class="mood-btn" onclick="selectMood(this)">Tired but moving</button>
+      <button class="mood-btn" onclick="selectMood(this)">Off</button>
+    </div>
+    <input class="focus-input" id="focusWord" placeholder="One word for today's energy..." />
+  </div>
+  <div class="section">
+    <div class="section-title">Business execution</div>
+    <div class="task-row"><div class="task-check" id="chk-out" onclick="toggleCheck('out','done')"></div><div class="task-label" id="lbl-out">Supplier outreaches</div><span class="task-badge badge-biz">biz</span><input class="task-input" id="inp-out" type="number" min="0" max="99" placeholder="0" oninput="updateProgress()"/><div class="task-target">/ 10</div></div>
+    <div class="task-row"><div class="task-check" id="chk-fol" onclick="toggleCheck('fol','done')"></div><div class="task-label" id="lbl-fol">Follow-ups sent</div><span class="task-badge badge-biz">biz</span><input class="task-input" id="inp-fol" type="number" min="0" max="99" placeholder="0" oninput="updateProgress()"/><div class="task-target">/ 10</div></div>
+    <div class="task-row"><div class="task-check" id="chk-ana" onclick="toggleCheck('ana','done')"></div><div class="task-label" id="lbl-ana">Product analyses</div><span class="task-badge badge-biz">biz</span><input class="task-input" id="inp-ana" type="number" min="0" max="99" placeholder="0" oninput="updateProgress()"/><div class="task-target">/ 20</div></div>
+    <div class="task-row"><div class="task-check" id="chk-ord" onclick="toggleCheck('ord','done')"></div><div class="task-label" id="lbl-ord">Orders placed</div><span class="task-badge badge-biz">biz</span><input class="task-input" id="inp-ord" type="number" min="0" max="99" placeholder="0" oninput="updateProgress()"/><div class="task-target">/ 2</div></div>
+    <div class="task-row"><div class="task-check" id="chk-jus" onclick="toggleCheck('jus','done')"></div><div class="task-label" id="lbl-jus">Justin sync / task assigned</div><span class="task-badge badge-biz">biz</span></div>
+    <div class="progress-wrap"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
+    <div class="progress-label" id="progressLabel">0 of 5 tasks complete</div>
+  </div>
+  <div class="section">
+    <div class="section-title">Body — movement</div>
+    <div class="task-row"><div class="task-check" id="chk-gym" onclick="toggleCheck('gym','gym-done')"></div><div class="task-label" id="lbl-gym">Gym / movement completed</div><span class="task-badge badge-body">body</span></div>
+    <div class="task-row"><div class="task-check" id="chk-water" onclick="toggleCheck('water','gym-done')"></div><div class="task-label" id="lbl-water">Hydration (1 gallon)</div><span class="task-badge badge-body">body</span></div>
+    <div class="task-row" style="border-bottom:none;padding-bottom:0;"><div class="task-check" id="chk-sleep" onclick="toggleCheck('sleep','gym-done')"></div><div class="task-label" id="lbl-sleep">7+ hours sleep last night</div><span class="task-badge badge-body">body</span></div>
+    <div class="gym-type-row" id="gymTypeRow">
+      <button class="gym-btn" onclick="selectGym(this,'Weights')">Weights</button>
+      <button class="gym-btn" onclick="selectGym(this,'Cardio')">Cardio</button>
+      <button class="gym-btn" onclick="selectGym(this,'HIIT')">HIIT</button>
+      <button class="gym-btn" onclick="selectGym(this,'Walk / run')">Walk / run</button>
+      <button class="gym-btn" onclick="selectGym(this,'Stretch / yoga')">Stretch / yoga</button>
+      <button class="gym-btn" onclick="selectGym(this,'Rest day')">Rest day</button>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-title">Mind — sobriety</div>
+    <div class="sober-checks">
+      <div class="sober-item" id="soberAlcohol" onclick="toggleSober('soberAlcohol')"><span style="font-size:20px;">🚫</span><div><div class="sober-item-text">No alcohol</div><div class="sober-item-sub">tap to confirm</div></div></div>
+      <div class="sober-item" id="soberSmoke" onclick="toggleSober('soberSmoke')"><span style="font-size:20px;">🚭</span><div><div class="sober-item-text">No smoking</div><div class="sober-item-sub">tap to confirm</div></div></div>
+    </div>
+    <div class="sober-note">Your body is infrastructure. Protect it like capital.</div>
+  </div>
+  <div class="section">
+    <div class="section-title">Win or miss?</div>
+    <div class="result-row">
+      <div class="result-btn" id="winBtn" onclick="selectResult('win')">I won today</div>
+      <div class="result-btn" id="missBtn" onclick="selectResult('miss')">I missed</div>
+    </div>
+    <div class="consequence-box" id="consequenceBox" style="display:none;">
+      <div class="con-level" id="conLevel">Hard</div>
+      <div class="con-text" id="conText"></div>
+      <div class="con-action" id="conAction"></div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-title">Reward tiers</div>
+    <div class="tier-row"><div class="tier-dot" style="background:#FAC775;"></div><div class="tier-info"><div class="tier-name">Tier 1 — Weekly win</div><div class="tier-desc">7-day streak · biz + gym + sober 5/7</div><div class="tier-reward">$200–300 → date night, spa, premium experience</div></div><div class="tier-status locked" id="tier1Status">Locked</div></div>
+    <div class="tier-row"><div class="tier-dot" style="background:#AFA9EC;"></div><div class="tier-info"><div class="tier-name">Tier 2 — Monthly operator</div><div class="tier-desc">30-day streak · SKUs live + 20%+ ROI</div><div class="tier-reward">$600–900 → wardrobe, tech, wildcard for her</div></div><div class="tier-status locked" id="tier2Status">Locked</div></div>
+    <div class="tier-row"><div class="tier-dot" style="background:#5DCAA5;"></div><div class="tier-info"><div class="tier-name">Tier 3 — Scaling rewards</div><div class="tier-desc">60-day streak · $5K+ monthly</div><div class="tier-reward">$1,500–2,500 → gold, investment, travel fund</div></div><div class="tier-status locked" id="tier3Status">Locked</div></div>
+    <div class="tier-row"><div class="tier-dot" style="background:#7F77DD;"></div><div class="tier-info"><div class="tier-name">Tier 4 — Identity shift</div><div class="tier-desc">90 days · $10K+ month · system runs itself</div><div class="tier-reward">$3,000–5,000 → international flight, freedom move</div></div><div class="tier-status locked" id="tier4Status">Locked</div></div>
+  </div>
+  <div class="section">
+    <div class="section-title">90-day streak</div>
+    <div class="streak-grid" id="streakGrid"></div>
+  </div>
+  <div class="section">
+    <div class="section-title">Notifications</div>
+    <div class="notify-row"><div><div class="notify-label">Morning operator brief</div><div class="notify-sub">7:30 AM — Identity, intentions, execute</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+    <div class="notify-row"><div><div class="notify-label">Midday check-in</div><div class="notify-sub">12:30 PM — Are you on pace?</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+    <div class="notify-row"><div><div class="notify-label">Gym reminder</div><div class="notify-sub">4:30 PM — Movement non-negotiable</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+    <div class="notify-row"><div><div class="notify-label">Streak protection alert</div><div class="notify-sub">6:30 PM — Tasks incomplete warning</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+    <div class="notify-row"><div><div class="notify-label">Sobriety check-in</div><div class="notify-sub">9:00 PM — Stay the course. Log it.</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+    <div class="notify-row"><div><div class="notify-label">End of day lockdown</div><div class="notify-sub">9:30 PM — Log wins, close strong</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+  </div>
+  <button class="submit-btn" onclick="submitDay()">Lock in day — no zero days</button>
+</div>
+<div class="overlay" id="overlay">
+  <div class="overlay-card" id="overlayCard">
+    <div class="ov-icon" id="ovIcon">💰</div>
+    <div class="ov-title" id="ovTitle">Day locked in.</div>
+    <div class="ov-text" id="ovText"></div>
+    <div class="ov-action" id="ovAction" style="display:none;"></div>
+    <button class="ov-close" onclick="closeOverlay()">Let's go</button>
+  </div>
+</div>
+<script>
+const quotes=["I move with precision, not emotion.","Consistency beats intensity — I show up daily.","Boring = profitable. I choose stable over exciting.","Data over emotion. I trust numbers, not opinions.","I do not chase — I position.","Repetition builds wealth: Outreach → Analyze → Order → Repeat.","I am disciplined when it's inconvenient. I execute when it's boring.","Every dollar deployed must return more dollars, more leverage, more opportunity.","I am not trying to become this. I am operating as this now.","My body is infrastructure. I protect it like capital.","Winners get scaled. I double down, not diversify too early.","No zero days. No excuses. No negotiating with comfort."];
+const bizC=[{level:"Hard",text:"The man you're trying to become watched you quit today. He's not impressed.",action:"Tomorrow outreach doubles to 20. You owe the business."},{level:"Hard",text:"You didn't miss a task. You chose your old self over your future self. Own that.",action:"No entertainment tonight. Review your operator transcript instead."},{level:"Hard",text:"Comfort is cheap. So is the life you'll have if you keep choosing it.",action:"No discretionary spending this week until 3 consecutive wins."},{level:"Hard",text:"Your competition executed today. You didn't. The gap just got wider.",action:"Text Justin right now: 'I didn't execute today. Tomorrow I go harder.'"},{level:"Hard",text:"You already know what laziness costs. You've paid that bill before. Stop reordering it.",action:"Wake up 1 hour earlier tomorrow. You bought debt today. Pay it back."},{level:"Hard",text:"You talk about building a machine. Today you were the reason it broke.",action:"30 minutes of business reading before bed. No skipping."},{level:"Brutal",text:"You had 24 hours. You wasted them. That's not bad luck. That's a choice you made.",action:"Double tomorrow's targets. No negotiations."},{level:"Brutal",text:"The version of you that's broke, stuck, and watching others win? He showed up today. You let him.",action:"Write out your identity statement 3 times before you sleep."},{level:"Brutal",text:"Nashanda is watching who you are when it's hard. Today she saw the answer.",action:"No Tier 1 reward this week. Rewards are earned, not given."},{level:"Brutal",text:"You wrote down $10K months. You can't even hit 10 outreaches. Sit with that.",action:"Log exactly where your time went today. You owe yourself the truth."},{level:"Brutal",text:"Nobody is coming to save you. Not a strategy, not a mentor, not another conversation with an AI. Just you. And today you weren't enough.",action:"Tomorrow you execute without excuses or you don't log a win."},{level:"Brutal",text:"You know what your old patterns cost you. You just paid the same price again. Voluntarily.",action:"No scrolling, no shows. Sit with the discomfort until it makes you move."},{level:"Brutal",text:"A man who can't keep a promise to himself can't keep one to anyone else. Including her.",action:"Text someone you trust and tell them what you didn't do today. Out loud."},{level:"Brutal",text:"The gap between who you are and who you said you'd be just got wider. You did that.",action:"Open your operator transcript. Read it. All of it. Tonight."},{level:"Brutal",text:"You want freedom but you keep acting like someone who deserves a cage.",action:"Double outreach tomorrow. No rest until you've earned it."},{level:"Brutal",text:"Somewhere right now someone with less talent, less knowledge, and less access than you is outworking you. Think about that.",action:"Set your alarm 90 minutes earlier. Tomorrow starts now."},{level:"Brutal",text:"Your future kids will either inherit a legacy or an excuse. Today you wrote an excuse.",action:"Reread your vision. Ask yourself if today's version of you deserves it."},{level:"Brutal",text:"You didn't lose momentum today. You chose to give it away.",action:"Tier reward delayed one full week. Earn it back."},{level:"Brutal",text:"Justin is doing his job. The question is whether you're doing yours. Today you weren't.",action:"Own it to Justin directly. Be specific about what you didn't do."},{level:"Brutal",text:"You can feel bad about this or you can do something about it. Feeling bad is easier. That's why you default to it.",action:"Pick one task right now — even at this hour — and do it. Partial beats zero."}];
+const soberC=[{text:"Sobriety streak reset. Tier 4 is built on who you are every single day — including tonight.",action:"Business and gym streaks preserved. Sobriety clock restarts at zero tomorrow."},{text:"The version of you building a $10K/month machine doesn't cloud his mind. You know this.",action:"Sober streak resets. No Tier 2+ reward until 30 clean days are stacked again."},{text:"You can't build a clean business on a compromised mind. Those two things are connected.",action:"Journal it tonight. What triggered it. Be honest. That honesty is part of the work."},{text:"Smoke/drink free Xavier builds different. Today was a data point. Tomorrow is a choice.",action:"Sobriety streak resets. Show up clean tomorrow."},{text:"Every great thing you want — the freedom, the property, the life with Nashanda — requires a clear mind to build and keep. Today you chipped at the foundation.",action:"Restart the clock. 90 clean days is still the target. Begin again."}];
+let state={streak:0,soberStreak:0,gymStreak:0,dayCount:1,soberDays:0,gymDays:0,selectedResult:'',soberAlcohol:false,soberSmoke:false,gymType:''};
+function loadState(){try{const s=JSON.parse(localStorage.getItem('fs_v3')||'{}');if(s.streak!==undefined)state=Object.assign(state,s);}catch(e){}}
+function saveState(){try{localStorage.setItem('fs_v3',JSON.stringify(state));}catch(e){}}
+function init(){loadState();const now=new Date();document.getElementById('dateDisplay').textContent=now.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});document.getElementById('quoteDisplay').textContent=quotes[now.getDay()%quotes.length];document.getElementById('streakBadge').textContent='🔥 '+state.streak+' day streak';document.getElementById('dayCount').textContent=state.dayCount;document.getElementById('soberDays').textContent=state.soberDays;document.getElementById('gymDays').textContent=state.gymDays;document.getElementById('bizStreak').textContent=state.streak;document.getElementById('gymStreak').textContent=state.gymStreak;document.getElementById('soberStreak').textContent=state.soberStreak;buildGrid();updateProgress();}
+function buildGrid(){const g=document.getElementById('streakGrid');g.innerHTML='';for(let i=0;i<90;i++){const d=document.createElement('div');d.className='sdot'+(i<state.streak?' filled':'')+(i===state.streak?' today':'');g.appendChild(d);}}
+function selectMood(btn){document.querySelectorAll('#moodRow .mood-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');}
+function selectGym(btn,val){document.querySelectorAll('#gymTypeRow .gym-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');state.gymType=val;if(val!=='Rest day'){document.getElementById('chk-gym').className='task-check gym-done';document.getElementById('lbl-gym').classList.add('done-text');}updateProgress();}
+function toggleSober(id){const el=document.getElementById(id);el.classList.toggle('clean');if(id==='soberAlcohol')state.soberAlcohol=el.classList.contains('clean');if(id==='soberSmoke')state.soberSmoke=el.classList.contains('clean');}
+function selectResult(type){document.getElementById('winBtn').className='result-btn'+(type==='win'?' win-selected':'');document.getElementById('missBtn').className='result-btn'+(type==='miss'?' miss-selected':'');state.selectedResult=type;const box=document.getElementById('consequenceBox');if(type==='miss'){const c=bizC[Math.floor(Math.random()*bizC.length)];document.getElementById('conLevel').textContent=c.level;document.getElementById('conLevel').className='con-level '+(c.level==='Brutal'?'con-brutal':'con-hard');document.getElementById('conText').textContent=c.text;document.getElementById('conAction').textContent=c.action;box.style.display='block';}else{box.style.display='none';}}
+function toggleCheck(id,cls){const chk=document.getElementById('chk-'+id);const lbl=document.getElementById('lbl-'+id);const isDone=chk.classList.contains(cls)||chk.classList.contains('done');chk.className='task-check'+(isDone?'':' '+cls);lbl.classList.toggle('done-text',!isDone);updateProgress();}
+function updateProgress(){const tasks=['out','fol','ana','ord','jus'];const targets={out:10,fol:10,ana:20,ord:2};let done=0;tasks.forEach(id=>{const chk=document.getElementById('chk-'+id);const inp=document.getElementById('inp-'+id);let completed=chk.classList.contains('done')||chk.classList.contains('gym-done');if(inp&&targets[id]){const val=parseInt(inp.value)||0;if(val>=targets[id]){chk.className='task-check done';document.getElementById('lbl-'+id).classList.add('done-text');completed=true;}}if(completed)done++;});const pct=Math.round((done/tasks.length)*100);document.getElementById('progressBar').style.width=pct+'%';document.getElementById('progressLabel').textContent=done+' of '+tasks.length+' business tasks complete';document.getElementById('completedPct').textContent=pct+'%';}
+function submitDay(){updateProgress();const pct=parseInt(document.getElementById('completedPct').textContent);const isWin=state.selectedResult==='win'||pct>=80;const gymDone=document.getElementById('chk-gym').classList.contains('gym-done')||document.getElementById('chk-gym').classList.contains('done');const fullySober=state.soberAlcohol&&state.soberSmoke;if(isWin){state.streak=(state.streak||0)+1;}else{state.streak=0;}if(gymDone){state.gymStreak=(state.gymStreak||0)+1;state.gymDays=(state.gymDays||0)+1;}else{state.gymStreak=0;}if(fullySober){state.soberStreak=(state.soberStreak||0)+1;state.soberDays=(state.soberDays||0)+1;}else{state.soberStreak=0;}state.dayCount=Math.min((state.dayCount||1)+1,90);const t1=state.streak>=7,t2=state.streak>=30,t3=state.streak>=60,t4=state.streak>=90;['tier1','tier2','tier3','tier4'].forEach((t,i)=>{const u=[t1,t2,t3,t4][i];document.getElementById(t+'Status').textContent=u?'Unlocked':'Locked';document.getElementById(t+'Status').className='tier-status '+(u?'unlocked':'locked');});saveState();buildGrid();document.getElementById('streakBadge').textContent='🔥 '+state.streak+' day streak';document.getElementById('soberDays').textContent=state.soberDays;document.getElementById('gymDays').textContent=state.gymDays;document.getElementById('bizStreak').textContent=state.streak;document.getElementById('gymStreak').textContent=state.gymStreak;document.getElementById('soberStreak').textContent=state.soberStreak;const card=document.getElementById('overlayCard');const ovAction=document.getElementById('ovAction');if(!fullySober&&!isWin){const sc=soberC[Math.floor(Math.random()*soberC.length)];const bc=bizC[Math.floor(Math.random()*bizC.length)];card.className='overlay-card brutal';document.getElementById('ovIcon').textContent='💀';document.getElementById('ovTitle').textContent='Business miss. Sobriety miss. Both.';document.getElementById('ovText').textContent=bc.text+'\n\n'+sc.text;ovAction.textContent=bc.action+' '+sc.action;ovAction.style.display='block';}else if(!fullySober){const sc=soberC[Math.floor(Math.random()*soberC.length)];card.className='overlay-card sober';document.getElementById('ovIcon').textContent='🔄';document.getElementById('ovTitle').textContent='Sobriety streak reset.';document.getElementById('ovText').textContent=sc.text;ovAction.textContent=sc.action;ovAction.style.display='block';}else if(!isWin){const bc=bizC[Math.floor(Math.random()*bizC.length)];card.className='overlay-card brutal';document.getElementById('ovIcon').textContent='🔴';document.getElementById('ovTitle').textContent=bc.level==='Brutal'?'No sugar coating.':'Miss logged.';document.getElementById('ovText').textContent=bc.text;ovAction.textContent=bc.action;ovAction.style.display='block';}else if(t4){card.className='overlay-card';document.getElementById('ovIcon').textContent='👑';document.getElementById('ovTitle').textContent='90 days. You built the machine.';document.getElementById('ovText').textContent='Business. Body. Mind. All locked in.\n\nTier 4 unlocked — book the trip, take the freedom move.\n\nThis was bought by discipline, not luck.';ovAction.style.display='none';}else if(t3&&state.streak===60){card.className='overlay-card';document.getElementById('ovIcon').textContent='🏆';document.getElementById('ovTitle').textContent='Tier 3 unlocked.';document.getElementById('ovText').textContent='60 days. Gold, travel fund, investment account — pick your move.';ovAction.style.display='none';}else if(t2&&state.streak===30){card.className='overlay-card';document.getElementById('ovIcon').textContent='🥇';document.getElementById('ovTitle').textContent='Tier 2 unlocked.';document.getElementById('ovText').textContent='$600–900 earned. Wardrobe, tech, or design that wildcard experience for Nashanda.';ovAction.style.display='none';}else if(t1&&state.streak===7){card.className='overlay-card';document.getElementById('ovIcon').textContent='🎯';document.getElementById('ovTitle').textContent='Tier 1 unlocked.';document.getElementById('ovText').textContent='$200–300 reward triggered. Date night, spa, premium experience — you earned this.';ovAction.style.display='none';}else{card.className='overlay-card';document.getElementById('ovIcon').textContent='💰';document.getElementById('ovTitle').textContent='Day '+(state.dayCount-1)+' locked in.';const parts=[];if(gymDone)parts.push('body moved');if(fullySober)parts.push('mind clean');parts.push('business executed');document.getElementById('ovText').textContent=parts.join(' · ')+'\n\n"This was bought by discipline, not luck."\n\n🔥 '+state.streak+'-day streak.';ovAction.style.display='none';}document.getElementById('overlay').classList.add('show');}
+function closeOverlay(){document.getElementById('overlay').classList.remove('show');}
+init();
+</script>
+</body>
+</html>
