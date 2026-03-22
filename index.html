@@ -526,8 +526,7 @@ async function signOut(){await sb.auth.signOut();currentUser=null;localStorage.r
 async function afterLogin(){
   await loadPrefs();
   await loadFromDB();
-  if(hasCompletedOnboarding()){showMainApp();}
-  else{onboardAnswers={};currentStep=0;buildOnboarding();showScreen('onboardScreen');}
+  showMainApp();
 }
 
 function showScreen(id){
