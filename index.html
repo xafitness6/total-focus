@@ -419,7 +419,8 @@ function buildOnboarding(){
     if(s.type==='input'){
       html+=`<input class="onboard-input" id="ob-${s.key}" placeholder="${s.placeholder||''}" value="${prefs[s.key]||''}"/>`;
     } else if(s.type==='single'){
-      html+=`<div class="onboard-options">${s.options.map(o=>`<button class="onboard-option ${(prefs[s.key]||'').includes(o.split(' — ')[0])?'selected':''}" onclick="selectOnboardOption(this,'${s.key}')">${o}</button>`).join('')}</div>`;
+      html+=`<div class="onboard-options">${s.options.map(o=>`<button class="onboard-option ${String(prefs[s.key]||'').includes
+(o.split(' — ')[0])?'selected':''}" onclick="selectOnboardOption(this,'${s.key}')">${o}</button>`).join('')}</div>`;
     } else if(s.type==='multi'){
       html+=`<div class="onboard-options">${s.options.map(o=>`<button class="onboard-option-multi ${Array.isArray(prefs[s.key])&&prefs[s.key].includes(o)?'selected':''}" onclick="toggleOnboardMulti(this,'${s.key}','${o}')"><div class="onboard-check"></div>${o}</button>`).join('')}</div>`;
     }
