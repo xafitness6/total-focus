@@ -14,8 +14,6 @@
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 html,body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;min-height:100vh;}
 .app{max-width:480px;margin:0 auto;padding:1.25rem 1rem 8rem;}
-
-/* Auth Screen */
 .auth-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem;}
 .auth-logo{font-size:28px;font-weight:700;letter-spacing:-.03em;margin-bottom:4px;}
 .auth-sub{font-size:13px;color:var(--text2);margin-bottom:2.5rem;text-align:center;line-height:1.6;}
@@ -25,33 +23,29 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 .auth-input::placeholder{color:var(--text3);}
 .auth-btn{width:100%;padding:13px;background:var(--green);border:none;border-radius:var(--radius-sm);color:#fff;font-size:15px;font-weight:600;cursor:pointer;margin-bottom:10px;transition:opacity .15s;}
 .auth-btn:active{opacity:.8;}
-.auth-toggle{font-size:13px;color:var(--text2);text-align:center;cursor:pointer;}
+.auth-btn.google{background:#fff;color:#111;display:flex;align-items:center;justify-content:center;gap:10px;}
+.auth-divider{display:flex;align-items:center;gap:8px;margin:4px 0 10px;}
+.auth-divider-line{flex:1;height:.5px;background:rgba(255,255,255,0.08);}
+.auth-divider-text{font-size:11px;color:var(--text3);}
+.auth-toggle{font-size:13px;color:var(--text2);text-align:center;cursor:pointer;margin-top:4px;}
 .auth-toggle span{color:var(--green);}
 .auth-error{font-size:12px;color:var(--red);margin-bottom:8px;text-align:center;}
 .auth-msg{font-size:12px;color:var(--green);margin-bottom:8px;text-align:center;}
-
-/* Quote Banner */
-.quote-banner{background:linear-gradient(135deg,#0d0d0d,#1a1a1a);border:.5px solid var(--border2);border-radius:var(--radius);padding:1rem 1.25rem;margin-bottom:1rem;position:relative;overflow:hidden;}
+.quote-banner{background:#0d0d0d;border:.5px solid var(--border2);border-radius:var(--radius);padding:1rem 1.25rem;margin-bottom:1rem;position:relative;overflow:hidden;}
 .quote-banner::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--purple),transparent);}
 .quote-text{font-size:14px;color:#ccc;line-height:1.7;font-style:italic;}
 .quote-author{font-size:11px;color:var(--text3);margin-top:6px;text-transform:uppercase;letter-spacing:.06em;}
-
-/* Header */
 .header{margin-bottom:1rem;padding-top:env(safe-area-inset-top,0px);}
 .date-line{font-size:11px;color:var(--text2);margin-bottom:4px;letter-spacing:.03em;}
 .title-row{display:flex;align-items:center;justify-content:space-between;}
 .app-title{font-size:22px;font-weight:700;letter-spacing:-.03em;}
-.streak-badge{background:var(--amber);color:var(--amber2);font-size:11px;font-weight:700;padding:4px 12px;border-radius:99px;letter-spacing:.02em;}
+.streak-badge{background:var(--amber);color:var(--amber2);font-size:11px;font-weight:700;padding:4px 12px;border-radius:99px;}
 .signout-btn{font-size:11px;color:var(--text3);cursor:pointer;padding:4px 8px;border:.5px solid var(--border);border-radius:99px;background:transparent;}
-
-/* Metrics */
 .metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-bottom:.85rem;}
 .metric{background:var(--bg2);border:.5px solid var(--border);border-radius:var(--radius-sm);padding:.6rem .4rem;text-align:center;}
 .metric-label{font-size:9px;color:var(--text3);margin-bottom:2px;text-transform:uppercase;letter-spacing:.05em;}
 .metric-val{font-size:21px;font-weight:700;}
 .metric-sub{font-size:9px;color:var(--text3);margin-top:1px;}
-
-/* Triple streak */
 .triple-streak{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-bottom:.85rem;}
 .ts-card{background:var(--bg2);border:.5px solid var(--border);border-radius:var(--radius-sm);padding:.7rem .5rem;text-align:center;}
 .ts-val{font-size:26px;font-weight:700;margin-bottom:2px;}
@@ -59,20 +53,14 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 .ts-biz .ts-val{color:var(--green);}
 .ts-body .ts-val{color:var(--coral);}
 .ts-mind .ts-val{color:var(--purple);}
-
-/* Section */
 .section{background:var(--card);border:.5px solid var(--border);border-radius:var(--radius);padding:1rem 1.1rem;margin-bottom:.85rem;}
 .section-title{font-size:10px;font-weight:700;color:var(--text3);margin-bottom:.75rem;text-transform:uppercase;letter-spacing:.08em;}
 .identity-quote{font-size:13px;color:var(--text2);font-style:italic;border-left:2px solid var(--purple);padding-left:12px;margin-bottom:.75rem;line-height:1.6;}
-
-/* Mood */
 .mood-row{display:flex;gap:6px;flex-wrap:wrap;}
 .mood-btn{padding:6px 13px;border:.5px solid var(--border2);border-radius:99px;font-size:12px;cursor:pointer;background:var(--bg3);color:var(--text);transition:all .15s;}
 .mood-btn.selected{background:var(--purple);border-color:var(--purple);color:#fff;}
 .focus-input{font-size:13px;padding:8px 12px;border:.5px solid var(--border2);border-radius:var(--radius-sm);background:var(--bg3);color:var(--text);width:100%;margin-top:8px;outline:none;}
 .focus-input::placeholder{color:var(--text3);}
-
-/* Tasks */
 .task-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:.5px solid var(--border);}
 .task-row:last-of-type{border-bottom:none;padding-bottom:0;}
 .task-check{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border2);cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s;}
@@ -90,24 +78,16 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 .progress-wrap{background:var(--bg3);border-radius:99px;height:3px;margin-top:10px;overflow:hidden;}
 .progress-fill{height:3px;border-radius:99px;background:var(--green);transition:width .4s;}
 .progress-label{font-size:11px;color:var(--text3);margin-top:5px;}
-
-/* Order reminder */
 .order-reminder{background:rgba(250,199,117,.06);border:.5px solid rgba(250,199,117,.2);border-radius:var(--radius-sm);padding:10px 12px;margin-top:10px;display:flex;align-items:center;gap:8px;}
 .order-reminder-text{font-size:12px;color:var(--amber);line-height:1.5;}
-
-/* Gym */
 .gym-type-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
 .gym-btn{padding:5px 11px;border:.5px solid var(--border2);border-radius:99px;font-size:12px;cursor:pointer;background:var(--bg3);color:var(--text2);transition:all .15s;}
 .gym-btn.selected{background:var(--coral);border-color:var(--coral);color:#fff;}
-
-/* Sober */
 .sober-checks{display:flex;gap:10px;margin-top:8px;}
 .sober-item{display:flex;align-items:center;gap:8px;padding:10px 12px;border:.5px solid var(--border2);border-radius:var(--radius-sm);cursor:pointer;flex:1;background:var(--bg3);transition:all .15s;}
 .sober-item.clean{background:rgba(127,119,221,.12);border-color:var(--purple);}
 .sober-item-text{font-size:13px;color:var(--text);}
 .sober-item-sub{font-size:10px;color:var(--text3);}
-
-/* Result */
 .result-row{display:flex;gap:8px;}
 .result-btn{flex:1;padding:12px;border:.5px solid var(--border2);border-radius:var(--radius-sm);font-size:14px;cursor:pointer;background:var(--bg3);color:var(--text);transition:all .15s;text-align:center;font-weight:600;}
 .result-btn.win-selected{background:var(--green);border-color:var(--green);color:#fff;}
@@ -118,8 +98,6 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 .con-brutal{color:#F09595;}
 .con-text{font-size:14px;color:#ddd;line-height:1.6;font-weight:500;margin-bottom:8px;}
 .con-action{font-size:12px;color:#555;padding-top:8px;border-top:.5px solid #222;line-height:1.5;}
-
-/* Tiers */
 .tier-row{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:.5px solid var(--border);}
 .tier-row:last-child{border-bottom:none;padding-bottom:0;}
 .tier-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;margin-top:4px;}
@@ -130,20 +108,14 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 .tier-status{font-size:11px;font-weight:600;padding:3px 9px;border-radius:99px;flex-shrink:0;}
 .locked{background:var(--bg3);color:var(--text3);}
 .unlocked{background:rgba(29,158,117,.18);color:var(--green);}
-
-/* Charts */
 .chart-tabs{display:flex;gap:6px;margin-bottom:12px;}
 .chart-tab{padding:5px 14px;border:.5px solid var(--border2);border-radius:99px;font-size:12px;cursor:pointer;background:var(--bg3);color:var(--text2);transition:all .15s;}
 .chart-tab.active{background:var(--green);border-color:var(--green);color:#fff;}
 .chart-wrap{position:relative;height:180px;}
-
-/* Streak grid */
 .streak-grid{display:flex;gap:3px;flex-wrap:wrap;margin-top:8px;}
 .sdot{width:14px;height:14px;border-radius:3px;background:var(--bg3);border:.5px solid var(--border);}
 .sdot.filled{background:var(--green);border-color:var(--green2);}
 .sdot.today{background:var(--amber);border-color:#BA7517;}
-
-/* Notifications */
 .notify-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:.5px solid var(--border);}
 .notify-row:last-child{border-bottom:none;}
 .notify-label{font-size:14px;color:var(--text);}
@@ -152,12 +124,8 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 .toggle.on{background:var(--green);border-color:var(--green2);}
 .toggle::after{content:'';width:18px;height:18px;border-radius:50%;background:#fff;position:absolute;top:2px;left:3px;transition:left .2s;}
 .toggle.on::after{left:21px;}
-
-/* Submit */
 .submit-btn{width:100%;padding:16px;background:var(--green);border:none;border-radius:var(--radius);color:#fff;font-size:16px;font-weight:700;cursor:pointer;margin-top:1rem;letter-spacing:-.01em;transition:opacity .15s;}
 .submit-btn:active{opacity:.8;}
-
-/* Overlay */
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);align-items:center;justify-content:center;z-index:999;padding:1rem;}
 .overlay.show{display:flex;}
 .overlay-card{background:var(--card);border:.5px solid var(--border2);border-radius:var(--radius);padding:2rem 1.5rem;text-align:center;max-width:340px;width:100%;}
@@ -177,26 +145,27 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 </head>
 <body>
 
-<!-- Auth Screen -->
 <div id="authScreen" class="auth-screen">
-  <div class="auth-logo">Wealth is calling...</div>
-  <div class="auth-sub">X's · 90-Day Wealth Mandate<br>Sign in to sync your progress across all devices</div>
+  <div class="auth-logo">Flowstate Venture</div>
+  <div class="auth-sub">X's 90-Day Wealth Mandate<br>Sign in to sync your progress across all devices</div>
   <div class="auth-card">
     <div class="auth-title" id="authTitle">Sign in</div>
     <div class="auth-error" id="authError" style="display:none;"></div>
     <div class="auth-msg" id="authMsg" style="display:none;"></div>
+    <button class="auth-btn google" onclick="signInWithGoogle()">
+      <img src="https://www.google.com/favicon.ico" style="width:16px;height:16px;"> Continue with Google
+    </button>
+    <div class="auth-divider"><div class="auth-divider-line"></div><div class="auth-divider-text">or</div><div class="auth-divider-line"></div></div>
     <input class="auth-input" id="authEmail" type="email" placeholder="Email address" />
     <input class="auth-input" id="authPassword" type="password" placeholder="Password" />
-    <button class="auth-btn" onclick="handleAuth()">Continue</button>
+    <button class="auth-btn" onclick="handleAuth()" id="authSubmitBtn">Sign in</button>
     <div class="auth-toggle" id="authToggle" onclick="toggleAuthMode()">Don't have an account? <span>Sign up</span></div>
   </div>
 </div>
 
-<!-- Main App -->
 <div id="mainApp" style="display:none;">
 <div class="app">
 
-  <!-- Quote Banner -->
   <div class="quote-banner">
     <div class="quote-text" id="rotatingQuote"></div>
     <div class="quote-author" id="rotatingAuthor"></div>
@@ -205,7 +174,7 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
   <div class="header">
     <div class="date-line" id="dateDisplay"></div>
     <div class="title-row">
-      <div class="app-title">Wealth Machine</div>
+      <div class="app-title">Flowstate Venture</div>
       <div style="display:flex;align-items:center;gap:8px;">
         <div class="streak-badge" id="streakBadge">🔥 0 day streak</div>
         <div class="signout-btn" onclick="signOut()">Sign out</div>
@@ -226,7 +195,6 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
     <div class="ts-card ts-mind"><div class="ts-val" id="soberStreak">0</div><div class="ts-lbl">Sobriety</div></div>
   </div>
 
-  <!-- Identity -->
   <div class="section">
     <div class="section-title">Identity check-in</div>
     <div class="identity-quote" id="quoteDisplay"></div>
@@ -239,7 +207,6 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
     <input class="focus-input" id="focusWord" placeholder="One word for today's energy..." />
   </div>
 
-  <!-- Business -->
   <div class="section">
     <div class="section-title">Business execution</div>
     <div class="task-row"><div class="task-check" id="chk-src" onclick="toggleCheck('src','done')"></div><div class="task-label" id="lbl-src">Suppliers / brands sourced</div><span class="task-badge badge-biz">biz</span><input class="task-input" id="inp-src" type="number" min="0" max="99" placeholder="0" oninput="updateProgress()"/><div class="task-target">/ 2</div></div>
@@ -256,7 +223,6 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
     </div>
   </div>
 
-  <!-- Body -->
   <div class="section">
     <div class="section-title">Body — movement</div>
     <div class="task-row"><div class="task-check" id="chk-gym" onclick="toggleCheck('gym','gym-done')"></div><div class="task-label" id="lbl-gym">Gym / movement completed</div><span class="task-badge badge-body">body</span></div>
@@ -272,7 +238,6 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
     </div>
   </div>
 
-  <!-- Sobriety -->
   <div class="section">
     <div class="section-title">Mind — sobriety</div>
     <div class="sober-checks">
@@ -282,7 +247,6 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
     <div class="sober-note">Your body is infrastructure. Protect it like capital.</div>
   </div>
 
-  <!-- Win or Miss -->
   <div class="section">
     <div class="section-title">Win or miss?</div>
     <div class="result-row">
@@ -296,7 +260,6 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
     </div>
   </div>
 
-  <!-- Charts -->
   <div class="section">
     <div class="section-title">Progress</div>
     <div class="chart-tabs">
@@ -307,7 +270,6 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
     <div class="chart-wrap"><canvas id="progressChart"></canvas></div>
   </div>
 
-  <!-- Reward Tiers -->
   <div class="section">
     <div class="section-title">Reward tiers</div>
     <div class="tier-row"><div class="tier-dot" style="background:#FAC775;"></div><div class="tier-info"><div class="tier-name">Tier 1 — Weekly win</div><div class="tier-desc">7-day streak · biz + gym + sober 5/7</div><div class="tier-reward">$200–300 → date night, spa, premium experience</div></div><div class="tier-status locked" id="tier1Status">Locked</div></div>
@@ -316,13 +278,11 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
     <div class="tier-row"><div class="tier-dot" style="background:#7F77DD;"></div><div class="tier-info"><div class="tier-name">Tier 4 — Identity shift</div><div class="tier-desc">90 days · $10K+ month · system runs itself</div><div class="tier-reward">$3,000–5,000 → international flight, freedom move</div></div><div class="tier-status locked" id="tier4Status">Locked</div></div>
   </div>
 
-  <!-- 90 Day Grid -->
   <div class="section">
     <div class="section-title">90-day streak</div>
     <div class="streak-grid" id="streakGrid"></div>
   </div>
 
-  <!-- Notifications -->
   <div class="section">
     <div class="section-title">Notifications</div>
     <div class="notify-row"><div><div class="notify-label">Morning operator brief</div><div class="notify-sub">7:30 AM — Identity, intentions, execute</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
@@ -339,7 +299,6 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 </div>
 </div>
 
-<!-- Win Overlay -->
 <div class="overlay" id="overlay">
   <div class="overlay-card" id="overlayCard">
     <div class="ov-icon" id="ovIcon">💰</div>
@@ -351,62 +310,60 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 </div>
 
 <script>
-const SUPABASE_URL = 'https://czofyrwvzbdnmngrhgqj.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN6b2Z5cnd2emJkbm1uZ3JoZ3FqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQxNDI1MjEsImV4cCI6MjA4OTcxODUyMX0.GExE-ZSCwa09sUD0F0twHvzZLM31_9iThcHaFnOU8lY';
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const SUPABASE_URL='https://czofyrwvzbdnmngrhgqj.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN6b2Z5cnd2emJkbm1uZ3JoZ3FqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQxNDI1MjEsImV4cCI6MjA4OTcxODUyMX0.GExE-ZSCwa09sUD0F0twHvzZLM31_9iThcHaFnOU8lY';
+const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+let currentUser=null,chartInstance=null,isSignUp=false;
+let chartData={streak:[],tasks:[],wins:[]};
+let state={streak:0,soberStreak:0,gymStreak:0,dayCount:1,soberDays:0,gymDays:0,selectedResult:'',soberAlcohol:false,soberSmoke:false,gymType:''};
 
-let currentUser = null;
-let isSignUp = false;
-let chartInstance = null;
-let chartData = { streak:[], tasks:[], wins:[] };
-
-const quotes = [
-  { text:"The impediment to action advances action. What stands in the way becomes the way.", author:"Marcus Aurelius" },
-  { text:"You have power over your mind, not outside events. Realize this, and you will find strength.", author:"Marcus Aurelius" },
-  { text:"Do not pray for an easy life. Pray for the strength to endure a difficult one.", author:"Bruce Lee" },
-  { text:"A lion doesn't concern himself with the opinions of sheep.", author:"George R.R. Martin" },
-  { text:"The man who moves a mountain begins by carrying away small stones.", author:"Confucius" },
-  { text:"Wealth is the ability to fully experience life.", author:"Henry David Thoreau" },
-  { text:"If you know the enemy and know yourself, you need not fear the result of a hundred battles.", author:"Sun Tzu" },
-  { text:"Waste no more time arguing what a good man should be. Be one.", author:"Marcus Aurelius" },
-  { text:"Fall seven times, stand up eight.", author:"Japanese Proverb" },
-  { text:"The successful warrior is the average man with laser-like focus.", author:"Bruce Lee" },
-  { text:"It does not matter how slowly you go as long as you do not stop.", author:"Confucius" },
-  { text:"He who is not courageous enough to take risks will accomplish nothing in life.", author:"Muhammad Ali" },
-  { text:"I hated every minute of training, but I said: don't quit. Suffer now and live the rest of your life as a champion.", author:"Muhammad Ali" },
-  { text:"The key to immortality is first living a life worth remembering.", author:"Bruce Lee" },
-  { text:"Difficulties strengthen the mind, as labor does the body.", author:"Seneca" },
-  { text:"A ship in harbor is safe, but that is not what ships are built for.", author:"John A. Shedd" },
-  { text:"Your life is your message to the world. Make sure it's inspiring.", author:"Unknown" },
-  { text:"Don't count the days. Make the days count.", author:"Muhammad Ali" },
-  { text:"The only person you are destined to become is the person you decide to be.", author:"Ralph Waldo Emerson" },
-  { text:"Opportunities multiply as they are seized.", author:"Sun Tzu" },
-  { text:"Discipline is the bridge between goals and accomplishment.", author:"Jim Rohn" },
-  { text:"Either you run the day or the day runs you.", author:"Jim Rohn" },
-  { text:"The grind is real but so is the reward.", author:"Unknown" },
-  { text:"Be careful who you pretend to be. You are who you pretend to be.", author:"Kurt Vonnegut" },
-  { text:"Success is walking from failure to failure with no loss of enthusiasm.", author:"Winston Churchill" },
-  { text:"Formal education will make you a living. Self-education will make you a fortune.", author:"Jim Rohn" },
-  { text:"Stop wearing your wishbone where your backbone ought to be.", author:"Elizabeth Gilbert" },
-  { text:"The most dangerous creation of any society is the man who has nothing to lose.", author:"James Baldwin" },
-  { text:"You can't use up creativity. The more you use, the more you have.", author:"Maya Angelou" },
-  { text:"Not how long, but how well you have lived is the main thing.", author:"Seneca" }
+const quotes=[
+  {text:"The impediment to action advances action. What stands in the way becomes the way.",author:"Marcus Aurelius"},
+  {text:"You have power over your mind, not outside events. Realize this, and you will find strength.",author:"Marcus Aurelius"},
+  {text:"Do not pray for an easy life. Pray for the strength to endure a difficult one.",author:"Bruce Lee"},
+  {text:"A lion doesn't concern himself with the opinions of sheep.",author:"George R.R. Martin"},
+  {text:"The man who moves a mountain begins by carrying away small stones.",author:"Confucius"},
+  {text:"If you know the enemy and know yourself, you need not fear the result of a hundred battles.",author:"Sun Tzu"},
+  {text:"Waste no more time arguing what a good man should be. Be one.",author:"Marcus Aurelius"},
+  {text:"Fall seven times, stand up eight.",author:"Japanese Proverb"},
+  {text:"The successful warrior is the average man with laser-like focus.",author:"Bruce Lee"},
+  {text:"He who is not courageous enough to take risks will accomplish nothing in life.",author:"Muhammad Ali"},
+  {text:"I hated every minute of training, but I said: don't quit. Suffer now and live the rest of your life as a champion.",author:"Muhammad Ali"},
+  {text:"Difficulties strengthen the mind, as labor does the body.",author:"Seneca"},
+  {text:"Don't count the days. Make the days count.",author:"Muhammad Ali"},
+  {text:"Opportunities multiply as they are seized.",author:"Sun Tzu"},
+  {text:"Discipline is the bridge between goals and accomplishment.",author:"Jim Rohn"},
+  {text:"Either you run the day or the day runs you.",author:"Jim Rohn"},
+  {text:"Formal education will make you a living. Self-education will make you a fortune.",author:"Jim Rohn"},
+  {text:"Not how long, but how well you have lived is the main thing.",author:"Seneca"},
+  {text:"The most dangerous creation of any society is the man who has nothing to lose.",author:"James Baldwin"},
+  {text:"An investment in knowledge pays the best interest.",author:"Benjamin Franklin"},
+  {text:"The key to immortality is first living a life worth remembering.",author:"Bruce Lee"},
+  {text:"A ship in harbor is safe, but that is not what ships are built for.",author:"John A. Shedd"},
+  {text:"Stop wearing your wishbone where your backbone ought to be.",author:"Elizabeth Gilbert"},
+  {text:"Success is walking from failure to failure with no loss of enthusiasm.",author:"Winston Churchill"},
+  {text:"The grind is real but so is the reward.",author:"Unknown"},
+  {text:"You are the average of the five people you spend the most time with.",author:"Jim Rohn"},
+  {text:"Do something today that your future self will thank you for.",author:"Unknown"},
+  {text:"Work like there is someone working 24 hours a day to take it all away from you.",author:"Mark Cuban"},
+  {text:"Chase the vision, not the money. The money will end up following you.",author:"Tony Hsieh"},
+  {text:"The secret of getting ahead is getting started.",author:"Mark Twain"}
 ];
 
-const operatorQuotes = [
+const operatorQuotes=[
   "I move with precision, not emotion.",
   "Consistency beats intensity — I show up daily.",
   "Boring = profitable. I choose stable over exciting.",
   "Data over emotion. I trust numbers, not opinions.",
   "I do not chase — I position.",
-  "Repetition builds wealth: Source → Analyze → Order → Repeat.",
+  "Source → Analyze → Order → Repeat. That's the whole game.",
   "I am disciplined when it's inconvenient. I execute when it's boring.",
   "Every dollar deployed must return more dollars, more leverage, more opportunity.",
   "I am not trying to become this. I am operating as this now.",
   "My body is infrastructure. I protect it like capital."
 ];
 
-const bizC = [
+const bizC=[
   {level:"Hard",text:"The man you're trying to become watched you quit today. He's not impressed.",action:"Tomorrow outreach doubles. You owe the business."},
   {level:"Hard",text:"You didn't miss a task. You chose your old self over your future self. Own that.",action:"No entertainment tonight. Review your operator transcript instead."},
   {level:"Hard",text:"Comfort is cheap. So is the life you'll have if you keep choosing it.",action:"No discretionary spending this week until 3 consecutive wins."},
@@ -429,7 +386,7 @@ const bizC = [
   {level:"Brutal",text:"You can feel bad about this or you can do something about it. Feeling bad is easier. That's why you default to it.",action:"Pick one task right now — even at this hour — and do it. Partial beats zero."}
 ];
 
-const soberC = [
+const soberC=[
   {text:"Sobriety streak reset. Tier 4 is built on who you are every single day — including tonight.",action:"Business and gym streaks preserved. Sobriety clock restarts at zero tomorrow."},
   {text:"The version of you building a $10K/month machine doesn't cloud his mind. You know this.",action:"Sober streak resets. No Tier 2+ reward until 30 clean days are stacked again."},
   {text:"You can't build a clean business on a compromised mind. Those two things are connected.",action:"Journal it tonight. What triggered it. Be honest. That honesty is part of the work."},
@@ -437,211 +394,129 @@ const soberC = [
   {text:"Every great thing you want — the freedom, the property, the life with Nashanda — requires a clear mind to build and keep. Today you chipped at the foundation.",action:"Restart the clock. 90 clean days is still the target. Begin again."}
 ];
 
-let state = {streak:0,soberStreak:0,gymStreak:0,dayCount:1,soberDays:0,gymDays:0,selectedResult:'',soberAlcohol:false,soberSmoke:false,gymType:''};
+async function signInWithGoogle(){
+  const{error}=await sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:window.location.origin}});
+  if(error){showError(error.message);}
+}
 
-// Auth
-async function handleAuth() {
-  const email = document.getElementById('authEmail').value.trim();
-  const password = document.getElementById('authPassword').value.trim();
-  const errEl = document.getElementById('authError');
-  const msgEl = document.getElementById('authMsg');
-  errEl.style.display='none'; msgEl.style.display='none';
-  if (!email || !password) { errEl.textContent='Please enter email and password.'; errEl.style.display='block'; return; }
-  if (isSignUp) {
-    const {error} = await sb.auth.signUp({email, password});
-    if (error) { errEl.textContent=error.message; errEl.style.display='block'; }
-    else { msgEl.textContent='Account created! Check your email to confirm, then sign in.'; msgEl.style.display='block'; }
-  } else {
-    const {data,error} = await sb.auth.signInWithPassword({email, password});
-    if (error) { errEl.textContent='Invalid email or password.'; errEl.style.display='block'; }
-    else { currentUser=data.user; showApp(); }
+async function handleAuth(){
+  const email=document.getElementById('authEmail').value.trim();
+  const password=document.getElementById('authPassword').value.trim();
+  hideMessages();
+  if(!email||!password){showError('Please enter email and password.');return;}
+  if(isSignUp){
+    const{error}=await sb.auth.signUp({email,password});
+    if(error){showError(error.message);}
+    else{showMsg('Account created! Check your email to confirm, then sign in.');}
+  }else{
+    const{data,error}=await sb.auth.signInWithPassword({email,password});
+    if(error){showError('Invalid email or password.');}
+    else{currentUser=data.user;showApp();}
   }
 }
 
-function toggleAuthMode() {
-  isSignUp = !isSignUp;
-  document.getElementById('authTitle').textContent = isSignUp ? 'Create account' : 'Sign in';
-  document.getElementById('authToggle').innerHTML = isSignUp ? 'Already have an account? <span>Sign in</span>' : "Don't have an account? <span>Sign up</span>";
+function toggleAuthMode(){
+  isSignUp=!isSignUp;
+  document.getElementById('authTitle').textContent=isSignUp?'Create account':'Sign in';
+  document.getElementById('authSubmitBtn').textContent=isSignUp?'Create account':'Sign in';
+  document.getElementById('authToggle').innerHTML=isSignUp?'Already have an account? <span>Sign in</span>':"Don't have an account? <span>Sign up</span>";
 }
 
-async function signOut() {
-  await sb.auth.signOut();
-  currentUser = null;
-  document.getElementById('mainApp').style.display='none';
-  document.getElementById('authScreen').style.display='flex';
-}
+function showError(msg){const e=document.getElementById('authError');e.textContent=msg;e.style.display='block';}
+function showMsg(msg){const e=document.getElementById('authMsg');e.textContent=msg;e.style.display='block';}
+function hideMessages(){document.getElementById('authError').style.display='none';document.getElementById('authMsg').style.display='none';}
 
-async function showApp() {
+async function signOut(){await sb.auth.signOut();currentUser=null;document.getElementById('mainApp').style.display='none';document.getElementById('authScreen').style.display='flex';}
+
+async function showApp(){
   document.getElementById('authScreen').style.display='none';
   document.getElementById('mainApp').style.display='block';
   await loadFromDB();
   init();
 }
 
-// DB
-async function loadFromDB() {
-  if (!currentUser) return;
-  const today = new Date().toISOString().split('T')[0];
-  const {data} = await sb.from('daily_logs').select('*').eq('user_id', currentUser.id).order('log_date', {ascending:false}).limit(30);
-  if (data && data.length > 0) {
-    const latest = data[0];
-    state.streak = latest.biz_streak || 0;
-    state.soberStreak = latest.sober_streak || 0;
-    state.gymStreak = latest.gym_streak || 0;
-    state.soberDays = latest.sober_days || 0;
-    state.gymDays = latest.gym_days || 0;
-    state.dayCount = latest.day_count || 1;
-    chartData.streak = data.slice(0,14).reverse().map(d=>d.biz_streak||0);
-    chartData.tasks = data.slice(0,14).reverse().map(d=>d.is_win?1:0);
-    chartData.wins = data.slice(0,14).reverse().map(d=>d.is_win?100:0);
+async function loadFromDB(){
+  if(!currentUser)return;
+  const{data}=await sb.from('daily_logs').select('*').eq('user_id',currentUser.id).order('log_date',{ascending:false}).limit(30);
+  if(data&&data.length>0){
+    const l=data[0];
+    state.streak=l.biz_streak||0;state.soberStreak=l.sober_streak||0;state.gymStreak=l.gym_streak||0;
+    state.soberDays=l.sober_days||0;state.gymDays=l.gym_days||0;state.dayCount=l.day_count||1;
+    chartData.streak=data.slice(0,14).reverse().map(d=>d.biz_streak||0);
+    chartData.tasks=data.slice(0,14).reverse().map(d=>d.is_win?1:0);
+    chartData.wins=data.slice(0,14).reverse().map(d=>d.is_win?100:0);
   }
 }
 
-async function saveToDB(logData) {
-  if (!currentUser) return;
-  const today = new Date().toISOString().split('T')[0];
-  const {error} = await sb.from('daily_logs').upsert({
-    user_id: currentUser.id,
-    log_date: today,
-    biz_streak: logData.streak,
-    gym_streak: logData.gymStreak,
-    sober_streak: logData.soberStreak,
-    sober_days: logData.soberDays,
-    gym_days: logData.gymDays,
-    day_count: logData.dayCount,
-    is_win: logData.isWin,
-    is_sober: logData.fullySober,
-    is_gym: logData.gymDone,
-    mood: document.getElementById('focusWord').value || '',
-    focus_word: document.getElementById('focusWord').value || '',
-    gym_type: state.gymType || ''
-  }, {onConflict: 'user_id,log_date'});
-  if (!error) {
-    const ind = document.getElementById('savingIndicator');
-    ind.classList.add('show');
-    setTimeout(()=>ind.classList.remove('show'), 2500);
-  }
+async function saveToDB(logData){
+  if(!currentUser)return;
+  const today=new Date().toISOString().split('T')[0];
+  const{error}=await sb.from('daily_logs').upsert({
+    user_id:currentUser.id,log_date:today,
+    biz_streak:logData.streak,gym_streak:logData.gymStreak,sober_streak:logData.soberStreak,
+    sober_days:logData.soberDays,gym_days:logData.gymDays,day_count:logData.dayCount,
+    is_win:logData.isWin,is_sober:logData.fullySober,is_gym:logData.gymDone,
+    mood:document.getElementById('focusWord').value||'',
+    focus_word:document.getElementById('focusWord').value||'',
+    gym_type:state.gymType||''
+  },{onConflict:'user_id,log_date'});
+  if(!error){const i=document.getElementById('savingIndicator');i.classList.add('show');setTimeout(()=>i.classList.remove('show'),2500);}
 }
 
-// Init
-function init() {
-  const now = new Date();
-  document.getElementById('dateDisplay').textContent = now.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
-  document.getElementById('quoteDisplay').textContent = operatorQuotes[now.getDay() % operatorQuotes.length];
-  document.getElementById('streakBadge').textContent = '🔥 ' + state.streak + ' day streak';
-  document.getElementById('dayCount').textContent = state.dayCount;
-  document.getElementById('soberDays').textContent = state.soberDays;
-  document.getElementById('gymDays').textContent = state.gymDays;
-  document.getElementById('bizStreak').textContent = state.streak;
-  document.getElementById('gymStreak').textContent = state.gymStreak;
-  document.getElementById('soberStreak').textContent = state.soberStreak;
-  const day = now.getDate();
-  if (day === 1 || day === 15) document.getElementById('orderReminder').style.display='flex';
-  buildGrid();
-  updateProgress();
-  startQuoteRotation();
-  initChart();
-  updateTiers();
+function init(){
+  const now=new Date();
+  document.getElementById('dateDisplay').textContent=now.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+  document.getElementById('quoteDisplay').textContent=operatorQuotes[now.getDay()%operatorQuotes.length];
+  document.getElementById('streakBadge').textContent='🔥 '+state.streak+' day streak';
+  document.getElementById('dayCount').textContent=state.dayCount;
+  document.getElementById('soberDays').textContent=state.soberDays;
+  document.getElementById('gymDays').textContent=state.gymDays;
+  document.getElementById('bizStreak').textContent=state.streak;
+  document.getElementById('gymStreak').textContent=state.gymStreak;
+  document.getElementById('soberStreak').textContent=state.soberStreak;
+  const day=now.getDate();
+  if(day===1||day===15)document.getElementById('orderReminder').style.display='flex';
+  buildGrid();updateProgress();startQuoteRotation();initChart();updateTiers();
 }
 
-// Rotating quotes
-let quoteIndex = 0;
-function startQuoteRotation() {
-  quoteIndex = Math.floor(Math.random() * quotes.length);
-  showQuote();
-  setInterval(()=>{ quoteIndex=(quoteIndex+1)%quotes.length; showQuote(); }, 8000);
+let quoteIndex=0;
+function startQuoteRotation(){
+  quoteIndex=Math.floor(Math.random()*quotes.length);showQuote();
+  setInterval(()=>{quoteIndex=(quoteIndex+1)%quotes.length;showQuote();},8000);
 }
-function showQuote() {
-  const q = quotes[quoteIndex];
-  document.getElementById('rotatingQuote').textContent = '"' + q.text + '"';
-  document.getElementById('rotatingAuthor').textContent = '— ' + q.author;
+function showQuote(){
+  const q=quotes[quoteIndex];
+  document.getElementById('rotatingQuote').textContent='"'+q.text+'"';
+  document.getElementById('rotatingAuthor').textContent='— '+q.author;
 }
 
-// Chart
-function initChart() {
-  const ctx = document.getElementById('progressChart').getContext('2d');
-  const labels = Array.from({length:14},(_,i)=>'D'+(i+1));
-  const data = chartData.streak.length ? chartData.streak : Array(14).fill(0);
-  if (chartInstance) chartInstance.destroy();
-  chartInstance = new Chart(ctx, {
-    type:'line',
-    data:{
-      labels,
-      datasets:[{
-        label:'Business streak',
-        data,
-        borderColor:'#1D9E75',
-        backgroundColor:'rgba(29,158,117,0.08)',
-        borderWidth:2,
-        pointBackgroundColor:'#1D9E75',
-        pointRadius:3,
-        tension:0.4,
-        fill:true
-      }]
-    },
-    options:{
-      responsive:true,
-      maintainAspectRatio:false,
-      plugins:{legend:{display:false}},
-      scales:{
-        x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#444',font:{size:10}}},
-        y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#444',font:{size:10}},beginAtZero:true}
-      }
-    }
-  });
+function initChart(){
+  const ctx=document.getElementById('progressChart').getContext('2d');
+  const labels=Array.from({length:14},(_,i)=>'D'+(i+1));
+  const data=chartData.streak.length?chartData.streak:Array(14).fill(0);
+  if(chartInstance)chartInstance.destroy();
+  chartInstance=new Chart(ctx,{type:'line',data:{labels,datasets:[{label:'Streak',data,borderColor:'#1D9E75',backgroundColor:'rgba(29,158,117,0.08)',borderWidth:2,pointBackgroundColor:'#1D9E75',pointRadius:3,tension:0.4,fill:true}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#444',font:{size:10}}},y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#444',font:{size:10}},beginAtZero:true}}}});
 }
 
-function switchChart(type, btn) {
+function switchChart(type,btn){
   document.querySelectorAll('.chart-tab').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
-  const ctx = document.getElementById('progressChart').getContext('2d');
-  let data, label, color, bgColor;
-  if (type==='streak') { data=chartData.streak.length?chartData.streak:Array(14).fill(0); label='Business streak'; color='#1D9E75'; bgColor='rgba(29,158,117,0.08)'; }
-  else if (type==='tasks') { data=chartData.tasks.length?chartData.tasks:Array(14).fill(0); label='Daily wins'; color='#7F77DD'; bgColor='rgba(127,119,221,0.08)'; }
-  else { data=chartData.wins.length?chartData.wins:Array(14).fill(0); label='Win %'; color='#FAC775'; bgColor='rgba(250,199,117,0.08)'; }
-  if (chartInstance) chartInstance.destroy();
-  chartInstance = new Chart(ctx, {
-    type:'bar',
-    data:{labels:Array.from({length:14},(_,i)=>'D'+(i+1)),datasets:[{label,data,backgroundColor:bgColor,borderColor:color,borderWidth:1.5,borderRadius:4}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#444',font:{size:10}}},y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#444',font:{size:10}},beginAtZero:true}}}
-  });
+  let data,label,color,bg;
+  if(type==='streak'){data=chartData.streak.length?chartData.streak:Array(14).fill(0);label='Streak';color='#1D9E75';bg='rgba(29,158,117,0.08)';}
+  else if(type==='tasks'){data=chartData.tasks.length?chartData.tasks:Array(14).fill(0);label='Wins';color='#7F77DD';bg='rgba(127,119,221,0.08)';}
+  else{data=chartData.wins.length?chartData.wins:Array(14).fill(0);label='Win %';color='#FAC775';bg='rgba(250,199,117,0.08)';}
+  if(chartInstance)chartInstance.destroy();
+  chartInstance=new Chart(document.getElementById('progressChart').getContext('2d'),{type:'bar',data:{labels:Array.from({length:14},(_,i)=>'D'+(i+1)),datasets:[{label,data,backgroundColor:bg,borderColor:color,borderWidth:1.5,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#444',font:{size:10}}},y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#444',font:{size:10}},beginAtZero:true}}}});
 }
 
-function buildGrid() {
-  const g=document.getElementById('streakGrid'); g.innerHTML='';
-  for(let i=0;i<90;i++){const d=document.createElement('div');d.className='sdot'+(i<state.streak?' filled':'')+(i===state.streak?' today':'');g.appendChild(d);}
-}
-
-function updateTiers() {
-  const t1=state.streak>=7,t2=state.streak>=30,t3=state.streak>=60,t4=state.streak>=90;
-  ['tier1','tier2','tier3','tier4'].forEach((t,i)=>{const u=[t1,t2,t3,t4][i];document.getElementById(t+'Status').textContent=u?'Unlocked':'Locked';document.getElementById(t+'Status').className='tier-status '+(u?'unlocked':'locked');});
-}
-
+function buildGrid(){const g=document.getElementById('streakGrid');g.innerHTML='';for(let i=0;i<90;i++){const d=document.createElement('div');d.className='sdot'+(i<state.streak?' filled':'')+(i===state.streak?' today':'');g.appendChild(d);}}
+function updateTiers(){const t1=state.streak>=7,t2=state.streak>=30,t3=state.streak>=60,t4=state.streak>=90;['tier1','tier2','tier3','tier4'].forEach((t,i)=>{const u=[t1,t2,t3,t4][i];document.getElementById(t+'Status').textContent=u?'Unlocked':'Locked';document.getElementById(t+'Status').className='tier-status '+(u?'unlocked':'locked');});}
 function selectMood(btn){document.querySelectorAll('#moodRow .mood-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');}
 function selectGym(btn,val){document.querySelectorAll('#gymTypeRow .gym-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');state.gymType=val;if(val!=='Rest day'){document.getElementById('chk-gym').className='task-check gym-done';document.getElementById('lbl-gym').classList.add('done-text');}updateProgress();}
 function toggleSober(id){const el=document.getElementById(id);el.classList.toggle('clean');if(id==='soberAlcohol')state.soberAlcohol=el.classList.contains('clean');if(id==='soberSmoke')state.soberSmoke=el.classList.contains('clean');}
-
-function selectResult(type){
-  document.getElementById('winBtn').className='result-btn'+(type==='win'?' win-selected':'');
-  document.getElementById('missBtn').className='result-btn'+(type==='miss'?' miss-selected':'');
-  state.selectedResult=type;
-  const box=document.getElementById('consequenceBox');
-  if(type==='miss'){const c=bizC[Math.floor(Math.random()*bizC.length)];document.getElementById('conLevel').textContent=c.level;document.getElementById('conLevel').className='con-level '+(c.level==='Brutal'?'con-brutal':'con-hard');document.getElementById('conText').textContent=c.text;document.getElementById('conAction').textContent=c.action;box.style.display='block';}
-  else{box.style.display='none';}
-}
-
+function selectResult(type){document.getElementById('winBtn').className='result-btn'+(type==='win'?' win-selected':'');document.getElementById('missBtn').className='result-btn'+(type==='miss'?' miss-selected':'');state.selectedResult=type;const box=document.getElementById('consequenceBox');if(type==='miss'){const c=bizC[Math.floor(Math.random()*bizC.length)];document.getElementById('conLevel').textContent=c.level;document.getElementById('conLevel').className='con-level '+(c.level==='Brutal'?'con-brutal':'con-hard');document.getElementById('conText').textContent=c.text;document.getElementById('conAction').textContent=c.action;box.style.display='block';}else{box.style.display='none';}}
 function toggleCheck(id,cls){const chk=document.getElementById('chk-'+id);const lbl=document.getElementById('lbl-'+id);const isDone=chk.classList.contains(cls)||chk.classList.contains('done');chk.className='task-check'+(isDone?'':' '+cls);lbl.classList.toggle('done-text',!isDone);updateProgress();}
-
-function updateProgress(){
-  const tasks=['src','out','fol','ana','trn','jus'];
-  const targets={src:2,out:2,fol:2,ana:10};
-  let done=0;
-  tasks.forEach(id=>{const chk=document.getElementById('chk-'+id);const inp=document.getElementById('inp-'+id);let completed=chk.classList.contains('done')||chk.classList.contains('gym-done');if(inp&&targets[id]){const val=parseInt(inp.value)||0;if(val>=targets[id]){chk.className='task-check done';document.getElementById('lbl-'+id).classList.add('done-text');completed=true;}}if(completed)done++;});
-  const pct=Math.round((done/tasks.length)*100);
-  document.getElementById('progressBar').style.width=pct+'%';
-  document.getElementById('progressLabel').textContent=done+' of '+tasks.length+' tasks complete';
-  document.getElementById('completedPct').textContent=pct+'%';
-}
+function updateProgress(){const tasks=['src','out','fol','ana','trn','jus'];const targets={src:2,out:2,fol:2,ana:10};let done=0;tasks.forEach(id=>{const chk=document.getElementById('chk-'+id);const inp=document.getElementById('inp-'+id);let completed=chk.classList.contains('done')||chk.classList.contains('gym-done');if(inp&&targets[id]){const val=parseInt(inp.value)||0;if(val>=targets[id]){chk.className='task-check done';document.getElementById('lbl-'+id).classList.add('done-text');completed=true;}}if(completed)done++;});const pct=Math.round((done/tasks.length)*100);document.getElementById('progressBar').style.width=pct+'%';document.getElementById('progressLabel').textContent=done+' of '+tasks.length+' tasks complete';document.getElementById('completedPct').textContent=pct+'%';}
 
 async function submitDay(){
   updateProgress();
@@ -653,8 +528,7 @@ async function submitDay(){
   if(gymDone){state.gymStreak=(state.gymStreak||0)+1;state.gymDays=(state.gymDays||0)+1;}else{state.gymStreak=0;}
   if(fullySober){state.soberStreak=(state.soberStreak||0)+1;state.soberDays=(state.soberDays||0)+1;}else{state.soberStreak=0;}
   state.dayCount=Math.min((state.dayCount||1)+1,90);
-  updateTiers();
-  buildGrid();
+  updateTiers();buildGrid();
   document.getElementById('streakBadge').textContent='🔥 '+state.streak+' day streak';
   document.getElementById('soberDays').textContent=state.soberDays;
   document.getElementById('gymDays').textContent=state.gymDays;
@@ -663,8 +537,7 @@ async function submitDay(){
   document.getElementById('soberStreak').textContent=state.soberStreak;
   await saveToDB({streak:state.streak,gymStreak:state.gymStreak,soberStreak:state.soberStreak,soberDays:state.soberDays,gymDays:state.gymDays,dayCount:state.dayCount,isWin,fullySober,gymDone});
   const t1=state.streak>=7,t2=state.streak>=30,t3=state.streak>=60,t4=state.streak>=90;
-  const card=document.getElementById('overlayCard');
-  const ovAction=document.getElementById('ovAction');
+  const card=document.getElementById('overlayCard');const ovAction=document.getElementById('ovAction');
   if(!fullySober&&!isWin){const sc=soberC[Math.floor(Math.random()*soberC.length)];const bc=bizC[Math.floor(Math.random()*bizC.length)];card.className='overlay-card brutal';document.getElementById('ovIcon').textContent='💀';document.getElementById('ovTitle').textContent='Business miss. Sobriety miss. Both.';document.getElementById('ovText').textContent=bc.text+'\n\n'+sc.text;ovAction.textContent=bc.action+' '+sc.action;ovAction.style.display='block';}
   else if(!fullySober){const sc=soberC[Math.floor(Math.random()*soberC.length)];card.className='overlay-card sober';document.getElementById('ovIcon').textContent='🔄';document.getElementById('ovTitle').textContent='Sobriety streak reset.';document.getElementById('ovText').textContent=sc.text;ovAction.textContent=sc.action;ovAction.style.display='block';}
   else if(!isWin){const bc=bizC[Math.floor(Math.random()*bizC.length)];card.className='overlay-card brutal';document.getElementById('ovIcon').textContent='🔴';document.getElementById('ovTitle').textContent=bc.level==='Brutal'?'No sugar coating.':'Miss logged.';document.getElementById('ovText').textContent=bc.text;ovAction.textContent=bc.action;ovAction.style.display='block';}
@@ -678,10 +551,8 @@ async function submitDay(){
 
 function closeOverlay(){document.getElementById('overlay').classList.remove('show');}
 
-// Check session on load
-sb.auth.getSession().then(({data:{session}})=>{
-  if(session){currentUser=session.user;showApp();}
-});
+sb.auth.getSession().then(({data:{session}})=>{if(session){currentUser=session.user;showApp();}});
+sb.auth.onAuthStateChange((event,session)=>{if(event==='SIGNED_IN'&&session){currentUser=session.user;showApp();}});
 </script>
 </body>
 </html>
