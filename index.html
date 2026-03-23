@@ -17,10 +17,8 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 .app{max-width:480px;margin:0 auto;padding:1.25rem 1rem 8rem;}
 .screen{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem;}
 .screen.active{display:flex;}
-
-/* Auth */
-.auth-logo{font-size:32px;margin-bottom:6px;}
-.auth-title-main{font-size:24px;font-weight:700;letter-spacing:-.03em;margin-bottom:4px;}
+.auth-logo{font-size:48px;margin-bottom:8px;}
+.auth-title-main{font-size:26px;font-weight:700;letter-spacing:-.03em;margin-bottom:4px;}
 .auth-sub{font-size:13px;color:var(--text2);margin-bottom:2.5rem;text-align:center;line-height:1.6;}
 .auth-card{background:var(--card);border:.5px solid var(--border2);border-radius:var(--radius);padding:1.5rem;width:100%;max-width:360px;}
 .auth-card-title{font-size:16px;font-weight:600;margin-bottom:1.25rem;}
@@ -30,49 +28,63 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 .btn:active{opacity:.8;}
 .btn.google{background:#fff;color:#111;display:flex;align-items:center;justify-content:center;gap:10px;}
 .btn.secondary{background:var(--bg3);color:var(--text2);border:.5px solid var(--border2);}
-.btn.amber{background:var(--amber);color:var(--amber2);}
-.btn.red{background:var(--red);}
 .divider{display:flex;align-items:center;gap:8px;margin:4px 0 10px;}
 .divider-line{flex:1;height:.5px;background:rgba(255,255,255,0.08);}
 .divider-text{font-size:11px;color:var(--text3);}
 .auth-toggle{font-size:13px;color:var(--text2);text-align:center;cursor:pointer;margin-top:4px;}
 .auth-toggle span{color:var(--green);}
-.err{font-size:12px;color:var(--red);margin-bottom:8px;text-align:center;display:none;}
-.msg{font-size:12px;color:var(--green);margin-bottom:8px;text-align:center;display:none;}
+.err{font-size:12px;color:var(--red);margin-bottom:8px;text-align:center;}
+.msg{font-size:12px;color:var(--green);margin-bottom:8px;text-align:center;}
 
 /* Onboarding */
-.onboard-wrap{width:100%;max-width:400px;}
-.onboard-step{display:none;}
-.onboard-step.active{display:block;}
+.onboard-wrap{width:100%;max-width:420px;}
+.onboard-header{margin-bottom:1.5rem;}
+.onboard-eyebrow{font-size:11px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;}
 .onboard-progress{display:flex;gap:4px;margin-bottom:1.5rem;}
 .onboard-pip{flex:1;height:3px;border-radius:99px;background:var(--bg3);}
 .onboard-pip.done{background:var(--green);}
 .onboard-pip.current{background:var(--amber);}
-.onboard-q{font-size:20px;font-weight:700;letter-spacing:-.02em;margin-bottom:6px;line-height:1.3;}
-.onboard-sub{font-size:13px;color:var(--text2);margin-bottom:1.5rem;line-height:1.6;}
+.onboard-step{display:none;}
+.onboard-step.active{display:block;}
+.onboard-q{font-size:22px;font-weight:700;letter-spacing:-.02em;margin-bottom:8px;line-height:1.3;}
+.onboard-sub{font-size:14px;color:var(--text2);margin-bottom:1.5rem;line-height:1.6;}
 .onboard-options{display:flex;flex-direction:column;gap:8px;margin-bottom:1.25rem;}
-.onboard-option{padding:14px 16px;border:.5px solid var(--border2);border-radius:var(--radius-sm);cursor:pointer;background:var(--bg3);color:var(--text);font-size:14px;text-align:left;transition:all .15s;border-left:3px solid transparent;}
-.onboard-option.selected{background:rgba(29,158,117,.12);border-color:var(--green);border-left-color:var(--green);}
-.onboard-option-multi{padding:12px 16px;border:.5px solid var(--border2);border-radius:var(--radius-sm);cursor:pointer;background:var(--bg3);color:var(--text);font-size:14px;text-align:left;transition:all .15s;display:flex;align-items:center;gap:10px;}
-.onboard-option-multi.selected{background:rgba(29,158,117,.12);border-color:var(--green);}
-.onboard-check{width:18px;height:18px;border-radius:4px;border:1.5px solid var(--border2);flex-shrink:0;}
-.onboard-option-multi.selected .onboard-check{background:var(--green);border-color:var(--green);}
+.onboard-option{padding:14px 16px;border:.5px solid var(--border2);border-radius:var(--radius-sm);cursor:pointer;background:var(--bg3);color:var(--text);font-size:14px;text-align:left;transition:all .15s;border-left:3px solid transparent;width:100;}
+.onboard-option.selected{background:rgba(29,158,117,.12);border-color:var(--green);border-left-color:var(--green);color:var(--text);}
 .onboard-input{width:100%;padding:14px;background:var(--bg3);border:.5px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-size:15px;outline:none;margin-bottom:1.25rem;}
 .onboard-input::placeholder{color:var(--text3);}
+.onboard-nav{display:flex;gap:8px;}
+.onboard-nav .btn{margin-bottom:0;}
 
-/* Settings modal */
+/* Settings */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:999;align-items:flex-end;justify-content:center;padding:1rem;}
 .modal-overlay.show{display:flex;}
-.modal-card{background:var(--card);border:.5px solid var(--border2);border-radius:var(--radius) var(--radius) var(--radius-sm) var(--radius-sm);padding:1.5rem;width:100%;max-width:480px;max-height:85vh;overflow-y:auto;}
-.modal-title{font-size:18px;font-weight:700;margin-bottom:1.25rem;letter-spacing:-.02em;}
+.modal-card{background:var(--card);border:.5px solid var(--border2);border-radius:var(--radius);padding:1.5rem;width:100%;max-width:480px;max-height:88vh;overflow-y:auto;}
+.modal-title{font-size:18px;font-weight:700;margin-bottom:1.25rem;}
 .modal-section{margin-bottom:1.25rem;}
 .modal-section-title{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem;}
 .modal-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:.5px solid var(--border);}
 .modal-row:last-child{border-bottom:none;}
 .modal-row-label{font-size:14px;color:var(--text);}
-.modal-row-val{font-size:13px;color:var(--text2);}
+.modal-row-val{font-size:13px;color:var(--text2);max-width:60%;text-align:right;}
+.modal-input{padding:8px 12px;background:var(--bg3);border:.5px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-size:13px;outline:none;width:160px;text-align:right;}
+.modal-select{padding:8px 12px;background:var(--bg3);border:.5px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-size:13px;outline:none;}
 .modal-close{width:100%;padding:13px;background:var(--bg3);border:.5px solid var(--border2);border-radius:var(--radius-sm);color:var(--text2);font-size:15px;font-weight:600;cursor:pointer;margin-top:1rem;}
 .signout-row{padding:13px 16px;background:rgba(228,75,74,.08);border:.5px solid rgba(228,75,74,.2);border-radius:var(--radius-sm);color:var(--red);font-size:14px;font-weight:600;cursor:pointer;text-align:center;margin-top:.75rem;}
+
+/* Custom tasks */
+.custom-task-row{display:flex;gap:8px;align-items:center;margin-bottom:8px;}
+.custom-task-input{flex:1;padding:8px 12px;background:var(--bg3);border:.5px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-size:13px;outline:none;}
+.custom-task-num{width:48px;padding:8px;background:var(--bg3);border:.5px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-size:13px;outline:none;text-align:center;}
+.custom-task-del{background:none;border:none;color:var(--text3);cursor:pointer;font-size:16px;padding:4px;}
+.add-task-btn{width:100%;padding:10px;background:transparent;border:.5px dashed var(--border2);border-radius:var(--radius-sm);color:var(--text2);font-size:13px;cursor:pointer;margin-top:4px;}
+
+/* Tier editor */
+.tier-edit-row{background:var(--bg3);border:.5px solid var(--border);border-radius:var(--radius-sm);padding:12px;margin-bottom:8px;}
+.tier-edit-label{font-size:11px;color:var(--text3);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em;}
+.tier-edit-input{width:100%;padding:8px 10px;background:var(--bg2);border:.5px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-size:13px;outline:none;margin-bottom:6px;}
+.tier-edit-row-inner{display:flex;gap:6px;}
+.tier-edit-row-inner .tier-edit-input{margin-bottom:0;}
 
 /* Main app */
 .cog-btn{background:none;border:none;color:var(--text3);cursor:pointer;font-size:18px;padding:4px;line-height:1;}
@@ -117,12 +129,13 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 .task-badge{font-size:10px;padding:2px 7px;border-radius:99px;font-weight:600;flex-shrink:0;}
 .badge-biz{background:rgba(29,158,117,.12);color:var(--green);}
 .badge-body{background:rgba(216,90,48,.12);color:var(--coral);}
+.badge-custom{background:rgba(127,119,221,.12);color:var(--purple);}
 .task-input{width:44px;height:30px;border:.5px solid var(--border2);border-radius:var(--radius-sm);background:var(--bg3);color:var(--text);font-size:14px;text-align:center;outline:none;}
 .task-target{font-size:11px;color:var(--text3);min-width:26px;text-align:right;}
 .progress-wrap{background:var(--bg3);border-radius:99px;height:3px;margin-top:10px;overflow:hidden;}
 .progress-fill{height:3px;border-radius:99px;background:var(--green);transition:width .4s;}
 .progress-label{font-size:11px;color:var(--text3);margin-top:5px;}
-.order-reminder{background:rgba(250,199,117,.06);border:.5px solid rgba(250,199,117,.2);border-radius:var(--radius-sm);padding:10px 12px;margin-top:10px;display:flex;align-items:center;gap:8px;display:none;}
+.order-reminder{background:rgba(250,199,117,.06);border:.5px solid rgba(250,199,117,.2);border-radius:var(--radius-sm);padding:10px 12px;margin-top:10px;align-items:center;gap:8px;display:none;}
 .order-reminder-text{font-size:12px;color:var(--amber);line-height:1.5;}
 .gym-type-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
 .gym-btn{padding:5px 11px;border:.5px solid var(--border2);border-radius:99px;font-size:12px;cursor:pointer;background:var(--bg3);color:var(--text2);transition:all .15s;}
@@ -191,7 +204,7 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 
 <!-- Auth Screen -->
 <div id="authScreen" class="screen active">
-  <div style="font-size:48px;margin-bottom:12px;">💰</div>
+  <div class="auth-logo">💰</div>
   <div class="auth-title-main">Flowstate</div>
   <div class="auth-sub">Your 90-day wealth mandate.<br>Sign in to get started.</div>
   <div class="auth-card">
@@ -210,12 +223,17 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 </div>
 
 <!-- Onboarding Screen -->
-<div id="onboardScreen" class="screen" style="align-items:flex-start;padding:2rem 1.25rem;justify-content:flex-start;padding-top:4rem;">
+<div id="onboardScreen" class="screen" style="align-items:flex-start;justify-content:flex-start;padding:3rem 1.25rem 2rem;">
   <div class="onboard-wrap">
+    <div class="onboard-header">
+      <div class="onboard-eyebrow">Setup — one time only</div>
+    </div>
     <div class="onboard-progress" id="onboardProgress"></div>
     <div id="onboardSteps"></div>
-    <button class="btn" id="onboardNext" onclick="nextStep()">Continue</button>
-    <button class="btn secondary" id="onboardBack" onclick="prevStep()" style="display:none;">Back</button>
+    <div class="onboard-nav">
+      <button class="btn secondary" id="onboardBack" onclick="prevStep()" style="display:none;width:80px;flex-shrink:0;">Back</button>
+      <button class="btn" id="onboardNext" onclick="nextStep()">Continue</button>
+    </div>
   </div>
 </div>
 
@@ -229,7 +247,7 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
   <div class="header">
     <div class="date-line" id="dateDisplay"></div>
     <div class="title-row">
-      <div class="app-title">Flowstate</div>
+      <div class="app-title" id="appTitleEl">Flowstate</div>
       <div style="display:flex;align-items:center;gap:8px;">
         <div class="streak-badge" id="streakBadge">🔥 0 day streak</div>
         <button class="cog-btn" onclick="openSettings()">⚙️</button>
@@ -238,7 +256,7 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
   </div>
 
   <div class="metrics">
-    <div class="metric"><div class="metric-label">Day</div><div class="metric-val" id="dayCount">1</div><div class="metric-sub">of 90</div></div>
+    <div class="metric"><div class="metric-label">Day</div><div class="metric-val" id="dayCount">1</div><div class="metric-sub" id="daySubLabel">of 90</div></div>
     <div class="metric"><div class="metric-label">Done</div><div class="metric-val" id="completedPct">0%</div><div class="metric-sub">today</div></div>
     <div class="metric"><div class="metric-label">Sober</div><div class="metric-val" id="soberDays">0</div><div class="metric-sub">days</div></div>
     <div class="metric"><div class="metric-label">Gym</div><div class="metric-val" id="gymDays">0</div><div class="metric-sub">days</div></div>
@@ -264,14 +282,9 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 
   <div class="section">
     <div class="section-title">Business execution</div>
-    <div class="task-row"><div class="task-check" id="chk-src" onclick="toggleCheck('src','done')"></div><div class="task-label" id="lbl-src">Suppliers / brands sourced</div><span class="task-badge badge-biz">biz</span><input class="task-input" id="inp-src" type="number" min="0" max="99" placeholder="0" oninput="updateProgress()"/><div class="task-target">/ 2</div></div>
-    <div class="task-row"><div class="task-check" id="chk-out" onclick="toggleCheck('out','done')"></div><div class="task-label" id="lbl-out">Outreaches sent</div><span class="task-badge badge-biz">biz</span><input class="task-input" id="inp-out" type="number" min="0" max="99" placeholder="0" oninput="updateProgress()"/><div class="task-target">/ 2</div></div>
-    <div class="task-row"><div class="task-check" id="chk-fol" onclick="toggleCheck('fol','done')"></div><div class="task-label" id="lbl-fol">Follow-ups sent</div><span class="task-badge badge-biz">biz</span><input class="task-input" id="inp-fol" type="number" min="0" max="99" placeholder="0" oninput="updateProgress()"/><div class="task-target">/ 2</div></div>
-    <div class="task-row"><div class="task-check" id="chk-ana" onclick="toggleCheck('ana','done')"></div><div class="task-label" id="lbl-ana">Product analyses</div><span class="task-badge badge-biz">biz</span><input class="task-input" id="inp-ana" type="number" min="0" max="99" placeholder="0" oninput="updateProgress()"/><div class="task-target">/ 10</div></div>
-    <div class="task-row"><div class="task-check" id="chk-trn" onclick="toggleCheck('trn','done')"></div><div class="task-label" id="lbl-trn">1 hr training completed</div><span class="task-badge badge-biz">biz</span></div>
-    <div class="task-row"><div class="task-check" id="chk-jus" onclick="toggleCheck('jus','done')"></div><div class="task-label" id="lbl-jus">Justin sync</div><span class="task-badge badge-biz">biz</span></div>
+    <div id="taskList"></div>
     <div class="progress-wrap"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
-    <div class="progress-label" id="progressLabel">0 of 6 tasks complete</div>
+    <div class="progress-label" id="progressLabel">0 tasks complete</div>
     <div class="order-reminder" id="orderReminder">
       <span style="font-size:16px;">📦</span>
       <div class="order-reminder-text"><strong>Order placement day</strong> — 1st or 15th. Place your orders today.</div>
@@ -327,10 +340,7 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 
   <div class="section">
     <div class="section-title">Reward tiers</div>
-    <div class="tier-row"><div class="tier-dot" style="background:#FAC775;"></div><div class="tier-info"><div class="tier-name">Tier 1 — Weekly win</div><div class="tier-desc">7-day streak · biz + gym + sober 5/7</div><div class="tier-reward">$200–300 → date night, spa, premium experience</div></div><div class="tier-status locked" id="tier1Status">Locked</div></div>
-    <div class="tier-row"><div class="tier-dot" style="background:#AFA9EC;"></div><div class="tier-info"><div class="tier-name">Tier 2 — Monthly operator</div><div class="tier-desc">30-day streak · SKUs live + 20%+ ROI</div><div class="tier-reward">$600–900 → wardrobe, tech, wildcard</div></div><div class="tier-status locked" id="tier2Status">Locked</div></div>
-    <div class="tier-row"><div class="tier-dot" style="background:#5DCAA5;"></div><div class="tier-info"><div class="tier-name">Tier 3 — Scaling rewards</div><div class="tier-desc">60-day streak · $5K+ monthly</div><div class="tier-reward">$1,500–2,500 → gold, investment, travel fund</div></div><div class="tier-status locked" id="tier3Status">Locked</div></div>
-    <div class="tier-row"><div class="tier-dot" style="background:#7F77DD;"></div><div class="tier-info"><div class="tier-name">Tier 4 — Identity shift</div><div class="tier-desc">90 days · $10K+ month · system runs itself</div><div class="tier-reward">$3,000–5,000 → international flight, freedom move</div></div><div class="tier-status locked" id="tier4Status">Locked</div></div>
+    <div id="tierList"></div>
   </div>
 
   <div class="section">
@@ -357,16 +367,70 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 <div class="modal-overlay" id="settingsModal">
   <div class="modal-card">
     <div class="modal-title">⚙️ Settings</div>
+
     <div class="modal-section">
-      <div class="modal-section-title">Your profile</div>
-      <div class="modal-row"><div class="modal-row-label">Name</div><div class="modal-row-val" id="settingName">—</div></div>
-      <div class="modal-row"><div class="modal-row-label">Building</div><div class="modal-row-val" id="settingGoal">—</div></div>
-      <div class="modal-row"><div class="modal-row-label">Goal length</div><div class="modal-row-val" id="settingLength">90 days</div></div>
-      <div class="modal-row"><div class="modal-row-label">Motivator</div><div class="modal-row-val" id="settingMotivator">—</div></div>
-      <div class="modal-row"><div class="modal-row-label">Tone</div><div class="modal-row-val" id="settingTone">—</div></div>
-      <div class="modal-row"><div class="modal-row-label">Profanity</div><div class="modal-row-val" id="settingProfanity">—</div></div>
+      <div class="modal-section-title">Profile</div>
+      <div class="modal-row"><div class="modal-row-label">Name</div><input class="modal-input" id="set-name" placeholder="Your name"/></div>
+      <div class="modal-row"><div class="modal-row-label">Building</div><input class="modal-input" id="set-goal" placeholder="Your business/goal"/></div>
+      <div class="modal-row"><div class="modal-row-label">Who motivates you</div><input class="modal-input" id="set-motivator" placeholder="e.g. my partner"/></div>
+      <div class="modal-row"><div class="modal-row-label">Your biggest fear</div><input class="modal-input" id="set-fears" placeholder="If you don't execute..."/></div>
     </div>
-    <button class="btn secondary" onclick="resetOnboarding()" style="margin-bottom:8px;">Edit preferences</button>
+
+    <div class="modal-section">
+      <div class="modal-section-title">Goal timeline</div>
+      <div class="modal-row">
+        <div class="modal-row-label">Total days</div>
+        <select class="modal-select" id="set-goalLength">
+          <option>30 days</option>
+          <option>60 days</option>
+          <option selected>90 days</option>
+          <option>6 months</option>
+          <option>1 year</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">Tone & language</div>
+      <div class="modal-row">
+        <div class="modal-row-label">Consequence tone</div>
+        <select class="modal-select" id="set-tone">
+          <option value="Hard">Hard</option>
+          <option value="Brutal" selected>Brutal</option>
+          <option value="Motivational">Motivational</option>
+          <option value="Balanced">Balanced</option>
+        </select>
+      </div>
+      <div class="modal-row">
+        <div class="modal-row-label">Profanity</div>
+        <select class="modal-select" id="set-profanity">
+          <option value="true" selected>On</option>
+          <option value="false">Off</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">Daily tasks</div>
+      <div style="font-size:12px;color:var(--text3);margin-bottom:10px;">Edit targets or add custom tasks</div>
+      <div class="modal-row"><div class="modal-row-label">Suppliers sourced</div><input class="modal-input" type="number" id="set-src" value="2" min="1" max="50"/></div>
+      <div class="modal-row"><div class="modal-row-label">Outreaches</div><input class="modal-input" type="number" id="set-out" value="2" min="1" max="50"/></div>
+      <div class="modal-row"><div class="modal-row-label">Follow-ups</div><input class="modal-input" type="number" id="set-fol" value="2" min="1" max="50"/></div>
+      <div class="modal-row"><div class="modal-row-label">Product analyses</div><input class="modal-input" type="number" id="set-ana" value="10" min="1" max="100"/></div>
+      <div style="margin-top:12px;">
+        <div class="modal-section-title">Custom tasks</div>
+        <div id="customTasksEditor"></div>
+        <button class="add-task-btn" onclick="addCustomTaskField()">+ Add custom task</button>
+      </div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">Reward tiers</div>
+      <div style="font-size:12px;color:var(--text3);margin-bottom:10px;">Customize your milestone rewards</div>
+      <div id="tierEditor"></div>
+    </div>
+
+    <button class="btn" onclick="saveSettings()" style="margin-bottom:8px;">Save changes</button>
     <div class="signout-row" onclick="signOut()">Sign out</div>
     <button class="modal-close" onclick="closeSettings()">Close</button>
   </div>
@@ -390,19 +454,32 @@ const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
 let currentUser=null,chartInstance=null,isSignUp=false;
 let chartData={streak:[],tasks:[],wins:[]};
-let prefs={name:'',goal:'',goalLength:'90 days',motivator:'',relationship:'partner',tone:'brutal',profanity:true,fears:''};
+
+let prefs={
+  name:'',goal:'',goalLength:'90 days',motivator:'',relationship:'',tone:'Brutal',profanity:true,fears:'',
+  onboarding_complete:false,
+  taskTargets:{src:2,out:2,fol:2,ana:10},
+  customTasks:[],
+  tiers:[
+    {name:'Weekly win',days:7,desc:'Biz + gym + sober 5/7 days',reward:'$200–300 → date night, spa, premium experience',color:'#FAC775'},
+    {name:'Monthly operator',days:30,desc:'SKUs live + 20%+ ROI validated',reward:'$600–900 → wardrobe, tech, wildcard',color:'#AFA9EC'},
+    {name:'Scaling rewards',days:60,desc:'$5K+ monthly revenue',reward:'$1,500–2,500 → gold, investment, travel fund',color:'#5DCAA5'},
+    {name:'Identity shift',days:90,desc:'$10K+ month, system runs itself',reward:'$3,000–5,000 → international flight, freedom move',color:'#7F77DD'}
+  ]
+};
+
 let state={streak:0,soberStreak:0,gymStreak:0,dayCount:1,soberDays:0,gymDays:0,selectedResult:'',soberAlcohol:false,soberSmoke:false,gymType:''};
 
-// Onboarding steps definition
+// Onboarding
 const onboardSteps=[
   {id:'name',type:'input',q:"What's your name?",sub:"How should the app address you?",placeholder:"Your first name",key:'name'},
-  {id:'goal',type:'input',q:"What are you building?",sub:"Describe your business or main goal in a few words.",placeholder:"e.g. Amazon FBA business, $10K/month",key:'goal'},
+  {id:'goal',type:'input',q:"What are you building?",sub:"Describe your main goal or business in a few words.",placeholder:"e.g. Amazon FBA, $10K/month, fitness coaching",key:'goal'},
   {id:'goalLength',type:'single',q:"What's your goal timeline?",sub:"How long are you committing to this?",key:'goalLength',options:['30 days','60 days','90 days','6 months','1 year']},
-  {id:'motivator',type:'input',q:"Who do you do this for?",sub:"Who in your life motivates you most? Could be a partner, family member, future self — anyone.",placeholder:"e.g. My partner, my kids, myself",key:'motivator'},
-  {id:'relationship',type:'single',q:"What's your relationship status?",sub:"This helps personalize your consequence messages.",key:'relationship',options:['In a relationship','Single','Married','It\'s complicated']},
-  {id:'tone',type:'single',q:"How do you want to be spoken to?",sub:"When you miss a day, what tone hits hardest for you?",key:'tone',options:['Hard — direct and blunt','Brutal — no mercy, no excuses','Motivational — tough love','Balanced — mix of all three']},
-  {id:'profanity',type:'single',q:"Profanity in consequences?",sub:"Some people respond better to raw language. Your call.",key:'profanity',options:['Yes — keep it real','No — keep it clean']},
-  {id:'fears',type:'input',q:"What's your biggest fear if you don't execute?",sub:"Be honest. This gets used against you when you miss.",placeholder:"e.g. Staying broke, letting my family down",key:'fears'}
+  {id:'motivator',type:'input',q:"Who do you do this for?",sub:"Who in your life motivates you most? Partner, family, yourself — anyone.",placeholder:"e.g. My partner, my kids, myself",key:'motivator'},
+  {id:'relationship',type:'single',q:"What's your relationship status?",sub:"Helps personalize your messages.",key:'relationship',options:['In a relationship','Single','Married','It\'s complicated']},
+  {id:'tone',type:'single',q:"How do you want to be spoken to?",sub:"When you miss a day, what hits hardest?",key:'tone',options:['Hard — direct and blunt','Brutal — no mercy, no excuses','Motivational — tough love','Balanced — mix of all three']},
+  {id:'profanity',type:'single',q:"Profanity in consequences?",sub:"Some people respond better to raw language.",key:'profanity',options:['Yes — keep it real','No — keep it clean']},
+  {id:'fears',type:'input',q:"What's your biggest fear if you don't execute?",sub:"Be honest. This gets used against you when you slip.",placeholder:"e.g. Staying broke, letting my family down",key:'fears'}
 ];
 
 let currentStep=0;
@@ -419,10 +496,8 @@ function buildOnboarding(){
     if(s.type==='input'){
       html+=`<input class="onboard-input" id="ob-${s.key}" placeholder="${s.placeholder||''}" value="${prefs[s.key]||''}"/>`;
     } else if(s.type==='single'){
-      html+=`<div class="onboard-options">${s.options.map(o=>`<button class="onboard-option ${String(prefs[s.key]||'').includes
-(o.split(' — ')[0])?'selected':''}" onclick="selectOnboardOption(this,'${s.key}')">${o}</button>`).join('')}</div>`;
-    } else if(s.type==='multi'){
-      html+=`<div class="onboard-options">${s.options.map(o=>`<button class="onboard-option-multi ${Array.isArray(prefs[s.key])&&prefs[s.key].includes(o)?'selected':''}" onclick="toggleOnboardMulti(this,'${s.key}','${o}')"><div class="onboard-check"></div>${o}</button>`).join('')}</div>`;
+      const cur=String(prefs[s.key]||'');
+      html+=`<div class="onboard-options">${s.options.map(o=>`<button class="onboard-option ${cur&&o.startsWith(cur)?'selected':''}" onclick="selectOnboardOption(this,'${s.key}')">${o}</button>`).join('')}</div>`;
     }
     html+=`</div>`;
     return html;
@@ -433,13 +508,6 @@ function selectOnboardOption(btn,key){
   btn.closest('.onboard-options').querySelectorAll('.onboard-option').forEach(b=>b.classList.remove('selected'));
   btn.classList.add('selected');
   onboardAnswers[key]=btn.textContent.split(' — ')[0];
-}
-
-function toggleOnboardMulti(btn,key,val){
-  btn.classList.toggle('selected');
-  if(!onboardAnswers[key])onboardAnswers[key]=[];
-  if(btn.classList.contains('selected')){if(!onboardAnswers[key].includes(val))onboardAnswers[key].push(val);}
-  else{onboardAnswers[key]=onboardAnswers[key].filter(v=>v!==val);}
 }
 
 function updateOnboardProgress(){
@@ -455,7 +523,7 @@ function nextStep(){
     if(!val){alert('Please fill this in to continue.');return;}
     onboardAnswers[s.key]=val;
   } else {
-    if(!onboardAnswers[s.key]){alert('Please make a selection to continue.');return;}
+    if(!onboardAnswers[s.key]){alert('Please make a selection.');return;}
   }
   if(currentStep===onboardSteps.length-1){finishOnboarding();return;}
   document.getElementById('step-'+currentStep).classList.remove('active');
@@ -463,6 +531,7 @@ function nextStep(){
   document.getElementById('step-'+currentStep).classList.add('active');
   document.getElementById('onboardBack').style.display='block';
   updateOnboardProgress();
+  window.scrollTo(0,0);
 }
 
 function prevStep(){
@@ -477,31 +546,59 @@ function prevStep(){
 async function finishOnboarding(){
   prefs={...prefs,...onboardAnswers};
   prefs.profanity=onboardAnswers.profanity==='Yes';
-  if(currentUser){
-    await sb.from('user_prefs').upsert({user_id:currentUser.id,...prefs},{onConflict:'user_id'});
-  }
-  localStorage.setItem('fs_prefs',JSON.stringify(prefs));
+  prefs.onboarding_complete=true;
+  await savePrefs();
   showMainApp();
+}
+
+// Prefs
+async function savePrefs(){
+  localStorage.setItem('fs_prefs',JSON.stringify(prefs));
+  if(!currentUser)return;
+  const payload={
+    user_id:currentUser.id,
+    name:prefs.name||'',
+    goal:prefs.goal||'',
+    goalLength:prefs.goalLength||'90 days',
+    motivator:prefs.motivator||'',
+    relationship:prefs.relationship||'',
+    tone:prefs.tone||'Brutal',
+    profanity:!!prefs.profanity,
+    fears:prefs.fears||'',
+    onboarding_complete:!!prefs.onboarding_complete
+  };
+  await sb.from('user_prefs').upsert(payload,{onConflict:'user_id'});
 }
 
 async function loadPrefs(){
   const local=localStorage.getItem('fs_prefs');
-  if(local)prefs=Object.assign(prefs,JSON.parse(local));
-  if(currentUser){
+  if(local){try{prefs=Object.assign(prefs,JSON.parse(local));}catch(e){}}
+  if(!currentUser)return;
+  try{
     const{data}=await sb.from('user_prefs').select('*').eq('user_id',currentUser.id).single();
-    if(data){prefs=Object.assign(prefs,data);localStorage.setItem('fs_prefs',JSON.stringify(prefs));}
-  }
+    if(data){
+      prefs.name=data.name||prefs.name||'';
+      prefs.goal=data.goal||prefs.goal||'';
+      prefs.goalLength=data.goalLength||prefs.goalLength||'90 days';
+      prefs.motivator=data.motivator||prefs.motivator||'';
+      prefs.relationship=data.relationship||prefs.relationship||'';
+      prefs.tone=data.tone||prefs.tone||'Brutal';
+      prefs.profanity=data.profanity!==undefined?data.profanity:prefs.profanity;
+      prefs.fears=data.fears||prefs.fears||'';
+      prefs.onboarding_complete=data.onboarding_complete||false;
+      localStorage.setItem('fs_prefs',JSON.stringify(prefs));
+    }
+  }catch(e){}
 }
 
-function hasCompletedOnboarding(){return !!(prefs.name&&prefs.goal&&prefs.motivator);}
-
-function resetOnboarding(){closeSettings();onboardAnswers={...prefs};currentStep=0;buildOnboarding();showScreen('onboardScreen');}
+function hasCompletedOnboarding(){return !!prefs.onboarding_complete;}
 
 // Auth
 async function signInWithGoogle(){
   const{error}=await sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:window.location.origin}});
   if(error)showAuthError(error.message);
 }
+
 async function handleAuth(){
   const email=document.getElementById('authEmail').value.trim();
   const password=document.getElementById('authPassword').value.trim();
@@ -513,20 +610,41 @@ async function handleAuth(){
     else showAuthMsg('Account created! Check your email to confirm, then sign in.');
   }else{
     const{data,error}=await sb.auth.signInWithPassword({email,password});
-    if(error)showAuthError('Invalid email or password.');
-    else{currentUser=data.user;await afterLogin();}
+    if(error){showAuthError('Sign in failed: '+error.message);}
+    else if(data&&data.user){currentUser=data.user;await afterLogin();}
   }
 }
-function toggleAuthMode(){isSignUp=!isSignUp;document.getElementById('authTitle').textContent=isSignUp?'Create account':'Sign in';document.getElementById('authSubmitBtn').textContent=isSignUp?'Create account':'Sign in';document.getElementById('authToggle').innerHTML=isSignUp?'Already have an account? <span>Sign in</span>':"Don't have an account? <span>Sign up</span>";}
+
+function toggleAuthMode(){
+  isSignUp=!isSignUp;
+  document.getElementById('authTitle').textContent=isSignUp?'Create account':'Sign in';
+  document.getElementById('authSubmitBtn').textContent=isSignUp?'Create account':'Sign in';
+  document.getElementById('authToggle').innerHTML=isSignUp?'Already have an account? <span>Sign in</span>':"Don't have an account? <span>Sign up</span>";
+}
+
 function showAuthError(msg){const e=document.getElementById('authError');e.textContent=msg;e.style.display='block';}
 function showAuthMsg(msg){const e=document.getElementById('authMsg');e.textContent=msg;e.style.display='block';}
 function hideAuthMessages(){document.getElementById('authError').style.display='none';document.getElementById('authMsg').style.display='none';}
-async function signOut(){await sb.auth.signOut();currentUser=null;localStorage.removeItem('fs_prefs');showScreen('authScreen');}
+
+async function signOut(){
+  await sb.auth.signOut();
+  currentUser=null;
+  localStorage.removeItem('fs_prefs');
+  closeSettings();
+  showScreen('authScreen');
+}
 
 async function afterLogin(){
   await loadPrefs();
   await loadFromDB();
-  showMainApp();
+  if(hasCompletedOnboarding()){
+    showMainApp();
+  } else {
+    onboardAnswers={};
+    currentStep=0;
+    buildOnboarding();
+    showScreen('onboardScreen');
+  }
 }
 
 function showScreen(id){
@@ -535,9 +653,9 @@ function showScreen(id){
     el.style.display='none';
     el.classList.remove('active');
   });
-  const target=document.getElementById(id);
-  target.style.display='flex';
-  target.classList.add('active');
+  const t=document.getElementById(id);
+  t.style.display='flex';
+  t.classList.add('active');
 }
 
 function showMainApp(){showScreen('mainApp');init();}
@@ -545,68 +663,79 @@ function showMainApp(){showScreen('mainApp');init();}
 // DB
 async function loadFromDB(){
   if(!currentUser)return;
-  const{data}=await sb.from('daily_logs').select('*').eq('user_id',currentUser.id).order('log_date',{ascending:false}).limit(30);
-  if(data&&data.length>0){
-    const l=data[0];
-    state.streak=l.biz_streak||0;state.soberStreak=l.sober_streak||0;state.gymStreak=l.gym_streak||0;
-    state.soberDays=l.sober_days||0;state.gymDays=l.gym_days||0;state.dayCount=l.day_count||1;
-    chartData.streak=data.slice(0,14).reverse().map(d=>d.biz_streak||0);
-    chartData.tasks=data.slice(0,14).reverse().map(d=>d.is_win?1:0);
-    chartData.wins=data.slice(0,14).reverse().map(d=>d.is_win?100:0);
-  }
+  try{
+    const{data}=await sb.from('daily_logs').select('*').eq('user_id',currentUser.id).order('log_date',{ascending:false}).limit(30);
+    if(data&&data.length>0){
+      const l=data[0];
+      state.streak=l.biz_streak||0;state.soberStreak=l.sober_streak||0;state.gymStreak=l.gym_streak||0;
+      state.soberDays=l.sober_days||0;state.gymDays=l.gym_days||0;state.dayCount=l.day_count||1;
+      chartData.streak=data.slice(0,14).reverse().map(d=>d.biz_streak||0);
+      chartData.tasks=data.slice(0,14).reverse().map(d=>d.is_win?1:0);
+      chartData.wins=data.slice(0,14).reverse().map(d=>d.is_win?100:0);
+    }
+  }catch(e){}
 }
 
 async function saveToDB(logData){
   if(!currentUser)return;
-  const today=new Date().toISOString().split('T')[0];
-  const{error}=await sb.from('daily_logs').upsert({user_id:currentUser.id,log_date:today,biz_streak:logData.streak,gym_streak:logData.gymStreak,sober_streak:logData.soberStreak,sober_days:logData.soberDays,gym_days:logData.gymDays,day_count:logData.dayCount,is_win:logData.isWin,is_sober:logData.fullySober,is_gym:logData.gymDone,mood:document.getElementById('focusWord').value||'',focus_word:document.getElementById('focusWord').value||'',gym_type:state.gymType||''},{onConflict:'user_id,log_date'});
-  if(!error){const i=document.getElementById('savingIndicator');i.classList.add('show');setTimeout(()=>i.classList.remove('show'),2500);}
+  try{
+    const today=new Date().toISOString().split('T')[0];
+    await sb.from('daily_logs').upsert({
+      user_id:currentUser.id,log_date:today,
+      biz_streak:logData.streak,gym_streak:logData.gymStreak,sober_streak:logData.soberStreak,
+      sober_days:logData.soberDays,gym_days:logData.gymDays,day_count:logData.dayCount,
+      is_win:logData.isWin,is_sober:logData.fullySober,is_gym:logData.gymDone,
+      mood:document.getElementById('focusWord').value||'',
+      focus_word:document.getElementById('focusWord').value||'',
+      gym_type:state.gymType||''
+    },{onConflict:'user_id,log_date'});
+    const i=document.getElementById('savingIndicator');
+    i.classList.add('show');
+    setTimeout(()=>i.classList.remove('show'),2500);
+  }catch(e){}
 }
 
-// Personalized content
+// Personalization helpers
 function getName(){return prefs.name||'You';}
 function getMotivator(){return prefs.motivator||'the people who matter to you';}
 function getGoal(){return prefs.goal||'your business';}
-function getFears(){return prefs.fears||'staying where you are';}
+function getFears(){return prefs.fears||'staying exactly where you are';}
+function isBrutal(){return prefs.tone==='Brutal';}
 
 function getConsequences(){
-  const n=getName();const m=getMotivator();const g=getGoal();const f=getFears();
-  const p=prefs.profanity;
-  const hard=[
+  const n=getName(),m=getMotivator(),g=getGoal(),f=getFears(),p=prefs.profanity;
+  return[
     {level:"Hard",text:`The ${n} you're trying to become watched you quit today. He's not impressed.`,action:"Tomorrow outreach doubles. You owe the business."},
     {level:"Hard",text:`You didn't miss a task. You chose your old self over your future self. Own that.`,action:"No entertainment tonight. Review your goals instead."},
-    {level:"Hard",text:`Comfort is cheap. So is the life you'll have if you keep choosing it.`,action:`No discretionary spending until 3 consecutive wins.`},
-    {level:"Hard",text:`Your competition executed today. You didn't. The gap just got wider.`,action:`Text your accountability partner right now: 'I didn't execute today. Tomorrow I go harder.'`},
+    {level:"Hard",text:`Comfort is cheap. So is the life you'll have if you keep choosing it.`,action:"No discretionary spending until 3 consecutive wins."},
+    {level:"Hard",text:`Your competition executed today. You didn't. The gap just got wider.`,action:"Text your accountability partner: 'I didn't execute today. Tomorrow I go harder.'"},
     {level:"Hard",text:`You already know what laziness costs. You've paid that bill before. Stop reordering it.`,action:"Wake up 1 hour earlier tomorrow. You bought debt today. Pay it back."},
     {level:"Hard",text:`You talk about building ${g}. Today you were the reason it didn't move.`,action:"30 minutes of business reading before bed. No skipping."},
-  ];
-  const brutal=[
     {level:"Brutal",text:`You had 24 hours. You wasted them. That's not bad luck. That's a choice you made.`,action:"Double tomorrow's targets. No negotiations."},
     {level:"Brutal",text:`The version of ${n} that's broke, stuck, and watching others win? He showed up today. You let him.`,action:"Write out your identity statement 3 times before you sleep."},
     {level:"Brutal",text:`${m} is watching who you are when it's hard. Today they saw the answer.`,action:"No Tier 1 reward this week. Rewards are earned, not given."},
-    {level:"Brutal",text:`You wrote down your goals. You ${p?`can't even hit 2 fuckin' outreaches`:'can\'t even hit 2 outreaches'}. Sit with that.`,action:"Log exactly where your time went today. You owe yourself the truth."},
+    {level:"Brutal",text:`You wrote down your goals. You ${p?`can't even hit your daily targets`:'can\'t even hit your targets'}. Sit with that.`,action:"Log exactly where your time went today. You owe yourself the truth."},
     {level:"Brutal",text:`Nobody is coming to save you. Not a strategy, not a mentor, not another conversation with an AI. Just you. And today you weren't enough.`,action:"Tomorrow you execute without excuses or you don't log a win."},
     {level:"Brutal",text:`You know what your old patterns cost you. You just paid the same price again. Voluntarily.`,action:"No scrolling, no shows. Sit with the discomfort until it makes you move."},
-    {level:"Brutal",text:`A ${p?'man':'person'} who can't keep a promise to themselves can't keep one to anyone else. Including ${m}.`,action:"Tell someone you trust what you didn't do today. Out loud."},
-    {level:"Brutal",text:`The gap between who you are and who you said you'd be just got wider. You did that.`,action:"Open your goals doc. Read it. All of it. Tonight."},
-    {level:"Brutal",text:`You want freedom but you keep ${p?'acting like someone who deserves a cage':'choosing the comfortable cage'}.`,action:"Double outreach tomorrow. No rest until you've earned it."},
+    {level:"Brutal",text:`A person who can't keep a promise to themselves can't keep one to anyone else. Including ${m}.`,action:"Tell someone you trust what you didn't do today. Out loud."},
+    {level:"Brutal",text:`The gap between who you are and who you said you'd be just got wider. You did that.`,action:"Open your goals. Read them. All of it. Tonight."},
+    {level:"Brutal",text:`You want freedom but you keep ${p?'acting like someone who deserves a cage':'choosing comfort over the life you said you wanted'}.`,action:"Double outreach tomorrow. No rest until you've earned it."},
     {level:"Brutal",text:`Somewhere right now someone with less talent, less knowledge, and less access than you is outworking you.`,action:"Set your alarm 90 minutes earlier. Tomorrow starts now."},
     {level:"Brutal",text:`Your fear was ${f}. Today you moved closer to it, not further.`,action:"Reread your vision. Ask yourself if today's version of you deserves it."},
     {level:"Brutal",text:`${m} deserves better than the version of you that showed up today.`,action:"Tier reward delayed one full week. Earn it back."},
-    {level:"Brutal",text:`You ${p?`didn't lose momentum today. You chose to give it the fuck away`:'didn\'t lose momentum today. You chose to give it away'}.`,action:"Tier reward delayed one full week. Earn it back."},
+    {level:"Brutal",text:`You ${p?`didn't lose momentum today — you chose to give it the fuck away`:'didn\'t lose momentum today. You chose to give it away'}.`,action:"Tier reward delayed one full week. Earn it back."},
     {level:"Brutal",text:`You can feel bad about this or you can do something about it. Feeling bad is easier. That's why you default to it.`,action:"Pick one task right now — even at this hour — and do it. Partial beats zero."}
   ];
-  return [...hard,...brutal];
 }
 
 function getSoberConsequences(){
-  const m=getMotivator();const g=getGoal();
+  const m=getMotivator(),g=getGoal();
   return[
     {text:`Sobriety streak reset. Everything you want is built on who you are every single day — including tonight.`,action:"Business and gym streaks preserved. Sobriety clock restarts at zero tomorrow."},
     {text:`The version of you building ${g} doesn't cloud their mind. You know this.`,action:"Sober streak resets. No Tier 2+ reward until 30 clean days are stacked again."},
-    {text:`You can't build a clean business on a compromised mind. Those two things are connected.`,action:"Journal it tonight. What triggered it. Be honest. That honesty is part of the work."},
+    {text:`You can't build a clean business on a compromised mind. Those two things are connected.`,action:"Journal it tonight. What triggered it. Be honest."},
     {text:`Clean and sober builds different. Today was a data point. Tomorrow is a choice.`,action:"Sobriety streak resets. Show up clean tomorrow."},
-    {text:`Everything you want — the freedom, the life with ${m} — requires a clear mind to build and keep. Today you chipped at the foundation.`,action:"Restart the clock. 90 clean days is still the target. Begin again."}
+    {text:`Everything you want — the freedom, the life you're building for ${m} — requires a clear mind. Today you chipped at the foundation.`,action:"Restart the clock. Begin again."}
   ];
 }
 
@@ -620,8 +749,7 @@ const universalQuotes=[
   {text:"Waste no more time arguing what a good man should be. Be one.",author:"Marcus Aurelius"},
   {text:"Fall seven times, stand up eight.",author:"Japanese Proverb"},
   {text:"The successful warrior is the average man with laser-like focus.",author:"Bruce Lee"},
-  {text:"He who is not courageous enough to take risks will accomplish nothing in life.",author:"Muhammad Ali"},
-  {text:"I hated every minute of training, but I said: don't quit. Suffer now and live the rest of your life as a champion.",author:"Muhammad Ali"},
+  {text:"I hated every minute of training, but I said don't quit. Suffer now and live the rest of your life as a champion.",author:"Muhammad Ali"},
   {text:"Difficulties strengthen the mind, as labor does the body.",author:"Seneca"},
   {text:"Don't count the days. Make the days count.",author:"Muhammad Ali"},
   {text:"Opportunities multiply as they are seized.",author:"Sun Tzu"},
@@ -632,15 +760,16 @@ const universalQuotes=[
   {text:"The most dangerous creation of any society is the man who has nothing to lose.",author:"James Baldwin"},
   {text:"Work like there is someone working 24 hours a day to take it all away from you.",author:"Mark Cuban"},
   {text:"Chase the vision, not the money. The money will end up following you.",author:"Tony Hsieh"},
-  {text:"The secret of getting ahead is getting started.",author:"Mark Twain"},
   {text:"An investment in knowledge pays the best interest.",author:"Benjamin Franklin"},
   {text:"Success is walking from failure to failure with no loss of enthusiasm.",author:"Winston Churchill"},
   {text:"Do something today that your future self will thank you for.",author:"Unknown"},
   {text:"You are the average of the five people you spend the most time with.",author:"Jim Rohn"},
-  {text:"Stop wearing your wishbone where your backbone ought to be.",author:"Elizabeth Gilbert"},
   {text:"A ship in harbor is safe, but that is not what ships are built for.",author:"John A. Shedd"},
   {text:"The key to immortality is first living a life worth remembering.",author:"Bruce Lee"},
-  {text:"The grind is real but so is the reward.",author:"Unknown"}
+  {text:"The grind is real but so is the reward.",author:"Unknown"},
+  {text:"Stop wearing your wishbone where your backbone ought to be.",author:"Elizabeth Gilbert"},
+  {text:"The secret of getting ahead is getting started.",author:"Mark Twain"},
+  {text:"He who is not courageous enough to take risks will accomplish nothing in life.",author:"Muhammad Ali"}
 ];
 
 const operatorQuotes=[
@@ -656,17 +785,99 @@ const operatorQuotes=[
   "My body is infrastructure. I protect it like capital."
 ];
 
-// Settings modal
+// Settings
 function openSettings(){
-  document.getElementById('settingName').textContent=prefs.name||'—';
-  document.getElementById('settingGoal').textContent=prefs.goal||'—';
-  document.getElementById('settingLength').textContent=prefs.goalLength||'90 days';
-  document.getElementById('settingMotivator').textContent=prefs.motivator||'—';
-  document.getElementById('settingTone').textContent=prefs.tone||'—';
-  document.getElementById('settingProfanity').textContent=prefs.profanity?'On':'Off';
+  document.getElementById('set-name').value=prefs.name||'';
+  document.getElementById('set-goal').value=prefs.goal||'';
+  document.getElementById('set-motivator').value=prefs.motivator||'';
+  document.getElementById('set-fears').value=prefs.fears||'';
+  document.getElementById('set-goalLength').value=prefs.goalLength||'90 days';
+  document.getElementById('set-tone').value=prefs.tone||'Brutal';
+  document.getElementById('set-profanity').value=String(prefs.profanity!==false);
+  document.getElementById('set-src').value=prefs.taskTargets?.src||2;
+  document.getElementById('set-out').value=prefs.taskTargets?.out||2;
+  document.getElementById('set-fol').value=prefs.taskTargets?.fol||2;
+  document.getElementById('set-ana').value=prefs.taskTargets?.ana||10;
+  buildCustomTasksEditor();
+  buildTierEditor();
   document.getElementById('settingsModal').classList.add('show');
 }
+
 function closeSettings(){document.getElementById('settingsModal').classList.remove('show');}
+
+function buildCustomTasksEditor(){
+  const el=document.getElementById('customTasksEditor');
+  el.innerHTML=(prefs.customTasks||[]).map((t,i)=>`
+    <div class="custom-task-row">
+      <input class="custom-task-input" id="ct-name-${i}" placeholder="Task name" value="${t.name||''}"/>
+      <input class="custom-task-num" id="ct-target-${i}" type="number" min="1" max="99" placeholder="Target" value="${t.target||1}"/>
+      <button class="custom-task-del" onclick="removeCustomTask(${i})">✕</button>
+    </div>`).join('');
+}
+
+function addCustomTaskField(){
+  if(!prefs.customTasks)prefs.customTasks=[];
+  prefs.customTasks.push({name:'',target:1});
+  buildCustomTasksEditor();
+}
+
+function removeCustomTask(i){
+  prefs.customTasks.splice(i,1);
+  buildCustomTasksEditor();
+}
+
+function buildTierEditor(){
+  const el=document.getElementById('tierEditor');
+  el.innerHTML=(prefs.tiers||[]).map((t,i)=>`
+    <div class="tier-edit-row">
+      <div class="tier-edit-label">Tier ${i+1}</div>
+      <input class="tier-edit-input" id="tier-name-${i}" placeholder="Tier name" value="${t.name||''}"/>
+      <div class="tier-edit-row-inner">
+        <input class="tier-edit-input" id="tier-days-${i}" type="number" placeholder="Days" value="${t.days||((i+1)*30)}" style="width:80px;"/>
+        <input class="tier-edit-input" id="tier-desc-${i}" placeholder="Unlock condition" value="${t.desc||''}"/>
+      </div>
+      <input class="tier-edit-input" id="tier-reward-${i}" placeholder="Reward description" value="${t.reward||''}"/>
+    </div>`).join('');
+}
+
+async function saveSettings(){
+  const n=document.getElementById('set-name').value.trim();
+  const g=document.getElementById('set-goal').value.trim();
+  prefs.name=n||prefs.name;
+  prefs.goal=g||prefs.goal;
+  prefs.motivator=document.getElementById('set-motivator').value.trim()||prefs.motivator;
+  prefs.fears=document.getElementById('set-fears').value.trim()||prefs.fears;
+  prefs.goalLength=document.getElementById('set-goalLength').value;
+  prefs.tone=document.getElementById('set-tone').value;
+  prefs.profanity=document.getElementById('set-profanity').value==='true';
+  prefs.taskTargets={
+    src:parseInt(document.getElementById('set-src').value)||2,
+    out:parseInt(document.getElementById('set-out').value)||2,
+    fol:parseInt(document.getElementById('set-fol').value)||2,
+    ana:parseInt(document.getElementById('set-ana').value)||10
+  };
+  const cts=[];
+  (prefs.customTasks||[]).forEach((_,i)=>{
+    const name=document.getElementById('ct-name-'+i)?.value.trim();
+    const target=parseInt(document.getElementById('ct-target-'+i)?.value)||1;
+    if(name)cts.push({name,target});
+  });
+  prefs.customTasks=cts;
+  (prefs.tiers||[]).forEach((_,i)=>{
+    prefs.tiers[i].name=document.getElementById('tier-name-'+i)?.value||prefs.tiers[i].name;
+    prefs.tiers[i].days=parseInt(document.getElementById('tier-days-'+i)?.value)||prefs.tiers[i].days;
+    prefs.tiers[i].desc=document.getElementById('tier-desc-'+i)?.value||prefs.tiers[i].desc;
+    prefs.tiers[i].reward=document.getElementById('tier-reward-'+i)?.value||prefs.tiers[i].reward;
+  });
+  await savePrefs();
+  closeSettings();
+  buildTaskList();
+  buildTierList();
+  updateDayLabel();
+  const ind=document.getElementById('savingIndicator');
+  ind.classList.add('show');
+  setTimeout(()=>ind.classList.remove('show'),2000);
+}
 
 // Init
 function init(){
@@ -680,9 +891,74 @@ function init(){
   document.getElementById('bizStreak').textContent=state.streak;
   document.getElementById('gymStreak').textContent=state.gymStreak;
   document.getElementById('soberStreak').textContent=state.soberStreak;
+  if(prefs.name)document.getElementById('appTitleEl').textContent=prefs.name+"'s Flowstate";
   const day=now.getDate();
   if(day===1||day===15)document.getElementById('orderReminder').style.display='flex';
-  buildGrid();updateProgress();startQuoteRotation();initChart();updateTiers();
+  updateDayLabel();
+  buildTaskList();
+  buildTierList();
+  buildGrid();
+  updateProgress();
+  startQuoteRotation();
+  initChart();
+  updateTiers();
+}
+
+function updateDayLabel(){
+  const gl=prefs.goalLength||'90 days';
+  const num=parseInt(gl)||90;
+  document.getElementById('daySubLabel').textContent='of '+num;
+  document.getElementById('streakGrid') && buildGrid(num);
+}
+
+// Dynamic task list
+function buildTaskList(){
+  const t=prefs.taskTargets||{src:2,out:2,fol:2,ana:10};
+  const defaults=[
+    {id:'src',label:'Suppliers / brands sourced',target:t.src,badge:'biz'},
+    {id:'out',label:'Outreaches sent',target:t.out,badge:'biz'},
+    {id:'fol',label:'Follow-ups sent',target:t.fol,badge:'biz'},
+    {id:'ana',label:'Product analyses',target:t.ana,badge:'biz'},
+    {id:'trn',label:'1 hr training completed',target:null,badge:'biz'},
+    {id:'jus',label:'Justin sync',target:null,badge:'biz'},
+  ];
+  const custom=(prefs.customTasks||[]).map((ct,i)=>({id:'ct'+i,label:ct.name,target:ct.target,badge:'custom'}));
+  const all=[...defaults,...custom];
+  const el=document.getElementById('taskList');
+  el.innerHTML=all.map((task,idx)=>`
+    <div class="task-row${idx===all.length-1?' last-task':''}">
+      <div class="task-check" id="chk-${task.id}" onclick="toggleCheck('${task.id}','done')"></div>
+      <div class="task-label" id="lbl-${task.id}">${task.label}</div>
+      <span class="task-badge badge-${task.badge}">${task.badge}</span>
+      ${task.target?`<input class="task-input" id="inp-${task.id}" type="number" min="0" max="999" placeholder="0" oninput="updateProgress()"/><div class="task-target">/ ${task.target}</div>`:''}
+    </div>`).join('');
+  document.querySelectorAll('#taskList .task-row:last-child').forEach(r=>r.style.borderBottom='none');
+  updateProgress();
+}
+
+// Dynamic tier list
+function buildTierList(){
+  const el=document.getElementById('tierList');
+  el.innerHTML=(prefs.tiers||[]).map((t,i)=>`
+    <div class="tier-row">
+      <div class="tier-dot" style="background:${t.color||'#888'};"></div>
+      <div class="tier-info">
+        <div class="tier-name">${t.name} — ${t.days} days</div>
+        <div class="tier-desc">${t.desc}</div>
+        <div class="tier-reward">${t.reward}</div>
+      </div>
+      <div class="tier-status locked" id="tier${i}Status">Locked</div>
+    </div>`).join('');
+}
+
+function updateTiers(){
+  (prefs.tiers||[]).forEach((t,i)=>{
+    const el=document.getElementById('tier'+i+'Status');
+    if(!el)return;
+    const u=state.streak>=t.days;
+    el.textContent=u?'Unlocked':'Locked';
+    el.className='tier-status '+(u?'unlocked':'locked');
+  });
 }
 
 let quoteIndex=0;
@@ -698,15 +974,13 @@ function showQuote(){
 
 function initChart(){
   const ctx=document.getElementById('progressChart').getContext('2d');
-  const labels=Array.from({length:14},(_,i)=>'D'+(i+1));
   const data=chartData.streak.length?chartData.streak:Array(14).fill(0);
   if(chartInstance)chartInstance.destroy();
-  chartInstance=new Chart(ctx,{type:'line',data:{labels,datasets:[{label:'Streak',data,borderColor:'#1D9E75',backgroundColor:'rgba(29,158,117,0.08)',borderWidth:2,pointBackgroundColor:'#1D9E75',pointRadius:3,tension:0.4,fill:true}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#444',font:{size:10}}},y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#444',font:{size:10}},beginAtZero:true}}}});
+  chartInstance=new Chart(ctx,{type:'line',data:{labels:Array.from({length:14},(_,i)=>'D'+(i+1)),datasets:[{data,borderColor:'#1D9E75',backgroundColor:'rgba(29,158,117,0.08)',borderWidth:2,pointBackgroundColor:'#1D9E75',pointRadius:3,tension:0.4,fill:true}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#444',font:{size:10}}},y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#444',font:{size:10}},beginAtZero:true}}}});
 }
 
 function switchChart(type,btn){
-  document.querySelectorAll('.chart-tab').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
+  document.querySelectorAll('.chart-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
   let data,color,bg;
   if(type==='streak'){data=chartData.streak.length?chartData.streak:Array(14).fill(0);color='#1D9E75';bg='rgba(29,158,117,0.08)';}
   else if(type==='tasks'){data=chartData.tasks.length?chartData.tasks:Array(14).fill(0);color='#7F77DD';bg='rgba(127,119,221,0.08)';}
@@ -715,31 +989,68 @@ function switchChart(type,btn){
   chartInstance=new Chart(document.getElementById('progressChart').getContext('2d'),{type:'bar',data:{labels:Array.from({length:14},(_,i)=>'D'+(i+1)),datasets:[{data,backgroundColor:bg,borderColor:color,borderWidth:1.5,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#444',font:{size:10}}},y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#444',font:{size:10}},beginAtZero:true}}}});
 }
 
-function buildGrid(){const g=document.getElementById('streakGrid');g.innerHTML='';for(let i=0;i<90;i++){const d=document.createElement('div');d.className='sdot'+(i<state.streak?' filled':'')+(i===state.streak?' today':'');g.appendChild(d);}}
-function updateTiers(){const t1=state.streak>=7,t2=state.streak>=30,t3=state.streak>=60,t4=state.streak>=90;['tier1','tier2','tier3','tier4'].forEach((t,i)=>{const u=[t1,t2,t3,t4][i];document.getElementById(t+'Status').textContent=u?'Unlocked':'Locked';document.getElementById(t+'Status').className='tier-status '+(u?'unlocked':'locked');});}
+function buildGrid(total){
+  const n=total||parseInt(prefs.goalLength)||90;
+  const g=document.getElementById('streakGrid');g.innerHTML='';
+  for(let i=0;i<n;i++){const d=document.createElement('div');d.className='sdot'+(i<state.streak?' filled':'')+(i===state.streak?' today':'');g.appendChild(d);}
+}
+
 function selectMood(btn){document.querySelectorAll('#moodRow .mood-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');}
 function selectGym(btn,val){document.querySelectorAll('#gymTypeRow .gym-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');state.gymType=val;if(val!=='Rest day'){document.getElementById('chk-gym').className='task-check gym-done';document.getElementById('lbl-gym').classList.add('done-text');}updateProgress();}
 function toggleSober(id){const el=document.getElementById(id);el.classList.toggle('clean');if(id==='soberAlcohol')state.soberAlcohol=el.classList.contains('clean');if(id==='soberSmoke')state.soberSmoke=el.classList.contains('clean');}
-function selectResult(type){document.getElementById('winBtn').className='result-btn'+(type==='win'?' win-selected':'');document.getElementById('missBtn').className='result-btn'+(type==='miss'?' miss-selected':'');state.selectedResult=type;const box=document.getElementById('consequenceBox');if(type==='miss'){const c=getConsequences()[Math.floor(Math.random()*getConsequences().length)];document.getElementById('conLevel').textContent=c.level;document.getElementById('conLevel').className='con-level '+(c.level==='Brutal'?'con-brutal':'con-hard');document.getElementById('conText').textContent=c.text;document.getElementById('conAction').textContent=c.action;box.style.display='block';}else{box.style.display='none';}}
-function toggleCheck(id,cls){const chk=document.getElementById('chk-'+id);const lbl=document.getElementById('lbl-'+id);const isDone=chk.classList.contains(cls)||chk.classList.contains('done');chk.className='task-check'+(isDone?'':' '+cls);lbl.classList.toggle('done-text',!isDone);updateProgress();}
+
+function selectResult(type){
+  document.getElementById('winBtn').className='result-btn'+(type==='win'?' win-selected':'');
+  document.getElementById('missBtn').className='result-btn'+(type==='miss'?' miss-selected':'');
+  state.selectedResult=type;
+  const box=document.getElementById('consequenceBox');
+  if(type==='miss'){
+    const c=getConsequences()[Math.floor(Math.random()*getConsequences().length)];
+    document.getElementById('conLevel').textContent=c.level;
+    document.getElementById('conLevel').className='con-level '+(c.level==='Brutal'?'con-brutal':'con-hard');
+    document.getElementById('conText').textContent=c.text;
+    document.getElementById('conAction').textContent=c.action;
+    box.style.display='block';
+  }else{box.style.display='none';}
+}
+
+function toggleCheck(id,cls){
+  const chk=document.getElementById('chk-'+id);
+  const lbl=document.getElementById('lbl-'+id);
+  if(!chk)return;
+  const isDone=chk.classList.contains(cls)||chk.classList.contains('done');
+  chk.className='task-check'+(isDone?'':' '+cls);
+  if(lbl)lbl.classList.toggle('done-text',!isDone);
+  updateProgress();
+}
+
+function getTaskIds(){
+  const t=prefs.taskTargets||{src:2,out:2,fol:2,ana:10};
+  const defaults=['src','out','fol','ana','trn','jus'];
+  const custom=(prefs.customTasks||[]).map((_,i)=>'ct'+i);
+  return{ids:[...defaults,...custom],targets:{src:t.src,out:t.out,fol:t.fol,ana:t.ana,...Object.fromEntries((prefs.customTasks||[]).map((ct,i)=>['ct'+i,ct.target]))}};
+}
 
 function updateProgress(){
-  const tasks=['src','out','fol','ana','trn','jus'];
-  const targets={src:2,out:2,fol:2,ana:10};
+  const{ids,targets}=getTaskIds();
   let done=0;
-  tasks.forEach(id=>{
+  ids.forEach(id=>{
     const chk=document.getElementById('chk-'+id);
     const inp=document.getElementById('inp-'+id);
+    if(!chk)return;
     let completed=chk.classList.contains('done')||chk.classList.contains('gym-done');
-    if(inp&&targets[id]){const val=parseInt(inp.value)||0;if(val>=targets[id]){chk.className='task-check done';document.getElementById('lbl-'+id).classList.add('done-text');completed=true;}}
+    if(inp&&targets[id]){
+      const val=parseInt(inp.value)||0;
+      if(val>=targets[id]){chk.className='task-check done';const l=document.getElementById('lbl-'+id);if(l)l.classList.add('done-text');completed=true;}
+    }
     if(completed)done++;
   });
-  const pct=Math.round((done/tasks.length)*100);
+  const pct=Math.round((done/ids.length)*100);
   document.getElementById('progressBar').style.width=pct+'%';
-  document.getElementById('progressLabel').textContent=done+' of '+tasks.length+' tasks complete';
+  document.getElementById('progressLabel').textContent=done+' of '+ids.length+' tasks complete';
   document.getElementById('completedPct').textContent=pct+'%';
   const btn=document.getElementById('submitBtn');
-  if(done===tasks.length){
+  if(done===ids.length&&ids.length>0){
     btn.classList.add('ready');
     btn.textContent=state.streak>0?'Win — day '+(state.streak+1)+' locked in':'Lock in day 1';
   }else{
@@ -750,14 +1061,18 @@ function updateProgress(){
 
 async function submitDay(){
   updateProgress();
-  const pct=parseInt(document.getElementById('completedPct').textContent);
+  const{ids}=getTaskIds();
+  let done=0;
+  ids.forEach(id=>{const chk=document.getElementById('chk-'+id);if(chk&&(chk.classList.contains('done')||chk.classList.contains('gym-done')))done++;});
+  const pct=Math.round((done/ids.length)*100);
   const isWin=state.selectedResult==='win'||pct>=80;
   const gymDone=document.getElementById('chk-gym').classList.contains('gym-done')||document.getElementById('chk-gym').classList.contains('done');
   const fullySober=state.soberAlcohol&&state.soberSmoke;
   if(isWin){state.streak=(state.streak||0)+1;}else{state.streak=0;}
   if(gymDone){state.gymStreak=(state.gymStreak||0)+1;state.gymDays=(state.gymDays||0)+1;}else{state.gymStreak=0;}
   if(fullySober){state.soberStreak=(state.soberStreak||0)+1;state.soberDays=(state.soberDays||0)+1;}else{state.soberStreak=0;}
-  state.dayCount=Math.min((state.dayCount||1)+1,90);
+  const maxDays=parseInt(prefs.goalLength)||90;
+  state.dayCount=Math.min((state.dayCount||1)+1,maxDays);
   updateTiers();buildGrid();
   document.getElementById('streakBadge').textContent='🔥 '+state.streak+' day streak';
   document.getElementById('soberDays').textContent=state.soberDays;
@@ -765,39 +1080,74 @@ async function submitDay(){
   document.getElementById('bizStreak').textContent=state.streak;
   document.getElementById('gymStreak').textContent=state.gymStreak;
   document.getElementById('soberStreak').textContent=state.soberStreak;
+  document.getElementById('dayCount').textContent=state.dayCount;
   await saveToDB({streak:state.streak,gymStreak:state.gymStreak,soberStreak:state.soberStreak,soberDays:state.soberDays,gymDays:state.gymDays,dayCount:state.dayCount,isWin,fullySober,gymDone});
-  const t1=state.streak>=7,t2=state.streak>=30,t3=state.streak>=60,t4=state.streak>=90;
-  const card=document.getElementById('overlayCard');const ovAction=document.getElementById('ovAction');
-  const bizConsequences=getConsequences();const soberConsequences=getSoberConsequences();
-  if(!fullySober&&!isWin){const sc=soberConsequences[Math.floor(Math.random()*soberConsequences.length)];const bc=bizConsequences[Math.floor(Math.random()*bizConsequences.length)];card.className='overlay-card brutal';document.getElementById('ovIcon').textContent='💀';document.getElementById('ovTitle').textContent='Business miss. Sobriety miss. Both.';document.getElementById('ovText').textContent=bc.text+'\n\n'+sc.text;ovAction.textContent=bc.action+' '+sc.action;ovAction.style.display='block';}
-  else if(!fullySober){const sc=soberConsequences[Math.floor(Math.random()*soberConsequences.length)];card.className='overlay-card sober';document.getElementById('ovIcon').textContent='🔄';document.getElementById('ovTitle').textContent='Sobriety streak reset.';document.getElementById('ovText').textContent=sc.text;ovAction.textContent=sc.action;ovAction.style.display='block';}
-  else if(!isWin){const bc=bizConsequences[Math.floor(Math.random()*bizConsequences.length)];card.className='overlay-card brutal';document.getElementById('ovIcon').textContent='🔴';document.getElementById('ovTitle').textContent=bc.level==='Brutal'?'No sugar coating.':'Miss logged.';document.getElementById('ovText').textContent=bc.text;ovAction.textContent=bc.action;ovAction.style.display='block';}
-  else if(t4){card.className='overlay-card';document.getElementById('ovIcon').textContent='👑';document.getElementById('ovTitle').textContent='You built the machine.';document.getElementById('ovText').textContent=`${getName()}, you did it.\n\nBusiness. Body. Mind. All locked in.\n\nTier 4 unlocked — book the trip, take the freedom move.\n\nThis was bought by discipline, not luck.`;ovAction.style.display='none';}
-  else if(t3&&state.streak===60){card.className='overlay-card';document.getElementById('ovIcon').textContent='🏆';document.getElementById('ovTitle').textContent='Tier 3 unlocked.';document.getElementById('ovText').textContent='60 days. Gold, travel fund, investment account — pick your move.';ovAction.style.display='none';}
-  else if(t2&&state.streak===30){card.className='overlay-card';document.getElementById('ovIcon').textContent='🥇';document.getElementById('ovTitle').textContent='Tier 2 unlocked.';document.getElementById('ovText').textContent=`$600–900 earned. Wardrobe, tech, or design that wildcard experience for ${getMotivator()}.`;ovAction.style.display='none';}
-  else if(t1&&state.streak===7){card.className='overlay-card';document.getElementById('ovIcon').textContent='🎯';document.getElementById('ovTitle').textContent='Tier 1 unlocked.';document.getElementById('ovText').textContent=`$200–300 reward triggered. You chose discipline and you earned this, ${getName()}.`;ovAction.style.display='none';}
-  else{card.className='overlay-card';document.getElementById('ovIcon').textContent='💰';document.getElementById('ovTitle').textContent='Day '+(state.dayCount-1)+' locked in.';const parts=[];if(gymDone)parts.push('body moved');if(fullySober)parts.push('mind clean');parts.push('business executed');document.getElementById('ovText').textContent=parts.join(' · ')+'\n\n"This was bought by discipline, not luck."\n\n🔥 '+state.streak+'-day streak.';ovAction.style.display='none';}
+  const bizConsequences=getConsequences();
+  const soberConsequences=getSoberConsequences();
+  const card=document.getElementById('overlayCard');
+  const ovAction=document.getElementById('ovAction');
+  const topTier=prefs.tiers&&prefs.tiers.length>0?prefs.tiers[prefs.tiers.length-1]:null;
+  const isTopTier=topTier&&state.streak>=topTier.days;
+  const newTier=prefs.tiers&&prefs.tiers.find(t=>t.days===state.streak);
+  if(!fullySober&&!isWin){
+    const sc=soberConsequences[Math.floor(Math.random()*soberConsequences.length)];
+    const bc=bizConsequences[Math.floor(Math.random()*bizConsequences.length)];
+    card.className='overlay-card brutal';
+    document.getElementById('ovIcon').textContent='💀';
+    document.getElementById('ovTitle').textContent='Business miss. Sobriety miss. Both.';
+    document.getElementById('ovText').textContent=bc.text+'\n\n'+sc.text;
+    ovAction.textContent=bc.action+' '+sc.action;ovAction.style.display='block';
+  }else if(!fullySober){
+    const sc=soberConsequences[Math.floor(Math.random()*soberConsequences.length)];
+    card.className='overlay-card sober';
+    document.getElementById('ovIcon').textContent='🔄';
+    document.getElementById('ovTitle').textContent='Sobriety streak reset.';
+    document.getElementById('ovText').textContent=sc.text;
+    ovAction.textContent=sc.action;ovAction.style.display='block';
+  }else if(!isWin){
+    const bc=bizConsequences[Math.floor(Math.random()*bizConsequences.length)];
+    card.className='overlay-card brutal';
+    document.getElementById('ovIcon').textContent='🔴';
+    document.getElementById('ovTitle').textContent=bc.level==='Brutal'?'No sugar coating.':'Miss logged.';
+    document.getElementById('ovText').textContent=bc.text;
+    ovAction.textContent=bc.action;ovAction.style.display='block';
+  }else if(isTopTier&&state.streak===topTier.days){
+    card.className='overlay-card';
+    document.getElementById('ovIcon').textContent='👑';
+    document.getElementById('ovTitle').textContent='You built the machine.';
+    document.getElementById('ovText').textContent=`${getName()}, you did it.\n\nBusiness. Body. Mind. All locked in.\n\n${topTier.reward}\n\nThis was bought by discipline, not luck.`;
+    ovAction.style.display='none';
+  }else if(newTier){
+    card.className='overlay-card';
+    document.getElementById('ovIcon').textContent='🏆';
+    document.getElementById('ovTitle').textContent=newTier.name+' unlocked.';
+    document.getElementById('ovText').textContent=`${state.streak} days in. ${newTier.reward}`;
+    ovAction.style.display='none';
+  }else{
+    card.className='overlay-card';
+    document.getElementById('ovIcon').textContent='💰';
+    document.getElementById('ovTitle').textContent='Day '+state.dayCount+' locked in.';
+    const parts=[];if(gymDone)parts.push('body moved');if(fullySober)parts.push('mind clean');parts.push('business executed');
+    document.getElementById('ovText').textContent=parts.join(' · ')+'\n\n"This was bought by discipline, not luck."\n\n🔥 '+state.streak+'-day streak.';
+    ovAction.style.display='none';
+  }
   document.getElementById('overlay').classList.add('show');
 }
 
 function closeOverlay(){document.getElementById('overlay').classList.remove('show');}
 
 // Boot
-async function bootApp() {
-  try {
-    const { data: { session } } = await sb.auth.getSession();
-    if (session && session.user) {
-      currentUser = session.user;
-      await afterLogin();
-      return;
-    }
-  } catch(e) {}
+async function bootApp(){
+  try{
+    const{data:{session}}=await sb.auth.getSession();
+    if(session&&session.user){currentUser=session.user;await afterLogin();return;}
+  }catch(e){}
   showScreen('authScreen');
 }
 
-sb.auth.onAuthStateChange(async (event, session) => {
-  if (event === 'SIGNED_IN' && session && session.user) {
-    currentUser = session.user;
+sb.auth.onAuthStateChange(async(event,session)=>{
+  if((event==='SIGNED_IN'||event==='TOKEN_REFRESHED')&&session&&session.user&&!currentUser){
+    currentUser=session.user;
     await afterLogin();
   }
 });
