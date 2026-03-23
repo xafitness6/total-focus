@@ -11,143 +11,174 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
-:root{--bg:#080808;--bg2:#111;--bg3:#1a1a1a;--card:#131313;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);--text:#f0f0f0;--text2:#777;--text3:#444;--green:#1D9E75;--green2:#0F6E56;--amber:#FAC775;--amber2:#412402;--purple:#7F77DD;--coral:#D85A30;--red:#E24B4A;--radius:14px;--radius-sm:8px;}
+:root{
+  --bg:#080808;--bg2:#111;--bg3:#1a1a1a;--card:#131313;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);
+  --text:#f0f0f0;--text2:#777;--text3:#444;
+  --accent:#1D9E75;--accent2:#0F6E56;
+  --amber:#FAC775;--amber2:#412402;
+  --purple:#7F77DD;--coral:#D85A30;--red:#E24B4A;
+  --radius:14px;--radius-sm:8px;
+}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-html,body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;min-height:100vh;}
+html,body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;min-height:100vh;transition:--accent .5s;}
+
+/* Canvas background */
+#bgCanvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.07;}
+
+/* All content above canvas */
+.app-wrap{position:relative;z-index:1;}
+
 .app{max-width:480px;margin:0 auto;padding:1.25rem 1rem 8rem;}
-.screen{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem;}
+.screen{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem;position:relative;z-index:1;}
 .screen.active{display:flex;}
-.auth-logo{font-size:48px;margin-bottom:8px;}
+
+/* Auth */
+.auth-logo{font-size:52px;margin-bottom:8px;}
 .auth-title-main{font-size:26px;font-weight:700;letter-spacing:-.03em;margin-bottom:4px;}
 .auth-sub{font-size:13px;color:var(--text2);margin-bottom:2.5rem;text-align:center;line-height:1.6;}
-.auth-card{background:var(--card);border:.5px solid var(--border2);border-radius:var(--radius);padding:1.5rem;width:100%;max-width:360px;}
+.auth-card{background:var(--card);border:.5px solid var(--border2);border-radius:var(--radius);padding:1.5rem;width:100%;max-width:360px;backdrop-filter:blur(10px);}
 .auth-card-title{font-size:16px;font-weight:600;margin-bottom:1.25rem;}
 .auth-input{width:100%;padding:12px 14px;background:var(--bg3);border:.5px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-size:15px;outline:none;margin-bottom:10px;}
 .auth-input::placeholder{color:var(--text3);}
-.btn{width:100%;padding:13px;border:none;border-radius:var(--radius-sm);font-size:15px;font-weight:600;cursor:pointer;margin-bottom:10px;transition:opacity .15s;color:#fff;background:var(--green);}
+.btn{width:100%;padding:13px;border:none;border-radius:var(--radius-sm);font-size:15px;font-weight:600;cursor:pointer;margin-bottom:10px;transition:all .2s;color:#fff;background:var(--accent);}
 .btn:active{opacity:.8;}
 .btn.google{background:#fff;color:#111;display:flex;align-items:center;justify-content:center;gap:10px;}
 .btn.secondary{background:var(--bg3);color:var(--text2);border:.5px solid var(--border2);}
+.btn.danger{background:var(--red);}
 .divider{display:flex;align-items:center;gap:8px;margin:4px 0 10px;}
 .divider-line{flex:1;height:.5px;background:rgba(255,255,255,0.08);}
 .divider-text{font-size:11px;color:var(--text3);}
 .auth-toggle{font-size:13px;color:var(--text2);text-align:center;cursor:pointer;margin-top:4px;}
-.auth-toggle span{color:var(--green);}
+.auth-toggle span{color:var(--accent);}
 .err{font-size:12px;color:var(--red);margin-bottom:8px;text-align:center;}
-.msg{font-size:12px;color:var(--green);margin-bottom:8px;text-align:center;}
+.msg{font-size:12px;color:var(--accent);margin-bottom:8px;text-align:center;}
 
 /* Onboarding */
 .onboard-wrap{width:100%;max-width:420px;}
-.onboard-header{margin-bottom:1.5rem;}
-.onboard-eyebrow{font-size:11px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;}
+.onboard-eyebrow{font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
 .onboard-progress{display:flex;gap:4px;margin-bottom:1.5rem;}
-.onboard-pip{flex:1;height:3px;border-radius:99px;background:var(--bg3);}
-.onboard-pip.done{background:var(--green);}
+.onboard-pip{flex:1;height:3px;border-radius:99px;background:var(--bg3);transition:background .3s;}
+.onboard-pip.done{background:var(--accent);}
 .onboard-pip.current{background:var(--amber);}
 .onboard-step{display:none;}
 .onboard-step.active{display:block;}
 .onboard-q{font-size:22px;font-weight:700;letter-spacing:-.02em;margin-bottom:8px;line-height:1.3;}
 .onboard-sub{font-size:14px;color:var(--text2);margin-bottom:1.5rem;line-height:1.6;}
 .onboard-options{display:flex;flex-direction:column;gap:8px;margin-bottom:1.25rem;}
-.onboard-option{padding:14px 16px;border:.5px solid var(--border2);border-radius:var(--radius-sm);cursor:pointer;background:var(--bg3);color:var(--text);font-size:14px;text-align:left;transition:all .15s;border-left:3px solid transparent;width:100;}
-.onboard-option.selected{background:rgba(29,158,117,.12);border-color:var(--green);border-left-color:var(--green);color:var(--text);}
+.onboard-option{padding:14px 16px;border:.5px solid var(--border2);border-radius:var(--radius-sm);cursor:pointer;background:var(--bg3);color:var(--text);font-size:14px;text-align:left;transition:all .15s;border-left:3px solid transparent;width:100%;}
+.onboard-option.selected{background:rgba(29,158,117,.12);border-color:var(--accent);border-left-color:var(--accent);}
 .onboard-input{width:100%;padding:14px;background:var(--bg3);border:.5px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-size:15px;outline:none;margin-bottom:1.25rem;}
 .onboard-input::placeholder{color:var(--text3);}
 .onboard-nav{display:flex;gap:8px;}
 .onboard-nav .btn{margin-bottom:0;}
 
-/* Settings */
+/* Task builder in onboarding */
+.task-builder{margin-bottom:1.25rem;}
+.task-builder-row{display:flex;gap:8px;align-items:center;margin-bottom:8px;}
+.task-builder-input{flex:1;padding:10px 12px;background:var(--bg3);border:.5px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-size:14px;outline:none;}
+.task-builder-num{width:56px;padding:10px 6px;background:var(--bg3);border:.5px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-size:14px;outline:none;text-align:center;}
+.task-builder-del{background:none;border:none;color:var(--text3);cursor:pointer;font-size:16px;padding:6px;flex-shrink:0;}
+.add-btn{width:100%;padding:10px;background:transparent;border:.5px dashed var(--border2);border-radius:var(--radius-sm);color:var(--text2);font-size:13px;cursor:pointer;transition:all .15s;}
+.add-btn:hover{border-color:var(--accent);color:var(--accent);}
+
+/* Movement builder */
+.movement-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.25rem;}
+.movement-chip{padding:8px 14px;border:.5px solid var(--border2);border-radius:99px;font-size:13px;cursor:pointer;background:var(--bg3);color:var(--text2);transition:all .15s;}
+.movement-chip.selected{background:rgba(216,90,48,.15);border-color:var(--coral);color:var(--coral);}
+
+/* Background picker */
+.bg-picker{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.25rem;}
+.bg-option{padding:10px 14px;border:.5px solid var(--border2);border-radius:var(--radius-sm);font-size:18px;cursor:pointer;background:var(--bg3);transition:all .15s;text-align:center;min-width:52px;}
+.bg-option.selected{border-color:var(--accent);background:rgba(29,158,117,.1);}
+
+/* Settings modal */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:999;align-items:flex-end;justify-content:center;padding:1rem;}
 .modal-overlay.show{display:flex;}
-.modal-card{background:var(--card);border:.5px solid var(--border2);border-radius:var(--radius);padding:1.5rem;width:100%;max-width:480px;max-height:88vh;overflow-y:auto;}
+.modal-card{background:var(--card);border:.5px solid var(--border2);border-radius:var(--radius);padding:1.5rem;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;}
 .modal-title{font-size:18px;font-weight:700;margin-bottom:1.25rem;}
-.modal-section{margin-bottom:1.25rem;}
+.modal-section{margin-bottom:1.5rem;}
 .modal-section-title{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem;}
 .modal-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:.5px solid var(--border);}
 .modal-row:last-child{border-bottom:none;}
-.modal-row-label{font-size:14px;color:var(--text);}
-.modal-row-val{font-size:13px;color:var(--text2);max-width:60%;text-align:right;}
+.modal-row-label{font-size:14px;color:var(--text);flex:1;}
 .modal-input{padding:8px 12px;background:var(--bg3);border:.5px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-size:13px;outline:none;width:160px;text-align:right;}
 .modal-select{padding:8px 12px;background:var(--bg3);border:.5px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-size:13px;outline:none;}
 .modal-close{width:100%;padding:13px;background:var(--bg3);border:.5px solid var(--border2);border-radius:var(--radius-sm);color:var(--text2);font-size:15px;font-weight:600;cursor:pointer;margin-top:1rem;}
 .signout-row{padding:13px 16px;background:rgba(228,75,74,.08);border:.5px solid rgba(228,75,74,.2);border-radius:var(--radius-sm);color:var(--red);font-size:14px;font-weight:600;cursor:pointer;text-align:center;margin-top:.75rem;}
 
-/* Custom tasks */
-.custom-task-row{display:flex;gap:8px;align-items:center;margin-bottom:8px;}
-.custom-task-input{flex:1;padding:8px 12px;background:var(--bg3);border:.5px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-size:13px;outline:none;}
-.custom-task-num{width:48px;padding:8px;background:var(--bg3);border:.5px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-size:13px;outline:none;text-align:center;}
-.custom-task-del{background:none;border:none;color:var(--text3);cursor:pointer;font-size:16px;padding:4px;}
-.add-task-btn{width:100%;padding:10px;background:transparent;border:.5px dashed var(--border2);border-radius:var(--radius-sm);color:var(--text2);font-size:13px;cursor:pointer;margin-top:4px;}
-
 /* Tier editor */
-.tier-edit-row{background:var(--bg3);border:.5px solid var(--border);border-radius:var(--radius-sm);padding:12px;margin-bottom:8px;}
-.tier-edit-label{font-size:11px;color:var(--text3);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em;}
+.tier-edit-card{background:var(--bg3);border:.5px solid var(--border);border-radius:var(--radius-sm);padding:12px;margin-bottom:8px;}
+.tier-edit-label{font-size:10px;color:var(--text3);margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em;font-weight:600;}
 .tier-edit-input{width:100%;padding:8px 10px;background:var(--bg2);border:.5px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-size:13px;outline:none;margin-bottom:6px;}
-.tier-edit-row-inner{display:flex;gap:6px;}
-.tier-edit-row-inner .tier-edit-input{margin-bottom:0;}
+.tier-edit-row{display:flex;gap:6px;}
+.tier-edit-row .tier-edit-input{margin-bottom:0;}
 
 /* Main app */
-.cog-btn{background:none;border:none;color:var(--text3);cursor:pointer;font-size:18px;padding:4px;line-height:1;}
-.quote-banner{background:#0d0d0d;border:.5px solid var(--border2);border-radius:var(--radius);padding:1rem 1.25rem;margin-bottom:1rem;position:relative;overflow:hidden;}
-.quote-banner::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--purple),transparent);}
+.cog-btn{background:none;border:none;cursor:pointer;font-size:18px;padding:4px;line-height:1;transition:transform .2s;}
+.cog-btn:hover{transform:rotate(45deg);}
+.quote-banner{border:.5px solid var(--border2);border-radius:var(--radius);padding:1rem 1.25rem;margin-bottom:1rem;position:relative;overflow:hidden;background:rgba(13,13,13,0.8);backdrop-filter:blur(8px);}
+.quote-banner::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent);}
 .quote-text{font-size:14px;color:#ccc;line-height:1.7;font-style:italic;}
 .quote-author{font-size:11px;color:var(--text3);margin-top:6px;text-transform:uppercase;letter-spacing:.06em;}
 .header{margin-bottom:1rem;padding-top:env(safe-area-inset-top,0px);}
 .date-line{font-size:11px;color:var(--text2);margin-bottom:4px;letter-spacing:.03em;}
 .title-row{display:flex;align-items:center;justify-content:space-between;}
 .app-title{font-size:22px;font-weight:700;letter-spacing:-.03em;}
-.streak-badge{background:var(--amber);color:var(--amber2);font-size:11px;font-weight:700;padding:4px 12px;border-radius:99px;}
+.streak-badge{background:var(--accent);color:#fff;font-size:11px;font-weight:700;padding:4px 12px;border-radius:99px;transition:background .5s;}
 .metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-bottom:.85rem;}
-.metric{background:var(--bg2);border:.5px solid var(--border);border-radius:var(--radius-sm);padding:.6rem .4rem;text-align:center;}
+.metric{background:rgba(17,17,17,0.85);border:.5px solid var(--border);border-radius:var(--radius-sm);padding:.6rem .4rem;text-align:center;backdrop-filter:blur(4px);}
 .metric-label{font-size:9px;color:var(--text3);margin-bottom:2px;text-transform:uppercase;letter-spacing:.05em;}
 .metric-val{font-size:21px;font-weight:700;}
 .metric-sub{font-size:9px;color:var(--text3);margin-top:1px;}
 .triple-streak{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-bottom:.85rem;}
-.ts-card{background:var(--bg2);border:.5px solid var(--border);border-radius:var(--radius-sm);padding:.7rem .5rem;text-align:center;}
+.ts-card{background:rgba(17,17,17,0.85);border:.5px solid var(--border);border-radius:var(--radius-sm);padding:.7rem .5rem;text-align:center;backdrop-filter:blur(4px);}
 .ts-val{font-size:26px;font-weight:700;margin-bottom:2px;}
 .ts-lbl{font-size:9px;color:var(--text2);text-transform:uppercase;letter-spacing:.04em;}
-.ts-biz .ts-val{color:var(--green);}
+.ts-biz .ts-val{color:var(--accent);}
 .ts-body .ts-val{color:var(--coral);}
 .ts-mind .ts-val{color:var(--purple);}
-.section{background:var(--card);border:.5px solid var(--border);border-radius:var(--radius);padding:1rem 1.1rem;margin-bottom:.85rem;}
+.section{background:rgba(19,19,19,0.88);border:.5px solid var(--border);border-radius:var(--radius);padding:1rem 1.1rem;margin-bottom:.85rem;backdrop-filter:blur(4px);}
 .section-title{font-size:10px;font-weight:700;color:var(--text3);margin-bottom:.75rem;text-transform:uppercase;letter-spacing:.08em;}
-.identity-quote{font-size:13px;color:var(--text2);font-style:italic;border-left:2px solid var(--purple);padding-left:12px;margin-bottom:.75rem;line-height:1.6;}
+.identity-quote{font-size:13px;color:var(--text2);font-style:italic;border-left:2px solid var(--accent);padding-left:12px;margin-bottom:.75rem;line-height:1.6;transition:border-color .5s;}
 .mood-row{display:flex;gap:6px;flex-wrap:wrap;}
 .mood-btn{padding:6px 13px;border:.5px solid var(--border2);border-radius:99px;font-size:12px;cursor:pointer;background:var(--bg3);color:var(--text);transition:all .15s;}
 .mood-btn.selected{background:var(--purple);border-color:var(--purple);color:#fff;}
 .focus-input{font-size:13px;padding:8px 12px;border:.5px solid var(--border2);border-radius:var(--radius-sm);background:var(--bg3);color:var(--text);width:100%;margin-top:8px;outline:none;}
 .focus-input::placeholder{color:var(--text3);}
 .task-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:.5px solid var(--border);}
-.task-row:last-of-type{border-bottom:none;padding-bottom:0;}
+.task-row:last-child{border-bottom:none;padding-bottom:0;}
 .task-check{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border2);cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s;}
-.task-check.done{background:var(--green);border-color:var(--green);}
+.task-check.done{background:var(--accent);border-color:var(--accent);}
 .task-check.done::after{content:'';display:block;width:5px;height:9px;border:2px solid white;border-top:none;border-left:none;transform:rotate(45deg) translateY(-1px);}
 .task-check.gym-done{background:var(--coral);border-color:var(--coral);}
 .task-check.gym-done::after{content:'';display:block;width:5px;height:9px;border:2px solid white;border-top:none;border-left:none;transform:rotate(45deg) translateY(-1px);}
 .task-label{font-size:14px;color:var(--text);flex:1;line-height:1.3;}
 .task-label.done-text{color:var(--text3);text-decoration:line-through;}
 .task-badge{font-size:10px;padding:2px 7px;border-radius:99px;font-weight:600;flex-shrink:0;}
-.badge-biz{background:rgba(29,158,117,.12);color:var(--green);}
+.badge-biz{background:rgba(29,158,117,.12);color:var(--accent);}
 .badge-body{background:rgba(216,90,48,.12);color:var(--coral);}
 .badge-custom{background:rgba(127,119,221,.12);color:var(--purple);}
 .task-input{width:44px;height:30px;border:.5px solid var(--border2);border-radius:var(--radius-sm);background:var(--bg3);color:var(--text);font-size:14px;text-align:center;outline:none;}
 .task-target{font-size:11px;color:var(--text3);min-width:26px;text-align:right;}
 .progress-wrap{background:var(--bg3);border-radius:99px;height:3px;margin-top:10px;overflow:hidden;}
-.progress-fill{height:3px;border-radius:99px;background:var(--green);transition:width .4s;}
+.progress-fill{height:3px;border-radius:99px;background:var(--accent);transition:width .4s,background .5s;}
 .progress-label{font-size:11px;color:var(--text3);margin-top:5px;}
 .order-reminder{background:rgba(250,199,117,.06);border:.5px solid rgba(250,199,117,.2);border-radius:var(--radius-sm);padding:10px 12px;margin-top:10px;align-items:center;gap:8px;display:none;}
 .order-reminder-text{font-size:12px;color:var(--amber);line-height:1.5;}
 .gym-type-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
 .gym-btn{padding:5px 11px;border:.5px solid var(--border2);border-radius:99px;font-size:12px;cursor:pointer;background:var(--bg3);color:var(--text2);transition:all .15s;}
-.gym-btn.selected{background:var(--coral);border-color:var(--coral);color:#fff;}
-.sober-checks{display:flex;gap:10px;margin-top:8px;}
-.sober-item{display:flex;align-items:center;gap:8px;padding:10px 12px;border:.5px solid var(--border2);border-radius:var(--radius-sm);cursor:pointer;flex:1;background:var(--bg3);transition:all .15s;}
+.gym-btn.selected{background:rgba(216,90,48,.2);border-color:var(--coral);color:var(--coral);}
+.sober-checks{display:flex;gap:10px;margin-top:8px;flex-wrap:wrap;}
+.sober-item{display:flex;align-items:center;gap:8px;padding:10px 12px;border:.5px solid var(--border2);border-radius:var(--radius-sm);cursor:pointer;flex:1;min-width:120px;background:var(--bg3);transition:all .15s;}
 .sober-item.clean{background:rgba(127,119,221,.12);border-color:var(--purple);}
 .sober-item-text{font-size:13px;color:var(--text);}
 .sober-item-sub{font-size:10px;color:var(--text3);}
+.custom-habit-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:.5px solid var(--border);}
+.custom-habit-row:last-child{border-bottom:none;}
 .result-row{display:flex;gap:8px;}
 .result-btn{flex:1;padding:12px;border:.5px solid var(--border2);border-radius:var(--radius-sm);font-size:14px;cursor:pointer;background:var(--bg3);color:var(--text);transition:all .15s;text-align:center;font-weight:600;}
-.result-btn.win-selected{background:var(--green);border-color:var(--green);color:#fff;}
+.result-btn.win-selected{background:var(--accent);border-color:var(--accent);color:#fff;}
 .result-btn.miss-selected{background:var(--red);border-color:var(--red);color:#fff;}
 .consequence-box{margin-top:.75rem;border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:1rem 1.1rem;border-left:3px solid var(--red);background:#150808;}
 .con-level{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px;}
@@ -161,52 +192,56 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 .tier-info{flex:1;}
 .tier-name{font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px;}
 .tier-desc{font-size:11px;color:var(--text3);margin-bottom:2px;}
-.tier-reward{font-size:12px;color:var(--green);font-weight:500;}
+.tier-reward{font-size:12px;color:var(--accent);font-weight:500;transition:color .5s;}
 .tier-status{font-size:11px;font-weight:600;padding:3px 9px;border-radius:99px;flex-shrink:0;}
 .locked{background:var(--bg3);color:var(--text3);}
-.unlocked{background:rgba(29,158,117,.18);color:var(--green);}
+.unlocked{background:rgba(29,158,117,.18);color:var(--accent);}
 .chart-tabs{display:flex;gap:6px;margin-bottom:12px;}
 .chart-tab{padding:5px 14px;border:.5px solid var(--border2);border-radius:99px;font-size:12px;cursor:pointer;background:var(--bg3);color:var(--text2);transition:all .15s;}
-.chart-tab.active{background:var(--green);border-color:var(--green);color:#fff;}
+.chart-tab.active{background:var(--accent);border-color:var(--accent);color:#fff;}
 .chart-wrap{position:relative;height:180px;}
 .streak-grid{display:flex;gap:3px;flex-wrap:wrap;margin-top:8px;}
-.sdot{width:14px;height:14px;border-radius:3px;background:var(--bg3);border:.5px solid var(--border);}
-.sdot.filled{background:var(--green);border-color:var(--green2);}
+.sdot{width:14px;height:14px;border-radius:3px;background:var(--bg3);border:.5px solid var(--border);transition:background .3s;}
+.sdot.filled{background:var(--accent);border-color:var(--accent);}
 .sdot.today{background:var(--amber);border-color:#BA7517;}
 .notify-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:.5px solid var(--border);}
 .notify-row:last-child{border-bottom:none;}
 .notify-label{font-size:14px;color:var(--text);}
 .notify-sub{font-size:11px;color:var(--text3);margin-top:1px;}
 .toggle{width:42px;height:24px;background:var(--bg3);border:.5px solid var(--border2);border-radius:99px;cursor:pointer;position:relative;transition:background .2s;flex-shrink:0;}
-.toggle.on{background:var(--green);border-color:var(--green2);}
+.toggle.on{background:var(--accent);border-color:var(--accent);}
 .toggle::after{content:'';width:18px;height:18px;border-radius:50%;background:#fff;position:absolute;top:2px;left:3px;transition:left .2s;}
 .toggle.on::after{left:21px;}
 .submit-btn{width:100%;padding:16px;border:none;border-radius:var(--radius);color:#fff;font-size:16px;font-weight:700;cursor:pointer;margin-top:1rem;letter-spacing:-.01em;transition:all .3s;background:var(--red);}
-.submit-btn.ready{background:var(--green);}
+.submit-btn.ready{background:var(--accent);}
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);align-items:center;justify-content:center;z-index:998;padding:1rem;}
 .overlay.show{display:flex;}
 .overlay-card{background:var(--card);border:.5px solid var(--border2);border-radius:var(--radius);padding:2rem 1.5rem;text-align:center;max-width:340px;width:100%;}
 .overlay-card.brutal{background:#0a0404;border-color:var(--red);}
 .overlay-card.sober{background:#06060f;border-color:var(--purple);}
+.overlay-card.crown{background:#0a0800;border-color:var(--amber);}
 .ov-icon{font-size:42px;margin-bottom:12px;}
 .ov-title{font-size:19px;font-weight:700;margin-bottom:10px;letter-spacing:-.02em;}
 .ov-text{font-size:14px;color:var(--text2);line-height:1.75;margin-bottom:12px;white-space:pre-line;}
 .ov-action{font-size:12px;color:var(--red);font-weight:600;margin-bottom:1.25rem;line-height:1.5;}
-.ov-close{padding:12px 32px;background:var(--green);border:none;border-radius:var(--radius-sm);color:#fff;font-size:15px;font-weight:700;cursor:pointer;}
+.ov-close{padding:12px 32px;background:var(--accent);border:none;border-radius:var(--radius-sm);color:#fff;font-size:15px;font-weight:700;cursor:pointer;transition:background .5s;}
 .overlay-card.brutal .ov-close{background:var(--red);}
 .overlay-card.sober .ov-close{background:var(--purple);}
+.overlay-card.crown .ov-close{background:var(--amber);color:var(--amber2);}
 .sober-note{font-size:12px;color:var(--text3);font-style:italic;margin-top:8px;line-height:1.5;}
-.saving-indicator{font-size:11px;color:var(--green);text-align:center;margin-top:6px;opacity:0;transition:opacity .3s;}
+.saving-indicator{font-size:11px;color:var(--accent);text-align:center;margin-top:6px;opacity:0;transition:opacity .3s,color .5s;}
 .saving-indicator.show{opacity:1;}
 </style>
 </head>
 <body>
 
+<canvas id="bgCanvas"></canvas>
+
 <!-- Auth Screen -->
 <div id="authScreen" class="screen active">
   <div class="auth-logo">💰</div>
   <div class="auth-title-main">Flowstate</div>
-  <div class="auth-sub">Your 90-day wealth mandate.<br>Sign in to get started.</div>
+  <div class="auth-sub">Your wealth mandate starts here.<br>Sign in to begin.</div>
   <div class="auth-card">
     <div class="auth-card-title" id="authTitle">Sign in</div>
     <div class="err" id="authError"></div>
@@ -225,9 +260,7 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 <!-- Onboarding Screen -->
 <div id="onboardScreen" class="screen" style="align-items:flex-start;justify-content:flex-start;padding:3rem 1.25rem 2rem;">
   <div class="onboard-wrap">
-    <div class="onboard-header">
-      <div class="onboard-eyebrow">Setup — one time only</div>
-    </div>
+    <div class="onboard-eyebrow" id="onboardEyebrow">Setup — one time only</div>
     <div class="onboard-progress" id="onboardProgress"></div>
     <div id="onboardSteps"></div>
     <div class="onboard-nav">
@@ -239,6 +272,7 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 
 <!-- Main App -->
 <div id="mainApp" class="screen" style="display:none;align-items:stretch;justify-content:flex-start;padding:0;min-height:unset;">
+<div class="app-wrap">
 <div class="app">
   <div class="quote-banner">
     <div class="quote-text" id="rotatingQuote"></div>
@@ -258,14 +292,14 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
   <div class="metrics">
     <div class="metric"><div class="metric-label">Day</div><div class="metric-val" id="dayCount">1</div><div class="metric-sub" id="daySubLabel">of 90</div></div>
     <div class="metric"><div class="metric-label">Done</div><div class="metric-val" id="completedPct">0%</div><div class="metric-sub">today</div></div>
-    <div class="metric"><div class="metric-label">Sober</div><div class="metric-val" id="soberDays">0</div><div class="metric-sub">days</div></div>
+    <div class="metric"><div class="metric-label" id="soberMetricLabel">Sober</div><div class="metric-val" id="soberDays">0</div><div class="metric-sub">days</div></div>
     <div class="metric"><div class="metric-label">Gym</div><div class="metric-val" id="gymDays">0</div><div class="metric-sub">days</div></div>
   </div>
 
   <div class="triple-streak">
     <div class="ts-card ts-biz"><div class="ts-val" id="bizStreak">0</div><div class="ts-lbl">Business</div></div>
     <div class="ts-card ts-body"><div class="ts-val" id="gymStreak">0</div><div class="ts-lbl">Movement</div></div>
-    <div class="ts-card ts-mind"><div class="ts-val" id="soberStreak">0</div><div class="ts-lbl">Sobriety</div></div>
+    <div class="ts-card ts-mind"><div class="ts-val" id="soberStreak">0</div><div class="ts-lbl" id="soberStreakLabel">Sobriety</div></div>
   </div>
 
   <div class="section">
@@ -281,38 +315,26 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
   </div>
 
   <div class="section">
-    <div class="section-title">Business execution</div>
+    <div class="section-title">Daily execution</div>
     <div id="taskList"></div>
     <div class="progress-wrap"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
     <div class="progress-label" id="progressLabel">0 tasks complete</div>
     <div class="order-reminder" id="orderReminder">
       <span style="font-size:16px;">📦</span>
-      <div class="order-reminder-text"><strong>Order placement day</strong> — 1st or 15th. Place your orders today.</div>
+      <div class="order-reminder-text"><strong>Order day</strong> — 1st or 15th. Place your orders.</div>
     </div>
   </div>
 
   <div class="section">
     <div class="section-title">Body — movement</div>
-    <div class="task-row"><div class="task-check" id="chk-gym" onclick="toggleCheck('gym','gym-done')"></div><div class="task-label" id="lbl-gym">Gym / movement completed</div><span class="task-badge badge-body">body</span></div>
-    <div class="task-row"><div class="task-check" id="chk-water" onclick="toggleCheck('water','gym-done')"></div><div class="task-label" id="lbl-water">Hydration (1 gallon)</div><span class="task-badge badge-body">body</span></div>
-    <div class="task-row" style="border-bottom:none;padding-bottom:0;"><div class="task-check" id="chk-sleep" onclick="toggleCheck('sleep','gym-done')"></div><div class="task-label" id="lbl-sleep">7+ hours sleep last night</div><span class="task-badge badge-body">body</span></div>
-    <div class="gym-type-row" id="gymTypeRow">
-      <button class="gym-btn" onclick="selectGym(this,'Weights')">Weights</button>
-      <button class="gym-btn" onclick="selectGym(this,'Cardio')">Cardio</button>
-      <button class="gym-btn" onclick="selectGym(this,'HIIT')">HIIT</button>
-      <button class="gym-btn" onclick="selectGym(this,'Walk / run')">Walk / run</button>
-      <button class="gym-btn" onclick="selectGym(this,'Stretch / yoga')">Stretch / yoga</button>
-      <button class="gym-btn" onclick="selectGym(this,'Rest day')">Rest day</button>
-    </div>
+    <div id="bodyTaskList"></div>
+    <div class="gym-type-row" id="gymTypeRow"></div>
   </div>
 
-  <div class="section">
-    <div class="section-title">Mind — sobriety</div>
-    <div class="sober-checks">
-      <div class="sober-item" id="soberAlcohol" onclick="toggleSober('soberAlcohol')"><span style="font-size:20px;">🚫</span><div><div class="sober-item-text">No alcohol</div><div class="sober-item-sub">tap to confirm</div></div></div>
-      <div class="sober-item" id="soberSmoke" onclick="toggleSober('soberSmoke')"><span style="font-size:20px;">🚭</span><div><div class="sober-item-text">No smoking</div><div class="sober-item-sub">tap to confirm</div></div></div>
-    </div>
-    <div class="sober-note">Your body is infrastructure. Protect it like capital.</div>
+  <div class="section" id="mindSection">
+    <div class="section-title" id="mindSectionTitle">Mind</div>
+    <div id="mindContent"></div>
+    <div class="sober-note" id="soberNote"></div>
   </div>
 
   <div class="section">
@@ -344,22 +366,23 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
   </div>
 
   <div class="section">
-    <div class="section-title">90-day streak</div>
+    <div class="section-title" id="streakGridTitle">90-day streak</div>
     <div class="streak-grid" id="streakGrid"></div>
   </div>
 
   <div class="section">
     <div class="section-title">Notifications</div>
-    <div class="notify-row"><div><div class="notify-label">Morning operator brief</div><div class="notify-sub">7:30 AM — Identity, intentions, execute</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+    <div class="notify-row"><div><div class="notify-label">Morning brief</div><div class="notify-sub">7:30 AM — Identity, intentions, execute</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
     <div class="notify-row"><div><div class="notify-label">Midday check-in</div><div class="notify-sub">12:30 PM — Are you on pace?</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
-    <div class="notify-row"><div><div class="notify-label">Gym reminder</div><div class="notify-sub">4:30 PM — Movement non-negotiable</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
-    <div class="notify-row"><div><div class="notify-label">Streak protection alert</div><div class="notify-sub">6:30 PM — Tasks incomplete warning</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
-    <div class="notify-row"><div><div class="notify-label">Sobriety check-in</div><div class="notify-sub">9:00 PM — Stay the course. Log it.</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
-    <div class="notify-row"><div><div class="notify-label">End of day lockdown</div><div class="notify-sub">9:30 PM — Log wins, close strong</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+    <div class="notify-row"><div><div class="notify-label">Movement reminder</div><div class="notify-sub">4:30 PM — Body non-negotiable</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+    <div class="notify-row"><div><div class="notify-label">Streak protection</div><div class="notify-sub">6:30 PM — Tasks incomplete warning</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+    <div class="notify-row"><div><div class="notify-label" id="mindNotifLabel">Mind check-in</div><div class="notify-sub">9:00 PM — Stay the course.</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+    <div class="notify-row"><div><div class="notify-label">End of day</div><div class="notify-sub">9:30 PM — Log wins, close strong</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
   </div>
 
   <button class="submit-btn" id="submitBtn" onclick="submitDay()">I failed today</button>
   <div class="saving-indicator" id="savingIndicator">Saved to cloud ✓</div>
+</div>
 </div>
 </div>
 
@@ -371,62 +394,69 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
     <div class="modal-section">
       <div class="modal-section-title">Profile</div>
       <div class="modal-row"><div class="modal-row-label">Name</div><input class="modal-input" id="set-name" placeholder="Your name"/></div>
-      <div class="modal-row"><div class="modal-row-label">Building</div><input class="modal-input" id="set-goal" placeholder="Your business/goal"/></div>
-      <div class="modal-row"><div class="modal-row-label">Who motivates you</div><input class="modal-input" id="set-motivator" placeholder="e.g. my partner"/></div>
-      <div class="modal-row"><div class="modal-row-label">Your biggest fear</div><input class="modal-input" id="set-fears" placeholder="If you don't execute..."/></div>
+      <div class="modal-row"><div class="modal-row-label">Building</div><input class="modal-input" id="set-goal" placeholder="Your goal"/></div>
+      <div class="modal-row"><div class="modal-row-label">Who motivates you</div><input class="modal-input" id="set-motivator" placeholder="Partner, kids..."/></div>
+      <div class="modal-row"><div class="modal-row-label">Biggest fear</div><input class="modal-input" id="set-fears" placeholder="If you don't execute..."/></div>
     </div>
 
     <div class="modal-section">
-      <div class="modal-section-title">Goal timeline</div>
-      <div class="modal-row">
-        <div class="modal-row-label">Total days</div>
+      <div class="modal-section-title">Timeline & tone</div>
+      <div class="modal-row"><div class="modal-row-label">Goal length</div>
         <select class="modal-select" id="set-goalLength">
-          <option>30 days</option>
-          <option>60 days</option>
-          <option selected>90 days</option>
-          <option>6 months</option>
-          <option>1 year</option>
+          <option>30 days</option><option>60 days</option><option selected>90 days</option><option>6 months</option><option>1 year</option>
+        </select>
+      </div>
+      <div class="modal-row"><div class="modal-row-label">Consequence tone</div>
+        <select class="modal-select" id="set-tone">
+          <option>Hard</option><option selected>Brutal</option><option>Motivational</option><option>Balanced</option>
+        </select>
+      </div>
+      <div class="modal-row"><div class="modal-row-label">Profanity</div>
+        <select class="modal-select" id="set-profanity">
+          <option value="true" selected>On</option><option value="false">Off</option>
         </select>
       </div>
     </div>
 
     <div class="modal-section">
-      <div class="modal-section-title">Tone & language</div>
-      <div class="modal-row">
-        <div class="modal-row-label">Consequence tone</div>
-        <select class="modal-select" id="set-tone">
-          <option value="Hard">Hard</option>
-          <option value="Brutal" selected>Brutal</option>
-          <option value="Motivational">Motivational</option>
-          <option value="Balanced">Balanced</option>
+      <div class="modal-section-title">Background</div>
+      <div class="modal-row"><div class="modal-row-label">Floating emoji</div>
+        <select class="modal-select" id="set-bgEmoji">
+          <option value="none">None</option>
+          <option value="💰">💰 Money bags</option>
+          <option value="🔥">🔥 Flames</option>
+          <option value="⚡">⚡ Lightning</option>
+          <option value="👑">👑 Crowns</option>
+          <option value="💎">💎 Diamonds</option>
+          <option value="random">🎲 Random</option>
         </select>
       </div>
-      <div class="modal-row">
-        <div class="modal-row-label">Profanity</div>
-        <select class="modal-select" id="set-profanity">
-          <option value="true" selected>On</option>
-          <option value="false">Off</option>
+      <div class="modal-row"><div class="modal-row-label">Streak color shift</div>
+        <select class="modal-select" id="set-colorShift">
+          <option value="true" selected>On</option><option value="false">Off</option>
         </select>
       </div>
     </div>
 
     <div class="modal-section">
       <div class="modal-section-title">Daily tasks</div>
-      <div style="font-size:12px;color:var(--text3);margin-bottom:10px;">Edit targets or add custom tasks</div>
-      <div class="modal-row"><div class="modal-row-label">Suppliers sourced</div><input class="modal-input" type="number" id="set-src" value="2" min="1" max="50"/></div>
-      <div class="modal-row"><div class="modal-row-label">Outreaches</div><input class="modal-input" type="number" id="set-out" value="2" min="1" max="50"/></div>
-      <div class="modal-row"><div class="modal-row-label">Follow-ups</div><input class="modal-input" type="number" id="set-fol" value="2" min="1" max="50"/></div>
-      <div class="modal-row"><div class="modal-row-label">Product analyses</div><input class="modal-input" type="number" id="set-ana" value="10" min="1" max="100"/></div>
-      <div style="margin-top:12px;">
-        <div class="modal-section-title">Custom tasks</div>
-        <div id="customTasksEditor"></div>
-        <button class="add-task-btn" onclick="addCustomTaskField()">+ Add custom task</button>
-      </div>
+      <div id="settingsTaskEditor"></div>
+      <button class="add-btn" onclick="addSettingsTask()" style="margin-top:4px;">+ Add task</button>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">Movement types</div>
+      <div id="settingsMovementEditor"></div>
+      <button class="add-btn" onclick="addMovementType()" style="margin-top:4px;">+ Add movement type</button>
+    </div>
+
+    <div class="modal-section" id="mindSettingsSection">
+      <div class="modal-section-title" id="mindSettingsTitle">Mind / habits</div>
+      <div id="mindSettingsEditor"></div>
     </div>
 
     <div class="modal-section">
       <div class="modal-section-title">Reward tiers</div>
-      <div style="font-size:12px;color:var(--text3);margin-bottom:10px;">Customize your milestone rewards</div>
       <div id="tierEditor"></div>
     </div>
 
@@ -454,36 +484,124 @@ const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
 let currentUser=null,chartInstance=null,isSignUp=false;
 let chartData={streak:[],tasks:[],wins:[]};
+let bgParticles=[],bgAnimFrame=null,bgEmoji='none';
+
+const ACCENT_LEVELS=[
+  {days:0,color:'#1D9E75',name:'green'},
+  {days:7,color:'#FAC775',name:'amber'},
+  {days:30,color:'#7F77DD',name:'purple'},
+  {days:60,color:'#5DCAA5',name:'teal'},
+  {days:90,color:'#FFD700',name:'gold'}
+];
 
 let prefs={
-  name:'',goal:'',goalLength:'90 days',motivator:'',relationship:'',tone:'Brutal',profanity:true,fears:'',
-  onboarding_complete:false,
-  taskTargets:{src:2,out:2,fol:2,ana:10},
-  customTasks:[],
+  name:'',goal:'',goalLength:'90 days',motivator:'',relationship:'',
+  tone:'Brutal',profanity:true,fears:'',onboarding_complete:false,
+  smokes:'neither',drinks:'no',
+  bgEmoji:'none',colorShift:true,
+  customHabits:[],
+  tasks:[
+    {id:'src',label:'Suppliers / brands sourced',target:2,category:'biz'},
+    {id:'out',label:'Outreaches sent',target:2,category:'biz'},
+    {id:'fol',label:'Follow-ups sent',target:2,category:'biz'},
+    {id:'ana',label:'Product analyses',target:10,category:'biz'},
+    {id:'trn',label:'1 hr training',target:null,category:'biz'},
+    {id:'jus',label:'Justin sync',target:null,category:'biz'},
+  ],
+  movementTypes:['Weights','Cardio','HIIT','Walk / run','Stretch / yoga','Rest day'],
+  bodyTasks:[
+    {id:'gym',label:'Gym / movement completed',category:'body'},
+    {id:'water',label:'Hydration (1 gallon)',category:'body'},
+    {id:'sleep',label:'7+ hours sleep',category:'body'},
+  ],
   tiers:[
-    {name:'Weekly win',days:7,desc:'Biz + gym + sober 5/7 days',reward:'$200–300 → date night, spa, premium experience',color:'#FAC775'},
-    {name:'Monthly operator',days:30,desc:'SKUs live + 20%+ ROI validated',reward:'$600–900 → wardrobe, tech, wildcard',color:'#AFA9EC'},
-    {name:'Scaling rewards',days:60,desc:'$5K+ monthly revenue',reward:'$1,500–2,500 → gold, investment, travel fund',color:'#5DCAA5'},
-    {name:'Identity shift',days:90,desc:'$10K+ month, system runs itself',reward:'$3,000–5,000 → international flight, freedom move',color:'#7F77DD'}
+    {name:'Weekly win',days:7,desc:'Biz + gym + sober 5/7',reward:'$200–300 → date night, spa',color:'#FAC775'},
+    {name:'Monthly operator',days:30,desc:'SKUs live + 20%+ ROI',reward:'$600–900 → wardrobe, tech',color:'#AFA9EC'},
+    {name:'Scaling rewards',days:60,desc:'$5K+ monthly revenue',reward:'$1,500–2,500 → gold, travel',color:'#5DCAA5'},
+    {name:'Identity shift',days:90,desc:'$10K+ system runs itself',reward:'$3,000–5,000 → freedom move',color:'#7F77DD'}
   ]
 };
 
-let state={streak:0,soberStreak:0,gymStreak:0,dayCount:1,soberDays:0,gymDays:0,selectedResult:'',soberAlcohol:false,soberSmoke:false,gymType:''};
+let state={streak:0,soberStreak:0,gymStreak:0,dayCount:1,soberDays:0,gymDays:0,selectedResult:'',soberItems:{},gymType:''};
 
-// Onboarding
+// ─── BACKGROUND CANVAS ───────────────────────────────────────
+const EMOJI_SETS={
+  '💰':['💰'],'🔥':['🔥'],'⚡':['⚡'],'👑':['👑'],'💎':['💎'],
+  'random':['💰','🔥','⚡','👑','💎','🚀','⭐','🏆'],
+  'none':[]
+};
+
+function initBg(){
+  const canvas=document.getElementById('bgCanvas');
+  if(!canvas)return;
+  canvas.width=window.innerWidth;
+  canvas.height=window.innerHeight;
+  const emojis=EMOJI_SETS[bgEmoji]||[];
+  if(emojis.length===0){canvas.style.display='none';return;}
+  canvas.style.display='block';
+  bgParticles=Array.from({length:25},()=>({
+    x:Math.random()*canvas.width,
+    y:Math.random()*canvas.height,
+    emoji:emojis[Math.floor(Math.random()*emojis.length)],
+    size:Math.random()*16+10,
+    speedY:-(Math.random()*0.3+0.1),
+    speedX:(Math.random()-0.5)*0.2,
+    opacity:Math.random()*0.5+0.1
+  }));
+  if(bgAnimFrame)cancelAnimationFrame(bgAnimFrame);
+  animateBg();
+}
+
+function animateBg(){
+  const canvas=document.getElementById('bgCanvas');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  bgParticles.forEach(p=>{
+    ctx.font=`${p.size}px serif`;
+    ctx.globalAlpha=p.opacity;
+    ctx.fillText(p.emoji,p.x,p.y);
+    p.y+=p.speedY;p.x+=p.speedX;
+    if(p.y<-20){p.y=canvas.height+20;p.x=Math.random()*canvas.width;}
+  });
+  ctx.globalAlpha=1;
+  bgAnimFrame=requestAnimationFrame(animateBg);
+}
+
+window.addEventListener('resize',()=>{
+  const c=document.getElementById('bgCanvas');
+  if(c){c.width=window.innerWidth;c.height=window.innerHeight;}
+});
+
+// ─── ACCENT COLOR ────────────────────────────────────────────
+function updateAccentColor(){
+  if(!prefs.colorShift)return;
+  let level=ACCENT_LEVELS[0];
+  for(const l of ACCENT_LEVELS){if(state.streak>=l.days)level=l;}
+  document.documentElement.style.setProperty('--accent',level.color);
+  document.documentElement.style.setProperty('--accent2',level.color);
+}
+
+// ─── ONBOARDING ───────────────────────────────────────────────
 const onboardSteps=[
   {id:'name',type:'input',q:"What's your name?",sub:"How should the app address you?",placeholder:"Your first name",key:'name'},
-  {id:'goal',type:'input',q:"What are you building?",sub:"Describe your main goal or business in a few words.",placeholder:"e.g. Amazon FBA, $10K/month, fitness coaching",key:'goal'},
-  {id:'goalLength',type:'single',q:"What's your goal timeline?",sub:"How long are you committing to this?",key:'goalLength',options:['30 days','60 days','90 days','6 months','1 year']},
-  {id:'motivator',type:'input',q:"Who do you do this for?",sub:"Who in your life motivates you most? Partner, family, yourself — anyone.",placeholder:"e.g. My partner, my kids, myself",key:'motivator'},
-  {id:'relationship',type:'single',q:"What's your relationship status?",sub:"Helps personalize your messages.",key:'relationship',options:['In a relationship','Single','Married','It\'s complicated']},
-  {id:'tone',type:'single',q:"How do you want to be spoken to?",sub:"When you miss a day, what hits hardest?",key:'tone',options:['Hard — direct and blunt','Brutal — no mercy, no excuses','Motivational — tough love','Balanced — mix of all three']},
-  {id:'profanity',type:'single',q:"Profanity in consequences?",sub:"Some people respond better to raw language.",key:'profanity',options:['Yes — keep it real','No — keep it clean']},
-  {id:'fears',type:'input',q:"What's your biggest fear if you don't execute?",sub:"Be honest. This gets used against you when you slip.",placeholder:"e.g. Staying broke, letting my family down",key:'fears'}
+  {id:'goal',type:'input',q:"What are you building?",sub:"Describe your main goal or business.",placeholder:"e.g. Amazon FBA, $10K/month",key:'goal'},
+  {id:'goalLength',type:'single',q:"What's your timeline?",sub:"How long are you committing?",key:'goalLength',options:['30 days','60 days','90 days','6 months','1 year']},
+  {id:'motivator',type:'input',q:"Who do you do this for?",sub:"Who in your life drives you most?",placeholder:"e.g. My partner, my kids, myself",key:'motivator'},
+  {id:'smokes',type:'single',q:"Do you smoke?",sub:"This determines what we track in your daily check-in.",key:'smokes',options:['Cigarettes','Weed','Both','Neither — I don\'t smoke']},
+  {id:'drinks',type:'single',q:"Do you drink alcohol?",sub:"Be honest — this is your accountability tool.",key:'drinks',options:['Yes — regularly','Socially','No — I don\'t drink']},
+  {id:'tone',type:'single',q:"How do you want to be spoken to?",sub:"When you miss a day — what hits hardest?",key:'tone',options:['Hard — direct and blunt','Brutal — no mercy, no excuses','Motivational — tough love','Balanced — mix of all three']},
+  {id:'profanity',type:'single',q:"Profanity in consequences?",sub:"Raw language or clean — your call.",key:'profanity',options:['Yes — keep it real','No — keep it clean']},
+  {id:'fears',type:'input',q:"What's your biggest fear if you don't execute?",sub:"This gets used against you when you slip.",placeholder:"e.g. Staying broke, letting my family down",key:'fears'},
+  {id:'tasks',type:'tasks',q:"Build your daily task list.",sub:"These are your non-negotiables. Edit, remove, or add your own."},
+  {id:'movement',type:'movement',q:"What movement types matter to you?",sub:"Select all that apply to your routine."},
+  {id:'bgEmoji',type:'bgpick',q:"Pick your vibe.",sub:"Your background aesthetic. Floating and subtle."}
 ];
 
 let currentStep=0;
 let onboardAnswers={};
+let tempTasks=[...prefs.tasks];
+let tempMovement=[...prefs.movementTypes];
 
 function buildOnboarding(){
   const progress=document.getElementById('onboardProgress');
@@ -494,10 +612,26 @@ function buildOnboarding(){
       <div class="onboard-q">${s.q}</div>
       <div class="onboard-sub">${s.sub}</div>`;
     if(s.type==='input'){
-      html+=`<input class="onboard-input" id="ob-${s.key}" placeholder="${s.placeholder||''}" value="${prefs[s.key]||''}"/>`;
-    } else if(s.type==='single'){
+      html+=`<input class="onboard-input" id="ob-${s.key}" placeholder="${s.placeholder||''}" value="${String(prefs[s.key]||'')}"/>`;
+    }else if(s.type==='single'){
       const cur=String(prefs[s.key]||'');
-      html+=`<div class="onboard-options">${s.options.map(o=>`<button class="onboard-option ${cur&&o.startsWith(cur)?'selected':''}" onclick="selectOnboardOption(this,'${s.key}')">${o}</button>`).join('')}</div>`;
+      html+=`<div class="onboard-options">${s.options.map(o=>`<button class="onboard-option ${cur&&o.startsWith(cur.split(' — ')[0])?'selected':''}" onclick="selectOnboardOption(this,'${s.key}')">${o}</button>`).join('')}</div>`;
+    }else if(s.type==='tasks'){
+      html+=`<div class="task-builder" id="ob-task-builder">`;
+      html+=tempTasks.map((t,ti)=>`
+        <div class="task-builder-row" id="ob-task-row-${ti}">
+          <input class="task-builder-input" id="ob-task-name-${ti}" placeholder="Task name" value="${t.label}"/>
+          <input class="task-builder-num" id="ob-task-target-${ti}" type="number" min="0" max="999" placeholder="—" value="${t.target||''}"/>
+          <button class="task-builder-del" onclick="removeOnboardTask(${ti})">✕</button>
+        </div>`).join('');
+      html+=`</div><button class="add-btn" onclick="addOnboardTask()">+ Add task</button>`;
+    }else if(s.type==='movement'){
+      const allMov=['Weights','Cardio','HIIT','Walk / run','Stretch / yoga','Rest day','Swimming','Boxing','Cycling','Yoga','Pilates','Sports'];
+      html+=`<div class="movement-chips" id="ob-movement-chips">${allMov.map(m=>`<button class="movement-chip ${tempMovement.includes(m)?'selected':''}" onclick="toggleMovementChip(this,'${m}')">${m}</button>`).join('')}</div>`;
+      html+=`<div style="margin-top:8px;"><input class="onboard-input" id="ob-custom-movement" placeholder="Add custom movement type..." style="margin-bottom:4px;"/><button class="add-btn" onclick="addCustomMovement()">+ Add</button></div>`;
+    }else if(s.type==='bgpick'){
+      const opts=[{v:'none',e:'—',l:'None'},{v:'💰',e:'💰',l:'Money bags'},{v:'🔥',e:'🔥',l:'Flames'},{v:'⚡',e:'⚡',l:'Lightning'},{v:'👑',e:'👑',l:'Crowns'},{v:'💎',e:'💎',l:'Diamonds'},{v:'random',e:'🎲',l:'Random'}];
+      html+=`<div class="bg-picker">${opts.map(o=>`<button class="bg-option ${(prefs.bgEmoji||'none')===o.v?'selected':''}" onclick="selectBgOption(this,'${o.v}')" title="${o.l}">${o.e||'✕'}</button>`).join('')}</div>`;
     }
     html+=`</div>`;
     return html;
@@ -510,20 +644,81 @@ function selectOnboardOption(btn,key){
   onboardAnswers[key]=btn.textContent.split(' — ')[0];
 }
 
+function removeOnboardTask(i){
+  tempTasks.splice(i,1);
+  rebuildOnboardTasks();
+}
+
+function addOnboardTask(){
+  tempTasks.push({id:'custom_'+Date.now(),label:'',target:null,category:'custom'});
+  rebuildOnboardTasks();
+}
+
+function rebuildOnboardTasks(){
+  const el=document.getElementById('ob-task-builder');
+  if(!el)return;
+  el.innerHTML=tempTasks.map((t,ti)=>`
+    <div class="task-builder-row" id="ob-task-row-${ti}">
+      <input class="task-builder-input" id="ob-task-name-${ti}" placeholder="Task name" value="${t.label}"/>
+      <input class="task-builder-num" id="ob-task-target-${ti}" type="number" min="0" max="999" placeholder="—" value="${t.target||''}"/>
+      <button class="task-builder-del" onclick="removeOnboardTask(${ti})">✕</button>
+    </div>`).join('');
+}
+
+function saveOnboardTasks(){
+  prefs.tasks=tempTasks.map((t,i)=>({
+    id:t.id||'task_'+i,
+    label:document.getElementById('ob-task-name-'+i)?.value.trim()||t.label,
+    target:parseInt(document.getElementById('ob-task-target-'+i)?.value)||null,
+    category:t.category||'custom'
+  })).filter(t=>t.label);
+}
+
+function toggleMovementChip(btn,val){
+  btn.classList.toggle('selected');
+  if(btn.classList.contains('selected')){if(!tempMovement.includes(val))tempMovement.push(val);}
+  else{tempMovement=tempMovement.filter(v=>v!==val);}
+}
+
+function addCustomMovement(){
+  const inp=document.getElementById('ob-custom-movement');
+  const val=inp?.value.trim();
+  if(!val)return;
+  if(!tempMovement.includes(val))tempMovement.push(val);
+  const chips=document.getElementById('ob-movement-chips');
+  if(chips){const btn=document.createElement('button');btn.className='movement-chip selected';btn.textContent=val;btn.onclick=()=>toggleMovementChip(btn,val);chips.appendChild(btn);}
+  if(inp)inp.value='';
+}
+
+function selectBgOption(btn,val){
+  document.querySelectorAll('.bg-option').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  onboardAnswers.bgEmoji=val;
+  bgEmoji=val;
+  initBg();
+}
+
 function updateOnboardProgress(){
   document.querySelectorAll('.onboard-pip').forEach((p,i)=>{
     p.className='onboard-pip'+(i<currentStep?' done':i===currentStep?' current':'');
   });
+  document.getElementById('onboardEyebrow').textContent=`Step ${currentStep+1} of ${onboardSteps.length}`;
 }
 
 function nextStep(){
   const s=onboardSteps[currentStep];
   if(s.type==='input'){
-    const val=document.getElementById('ob-'+s.key).value.trim();
-    if(!val){alert('Please fill this in to continue.');return;}
+    const val=document.getElementById('ob-'+s.key)?.value.trim();
+    if(!val){alert('Please fill this in.');return;}
     onboardAnswers[s.key]=val;
-  } else {
+  }else if(s.type==='single'){
     if(!onboardAnswers[s.key]){alert('Please make a selection.');return;}
+  }else if(s.type==='tasks'){
+    saveOnboardTasks();
+  }else if(s.type==='movement'){
+    prefs.movementTypes=tempMovement;
+  }else if(s.type==='bgpick'){
+    if(!onboardAnswers.bgEmoji)onboardAnswers.bgEmoji='none';
   }
   if(currentStep===onboardSteps.length-1){finishOnboarding();return;}
   document.getElementById('step-'+currentStep).classList.remove('active');
@@ -546,54 +741,46 @@ function prevStep(){
 async function finishOnboarding(){
   prefs={...prefs,...onboardAnswers};
   prefs.profanity=onboardAnswers.profanity==='Yes';
+  prefs.smokes=(onboardAnswers.smokes||'Neither').split(' — ')[0];
+  prefs.drinks=(onboardAnswers.drinks||'No').split(' — ')[0];
   prefs.onboarding_complete=true;
+  bgEmoji=prefs.bgEmoji||'none';
   await savePrefs();
   showMainApp();
 }
 
-// Prefs
+// ─── PREFS DB ────────────────────────────────────────────────
 async function savePrefs(){
   localStorage.setItem('fs_prefs',JSON.stringify(prefs));
   if(!currentUser)return;
-  const payload={
-    user_id:currentUser.id,
-    name:prefs.name||'',
-    goal:prefs.goal||'',
-    goalLength:prefs.goalLength||'90 days',
-    motivator:prefs.motivator||'',
-    relationship:prefs.relationship||'',
-    tone:prefs.tone||'Brutal',
-    profanity:!!prefs.profanity,
-    fears:prefs.fears||'',
-    onboarding_complete:!!prefs.onboarding_complete
-  };
-  await sb.from('user_prefs').upsert(payload,{onConflict:'user_id'});
+  try{
+    await sb.from('user_prefs').upsert({
+      user_id:currentUser.id,
+      name:prefs.name||'',goal:prefs.goal||'',goalLength:prefs.goalLength||'90 days',
+      motivator:prefs.motivator||'',relationship:prefs.relationship||'',
+      tone:prefs.tone||'Brutal',profanity:!!prefs.profanity,fears:prefs.fears||'',
+      onboarding_complete:!!prefs.onboarding_complete
+    },{onConflict:'user_id'});
+  }catch(e){}
 }
 
 async function loadPrefs(){
   const local=localStorage.getItem('fs_prefs');
-  if(local){try{prefs=Object.assign(prefs,JSON.parse(local));}catch(e){}}
+  if(local){try{const p=JSON.parse(local);prefs=Object.assign(prefs,p);}catch(e){}}
   if(!currentUser)return;
   try{
     const{data}=await sb.from('user_prefs').select('*').eq('user_id',currentUser.id).single();
     if(data){
-      prefs.name=data.name||prefs.name||'';
-      prefs.goal=data.goal||prefs.goal||'';
-      prefs.goalLength=data.goalLength||prefs.goalLength||'90 days';
-      prefs.motivator=data.motivator||prefs.motivator||'';
-      prefs.relationship=data.relationship||prefs.relationship||'';
-      prefs.tone=data.tone||prefs.tone||'Brutal';
-      prefs.profanity=data.profanity!==undefined?data.profanity:prefs.profanity;
-      prefs.fears=data.fears||prefs.fears||'';
-      prefs.onboarding_complete=data.onboarding_complete||false;
+      prefs.name=data.name||prefs.name;prefs.goal=data.goal||prefs.goal;
+      prefs.goalLength=data.goalLength||prefs.goalLength;prefs.motivator=data.motivator||prefs.motivator;
+      prefs.tone=data.tone||prefs.tone;prefs.profanity=data.profanity!==undefined?data.profanity:prefs.profanity;
+      prefs.fears=data.fears||prefs.fears;prefs.onboarding_complete=data.onboarding_complete||false;
       localStorage.setItem('fs_prefs',JSON.stringify(prefs));
     }
   }catch(e){}
 }
 
-function hasCompletedOnboarding(){return !!prefs.onboarding_complete;}
-
-// Auth
+// ─── AUTH ─────────────────────────────────────────────────────
 async function signInWithGoogle(){
   const{error}=await sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:window.location.origin}});
   if(error)showAuthError(error.message);
@@ -607,11 +794,11 @@ async function handleAuth(){
   if(isSignUp){
     const{error}=await sb.auth.signUp({email,password});
     if(error)showAuthError(error.message);
-    else showAuthMsg('Account created! Check your email to confirm, then sign in.');
+    else showAuthMsg('Account created! Check your email to confirm.');
   }else{
     const{data,error}=await sb.auth.signInWithPassword({email,password});
-    if(error){showAuthError('Sign in failed: '+error.message);}
-    else if(data&&data.user){currentUser=data.user;await afterLogin();}
+    if(error)showAuthError('Sign in failed: '+error.message);
+    else if(data?.user){currentUser=data.user;await afterLogin();}
   }
 }
 
@@ -622,50 +809,40 @@ function toggleAuthMode(){
   document.getElementById('authToggle').innerHTML=isSignUp?'Already have an account? <span>Sign in</span>':"Don't have an account? <span>Sign up</span>";
 }
 
-function showAuthError(msg){const e=document.getElementById('authError');e.textContent=msg;e.style.display='block';}
-function showAuthMsg(msg){const e=document.getElementById('authMsg');e.textContent=msg;e.style.display='block';}
+function showAuthError(m){const e=document.getElementById('authError');e.textContent=m;e.style.display='block';}
+function showAuthMsg(m){const e=document.getElementById('authMsg');e.textContent=m;e.style.display='block';}
 function hideAuthMessages(){document.getElementById('authError').style.display='none';document.getElementById('authMsg').style.display='none';}
 
 async function signOut(){
-  await sb.auth.signOut();
-  currentUser=null;
-  localStorage.removeItem('fs_prefs');
-  closeSettings();
-  showScreen('authScreen');
+  await sb.auth.signOut();currentUser=null;
+  localStorage.removeItem('fs_prefs');closeSettings();showScreen('authScreen');
 }
 
 async function afterLogin(){
-  await loadPrefs();
-  await loadFromDB();
-  if(hasCompletedOnboarding()){
-    showMainApp();
-  } else {
-    onboardAnswers={};
-    currentStep=0;
-    buildOnboarding();
-    showScreen('onboardScreen');
+  await loadPrefs();await loadFromDB();
+  bgEmoji=prefs.bgEmoji||'none';
+  if(prefs.onboarding_complete){showMainApp();}
+  else{
+    onboardAnswers={};currentStep=0;tempTasks=[...prefs.tasks];tempMovement=[...prefs.movementTypes];
+    buildOnboarding();showScreen('onboardScreen');
   }
 }
 
 function showScreen(id){
   ['authScreen','onboardScreen','mainApp'].forEach(s=>{
-    const el=document.getElementById(s);
-    el.style.display='none';
-    el.classList.remove('active');
+    const el=document.getElementById(s);el.style.display='none';el.classList.remove('active');
   });
-  const t=document.getElementById(id);
-  t.style.display='flex';
-  t.classList.add('active');
+  const t=document.getElementById(id);t.style.display='flex';t.classList.add('active');
 }
 
 function showMainApp(){showScreen('mainApp');init();}
 
-// DB
+// ─── DB ───────────────────────────────────────────────────────
 async function loadFromDB(){
   if(!currentUser)return;
   try{
     const{data}=await sb.from('daily_logs').select('*').eq('user_id',currentUser.id).order('log_date',{ascending:false}).limit(30);
-    if(data&&data.length>0){
+    if(data?.length>0){
       const l=data[0];
       state.streak=l.biz_streak||0;state.soberStreak=l.sober_streak||0;state.gymStreak=l.gym_streak||0;
       state.soberDays=l.sober_days||0;state.gymDays=l.gym_days||0;state.dayCount=l.day_count||1;
@@ -686,21 +863,30 @@ async function saveToDB(logData){
       sober_days:logData.soberDays,gym_days:logData.gymDays,day_count:logData.dayCount,
       is_win:logData.isWin,is_sober:logData.fullySober,is_gym:logData.gymDone,
       mood:document.getElementById('focusWord').value||'',
-      focus_word:document.getElementById('focusWord').value||'',
-      gym_type:state.gymType||''
+      focus_word:document.getElementById('focusWord').value||'',gym_type:state.gymType||''
     },{onConflict:'user_id,log_date'});
-    const i=document.getElementById('savingIndicator');
-    i.classList.add('show');
-    setTimeout(()=>i.classList.remove('show'),2500);
+    const i=document.getElementById('savingIndicator');i.classList.add('show');setTimeout(()=>i.classList.remove('show'),2500);
   }catch(e){}
 }
 
-// Personalization helpers
+// ─── PERSONALIZATION ──────────────────────────────────────────
 function getName(){return prefs.name||'You';}
 function getMotivator(){return prefs.motivator||'the people who matter to you';}
 function getGoal(){return prefs.goal||'your business';}
 function getFears(){return prefs.fears||'staying exactly where you are';}
-function isBrutal(){return prefs.tone==='Brutal';}
+function smokesCigs(){return prefs.smokes==='Cigarettes'||prefs.smokes==='Both';}
+function smokesWeed(){return prefs.smokes==='Weed'||prefs.smokes==='Both';}
+function smokes(){return prefs.smokes!=='Neither'&&!prefs.smokes?.includes('Neither');}
+function drinks(){return prefs.drinks!=='No'&&!prefs.drinks?.includes('No');}
+function hasSoberTracking(){return smokes()||drinks();}
+
+function getSoberItems(){
+  const items=[];
+  if(drinks())items.push({id:'noAlcohol',emoji:'🚫',label:'No alcohol',sub:'tap to confirm'});
+  if(smokesCigs())items.push({id:'noCigs',emoji:'🚭',label:'No cigarettes',sub:'tap to confirm'});
+  if(smokesWeed())items.push({id:'noWeed',emoji:'🌿',label:'No weed',sub:'tap to confirm'});
+  return items;
+}
 
 function getConsequences(){
   const n=getName(),m=getMotivator(),g=getGoal(),f=getFears(),p=prefs.profanity;
@@ -709,39 +895,39 @@ function getConsequences(){
     {level:"Hard",text:`You didn't miss a task. You chose your old self over your future self. Own that.`,action:"No entertainment tonight. Review your goals instead."},
     {level:"Hard",text:`Comfort is cheap. So is the life you'll have if you keep choosing it.`,action:"No discretionary spending until 3 consecutive wins."},
     {level:"Hard",text:`Your competition executed today. You didn't. The gap just got wider.`,action:"Text your accountability partner: 'I didn't execute today. Tomorrow I go harder.'"},
-    {level:"Hard",text:`You already know what laziness costs. You've paid that bill before. Stop reordering it.`,action:"Wake up 1 hour earlier tomorrow. You bought debt today. Pay it back."},
-    {level:"Hard",text:`You talk about building ${g}. Today you were the reason it didn't move.`,action:"30 minutes of business reading before bed. No skipping."},
+    {level:"Hard",text:`You already know what laziness costs. You've paid that bill before. Stop reordering it.`,action:"Wake up 1 hour earlier tomorrow."},
+    {level:"Hard",text:`You talk about building ${g}. Today you were the reason it didn't move.`,action:"30 minutes of learning before bed. No skipping."},
     {level:"Brutal",text:`You had 24 hours. You wasted them. That's not bad luck. That's a choice you made.`,action:"Double tomorrow's targets. No negotiations."},
     {level:"Brutal",text:`The version of ${n} that's broke, stuck, and watching others win? He showed up today. You let him.`,action:"Write out your identity statement 3 times before you sleep."},
     {level:"Brutal",text:`${m} is watching who you are when it's hard. Today they saw the answer.`,action:"No Tier 1 reward this week. Rewards are earned, not given."},
-    {level:"Brutal",text:`You wrote down your goals. You ${p?`can't even hit your daily targets`:'can\'t even hit your targets'}. Sit with that.`,action:"Log exactly where your time went today. You owe yourself the truth."},
-    {level:"Brutal",text:`Nobody is coming to save you. Not a strategy, not a mentor, not another conversation with an AI. Just you. And today you weren't enough.`,action:"Tomorrow you execute without excuses or you don't log a win."},
-    {level:"Brutal",text:`You know what your old patterns cost you. You just paid the same price again. Voluntarily.`,action:"No scrolling, no shows. Sit with the discomfort until it makes you move."},
-    {level:"Brutal",text:`A person who can't keep a promise to themselves can't keep one to anyone else. Including ${m}.`,action:"Tell someone you trust what you didn't do today. Out loud."},
-    {level:"Brutal",text:`The gap between who you are and who you said you'd be just got wider. You did that.`,action:"Open your goals. Read them. All of it. Tonight."},
-    {level:"Brutal",text:`You want freedom but you keep ${p?'acting like someone who deserves a cage':'choosing comfort over the life you said you wanted'}.`,action:"Double outreach tomorrow. No rest until you've earned it."},
-    {level:"Brutal",text:`Somewhere right now someone with less talent, less knowledge, and less access than you is outworking you.`,action:"Set your alarm 90 minutes earlier. Tomorrow starts now."},
-    {level:"Brutal",text:`Your fear was ${f}. Today you moved closer to it, not further.`,action:"Reread your vision. Ask yourself if today's version of you deserves it."},
-    {level:"Brutal",text:`${m} deserves better than the version of you that showed up today.`,action:"Tier reward delayed one full week. Earn it back."},
-    {level:"Brutal",text:`You ${p?`didn't lose momentum today — you chose to give it the fuck away`:'didn\'t lose momentum today. You chose to give it away'}.`,action:"Tier reward delayed one full week. Earn it back."},
-    {level:"Brutal",text:`You can feel bad about this or you can do something about it. Feeling bad is easier. That's why you default to it.`,action:"Pick one task right now — even at this hour — and do it. Partial beats zero."}
+    {level:"Brutal",text:`You wrote down your goals. You ${p?`can't even hit your daily targets`:'can\'t even hit your targets'}. Sit with that.`,action:"Log exactly where your time went today."},
+    {level:"Brutal",text:`Nobody is coming to save you. Not a strategy, not a mentor, not another AI conversation. Just you. And today you weren't enough.`,action:"Tomorrow you execute without excuses or you don't log a win."},
+    {level:"Brutal",text:`You know what your old patterns cost you. You just paid the same price again. Voluntarily.`,action:"No scrolling, no shows. Sit with it."},
+    {level:"Brutal",text:`A person who can't keep a promise to themselves can't keep one to anyone else. Including ${m}.`,action:"Tell someone what you didn't do today. Out loud."},
+    {level:"Brutal",text:`The gap between who you are and who you said you'd be just got wider. You did that.`,action:"Open your goals. Read them. Tonight."},
+    {level:"Brutal",text:`You want freedom but you keep ${p?'acting like someone who deserves a cage':'choosing comfort over the life you said you wanted'}.`,action:"Double targets tomorrow. No rest until you've earned it."},
+    {level:"Brutal",text:`Somewhere right now someone with less talent, less access than you is outworking you.`,action:"Set alarm 90 minutes earlier. Tomorrow starts now."},
+    {level:"Brutal",text:`Your fear was ${f}. Today you moved closer to it, not further.`,action:"Reread your vision. Ask if today's version of you deserves it."},
+    {level:"Brutal",text:`${m} deserves better than the version of you that showed up today.`,action:"Tier reward delayed one full week."},
+    {level:"Brutal",text:`You ${p?`didn't lose momentum — you chose to give it the fuck away`:'didn\'t lose momentum. You chose to give it away'}.`,action:"Tier reward delayed one full week."},
+    {level:"Brutal",text:`You can feel bad or you can do something. Feeling bad is easier. That's why you default to it.`,action:"Pick one task right now — even at this hour. Partial beats zero."}
   ];
 }
 
 function getSoberConsequences(){
   const m=getMotivator(),g=getGoal();
   return[
-    {text:`Sobriety streak reset. Everything you want is built on who you are every single day — including tonight.`,action:"Business and gym streaks preserved. Sobriety clock restarts at zero tomorrow."},
-    {text:`The version of you building ${g} doesn't cloud their mind. You know this.`,action:"Sober streak resets. No Tier 2+ reward until 30 clean days are stacked again."},
-    {text:`You can't build a clean business on a compromised mind. Those two things are connected.`,action:"Journal it tonight. What triggered it. Be honest."},
-    {text:`Clean and sober builds different. Today was a data point. Tomorrow is a choice.`,action:"Sobriety streak resets. Show up clean tomorrow."},
-    {text:`Everything you want — the freedom, the life you're building for ${m} — requires a clear mind. Today you chipped at the foundation.`,action:"Restart the clock. Begin again."}
+    {text:`Sobriety streak reset. Everything you want is built on who you are every single day.`,action:"Business and movement streaks preserved. Sobriety restarts tomorrow."},
+    {text:`The version of you building ${g} doesn't cloud their mind. You know this.`,action:"Sober streak resets. No Tier 2+ until 30 clean days."},
+    {text:`You can't build a clean business on a compromised mind.`,action:"Journal what triggered it tonight."},
+    {text:`Clean and clear builds different. Today was a data point. Tomorrow is a choice.`,action:"Show up clean tomorrow."},
+    {text:`Everything you want — the freedom, the life you're building for ${m} — requires a clear mind. Today you chipped at it.`,action:"Restart the clock. Begin again."}
   ];
 }
 
 const universalQuotes=[
   {text:"The impediment to action advances action. What stands in the way becomes the way.",author:"Marcus Aurelius"},
-  {text:"You have power over your mind, not outside events. Realize this, and you will find strength.",author:"Marcus Aurelius"},
+  {text:"You have power over your mind, not outside events.",author:"Marcus Aurelius"},
   {text:"Do not pray for an easy life. Pray for the strength to endure a difficult one.",author:"Bruce Lee"},
   {text:"A lion doesn't concern himself with the opinions of sheep.",author:"George R.R. Martin"},
   {text:"The man who moves a mountain begins by carrying away small stones.",author:"Confucius"},
@@ -749,7 +935,7 @@ const universalQuotes=[
   {text:"Waste no more time arguing what a good man should be. Be one.",author:"Marcus Aurelius"},
   {text:"Fall seven times, stand up eight.",author:"Japanese Proverb"},
   {text:"The successful warrior is the average man with laser-like focus.",author:"Bruce Lee"},
-  {text:"I hated every minute of training, but I said don't quit. Suffer now and live the rest of your life as a champion.",author:"Muhammad Ali"},
+  {text:"I hated every minute of training, but I said don't quit. Suffer now and live as a champion.",author:"Muhammad Ali"},
   {text:"Difficulties strengthen the mind, as labor does the body.",author:"Seneca"},
   {text:"Don't count the days. Make the days count.",author:"Muhammad Ali"},
   {text:"Opportunities multiply as they are seized.",author:"Sun Tzu"},
@@ -757,19 +943,19 @@ const universalQuotes=[
   {text:"Either you run the day or the day runs you.",author:"Jim Rohn"},
   {text:"Formal education will make you a living. Self-education will make you a fortune.",author:"Jim Rohn"},
   {text:"Not how long, but how well you have lived is the main thing.",author:"Seneca"},
-  {text:"The most dangerous creation of any society is the man who has nothing to lose.",author:"James Baldwin"},
   {text:"Work like there is someone working 24 hours a day to take it all away from you.",author:"Mark Cuban"},
   {text:"Chase the vision, not the money. The money will end up following you.",author:"Tony Hsieh"},
   {text:"An investment in knowledge pays the best interest.",author:"Benjamin Franklin"},
   {text:"Success is walking from failure to failure with no loss of enthusiasm.",author:"Winston Churchill"},
   {text:"Do something today that your future self will thank you for.",author:"Unknown"},
-  {text:"You are the average of the five people you spend the most time with.",author:"Jim Rohn"},
   {text:"A ship in harbor is safe, but that is not what ships are built for.",author:"John A. Shedd"},
   {text:"The key to immortality is first living a life worth remembering.",author:"Bruce Lee"},
   {text:"The grind is real but so is the reward.",author:"Unknown"},
+  {text:"He who is not courageous enough to take risks will accomplish nothing.",author:"Muhammad Ali"},
+  {text:"The most dangerous creation of any society is the man who has nothing to lose.",author:"James Baldwin"},
   {text:"Stop wearing your wishbone where your backbone ought to be.",author:"Elizabeth Gilbert"},
   {text:"The secret of getting ahead is getting started.",author:"Mark Twain"},
-  {text:"He who is not courageous enough to take risks will accomplish nothing in life.",author:"Muhammad Ali"}
+  {text:"You are the average of the five people you spend the most time with.",author:"Jim Rohn"}
 ];
 
 const operatorQuotes=[
@@ -785,7 +971,7 @@ const operatorQuotes=[
   "My body is infrastructure. I protect it like capital."
 ];
 
-// Settings
+// ─── SETTINGS ─────────────────────────────────────────────────
 function openSettings(){
   document.getElementById('set-name').value=prefs.name||'';
   document.getElementById('set-goal').value=prefs.goal||'';
@@ -793,93 +979,131 @@ function openSettings(){
   document.getElementById('set-fears').value=prefs.fears||'';
   document.getElementById('set-goalLength').value=prefs.goalLength||'90 days';
   document.getElementById('set-tone').value=prefs.tone||'Brutal';
-  document.getElementById('set-profanity').value=String(prefs.profanity!==false);
-  document.getElementById('set-src').value=prefs.taskTargets?.src||2;
-  document.getElementById('set-out').value=prefs.taskTargets?.out||2;
-  document.getElementById('set-fol').value=prefs.taskTargets?.fol||2;
-  document.getElementById('set-ana').value=prefs.taskTargets?.ana||10;
-  buildCustomTasksEditor();
+  document.getElementById('set-profanity').value=String(!!prefs.profanity);
+  document.getElementById('set-bgEmoji').value=prefs.bgEmoji||'none';
+  document.getElementById('set-colorShift').value=String(prefs.colorShift!==false);
+  buildSettingsTaskEditor();
+  buildSettingsMovementEditor();
+  buildMindSettingsEditor();
   buildTierEditor();
   document.getElementById('settingsModal').classList.add('show');
 }
 
 function closeSettings(){document.getElementById('settingsModal').classList.remove('show');}
 
-function buildCustomTasksEditor(){
-  const el=document.getElementById('customTasksEditor');
-  el.innerHTML=(prefs.customTasks||[]).map((t,i)=>`
-    <div class="custom-task-row">
-      <input class="custom-task-input" id="ct-name-${i}" placeholder="Task name" value="${t.name||''}"/>
-      <input class="custom-task-num" id="ct-target-${i}" type="number" min="1" max="99" placeholder="Target" value="${t.target||1}"/>
-      <button class="custom-task-del" onclick="removeCustomTask(${i})">✕</button>
+function buildSettingsTaskEditor(){
+  const el=document.getElementById('settingsTaskEditor');
+  el.innerHTML=(prefs.tasks||[]).map((t,i)=>`
+    <div class="task-builder-row">
+      <input class="task-builder-input" id="st-name-${i}" value="${t.label}" placeholder="Task name"/>
+      <input class="task-builder-num" id="st-target-${i}" type="number" min="0" max="999" value="${t.target||''}" placeholder="—"/>
+      <button class="task-builder-del" onclick="removeSettingsTask(${i})">✕</button>
     </div>`).join('');
 }
 
-function addCustomTaskField(){
-  if(!prefs.customTasks)prefs.customTasks=[];
-  prefs.customTasks.push({name:'',target:1});
-  buildCustomTasksEditor();
+function addSettingsTask(){
+  prefs.tasks.push({id:'t_'+Date.now(),label:'',target:null,category:'custom'});
+  buildSettingsTaskEditor();
 }
 
-function removeCustomTask(i){
-  prefs.customTasks.splice(i,1);
-  buildCustomTasksEditor();
+function removeSettingsTask(i){prefs.tasks.splice(i,1);buildSettingsTaskEditor();}
+
+function buildSettingsMovementEditor(){
+  const el=document.getElementById('settingsMovementEditor');
+  el.innerHTML=(prefs.movementTypes||[]).map((m,i)=>`
+    <div class="task-builder-row">
+      <input class="task-builder-input" id="sm-${i}" value="${m}" placeholder="Movement type"/>
+      <button class="task-builder-del" onclick="removeMovementType(${i})">✕</button>
+    </div>`).join('');
 }
+
+function addMovementType(){
+  prefs.movementTypes.push('');
+  buildSettingsMovementEditor();
+}
+
+function removeMovementType(i){prefs.movementTypes.splice(i,1);buildSettingsMovementEditor();}
+
+function buildMindSettingsEditor(){
+  const el=document.getElementById('mindSettingsEditor');
+  const title=document.getElementById('mindSettingsTitle');
+  if(hasSoberTracking()){
+    title.textContent='Sobriety tracking';
+    const items=getSoberItems();
+    el.innerHTML=`<div style="font-size:13px;color:var(--text2);line-height:1.6;">Currently tracking: ${items.map(i=>i.label).join(', ')}<br><span style="color:var(--text3);font-size:12px;">Update smoking/drinking in onboarding to change these.</span></div>`;
+  }else{
+    title.textContent='Custom habits';
+    el.innerHTML=`<div style="font-size:13px;color:var(--text2);margin-bottom:10px;">You don't drink or smoke — track your own habits instead.</div>`+
+    (prefs.customHabits||[]).map((h,i)=>`
+      <div class="task-builder-row">
+        <input class="task-builder-input" id="ch-${i}" value="${h}" placeholder="e.g. No junk food, No social media"/>
+        <button class="task-builder-del" onclick="removeCustomHabit(${i})">✕</button>
+      </div>`).join('')+
+    `<button class="add-btn" onclick="addCustomHabit()" style="margin-top:4px;">+ Add habit</button>`;
+  }
+}
+
+function addCustomHabit(){
+  if(!prefs.customHabits)prefs.customHabits=[];
+  prefs.customHabits.push('');
+  buildMindSettingsEditor();
+}
+
+function removeCustomHabit(i){prefs.customHabits.splice(i,1);buildMindSettingsEditor();}
 
 function buildTierEditor(){
   const el=document.getElementById('tierEditor');
   el.innerHTML=(prefs.tiers||[]).map((t,i)=>`
-    <div class="tier-edit-row">
+    <div class="tier-edit-card">
       <div class="tier-edit-label">Tier ${i+1}</div>
-      <input class="tier-edit-input" id="tier-name-${i}" placeholder="Tier name" value="${t.name||''}"/>
-      <div class="tier-edit-row-inner">
-        <input class="tier-edit-input" id="tier-days-${i}" type="number" placeholder="Days" value="${t.days||((i+1)*30)}" style="width:80px;"/>
-        <input class="tier-edit-input" id="tier-desc-${i}" placeholder="Unlock condition" value="${t.desc||''}"/>
+      <input class="tier-edit-input" id="te-name-${i}" placeholder="Name" value="${t.name}"/>
+      <div class="tier-edit-row">
+        <input class="tier-edit-input" id="te-days-${i}" type="number" placeholder="Days" value="${t.days}" style="width:80px;"/>
+        <input class="tier-edit-input" id="te-desc-${i}" placeholder="Unlock condition" value="${t.desc}"/>
       </div>
-      <input class="tier-edit-input" id="tier-reward-${i}" placeholder="Reward description" value="${t.reward||''}"/>
+      <input class="tier-edit-input" id="te-reward-${i}" placeholder="Reward" value="${t.reward}"/>
     </div>`).join('');
 }
 
 async function saveSettings(){
-  const n=document.getElementById('set-name').value.trim();
-  const g=document.getElementById('set-goal').value.trim();
-  prefs.name=n||prefs.name;
-  prefs.goal=g||prefs.goal;
+  prefs.name=document.getElementById('set-name').value.trim()||prefs.name;
+  prefs.goal=document.getElementById('set-goal').value.trim()||prefs.goal;
   prefs.motivator=document.getElementById('set-motivator').value.trim()||prefs.motivator;
   prefs.fears=document.getElementById('set-fears').value.trim()||prefs.fears;
   prefs.goalLength=document.getElementById('set-goalLength').value;
   prefs.tone=document.getElementById('set-tone').value;
   prefs.profanity=document.getElementById('set-profanity').value==='true';
-  prefs.taskTargets={
-    src:parseInt(document.getElementById('set-src').value)||2,
-    out:parseInt(document.getElementById('set-out').value)||2,
-    fol:parseInt(document.getElementById('set-fol').value)||2,
-    ana:parseInt(document.getElementById('set-ana').value)||10
-  };
-  const cts=[];
-  (prefs.customTasks||[]).forEach((_,i)=>{
-    const name=document.getElementById('ct-name-'+i)?.value.trim();
-    const target=parseInt(document.getElementById('ct-target-'+i)?.value)||1;
-    if(name)cts.push({name,target});
-  });
-  prefs.customTasks=cts;
+  prefs.bgEmoji=document.getElementById('set-bgEmoji').value;
+  prefs.colorShift=document.getElementById('set-colorShift').value==='true';
+  prefs.tasks=(prefs.tasks||[]).map((t,i)=>({
+    ...t,
+    label:document.getElementById('st-name-'+i)?.value.trim()||t.label,
+    target:parseInt(document.getElementById('st-target-'+i)?.value)||null
+  })).filter(t=>t.label);
+  prefs.movementTypes=(prefs.movementTypes||[]).map((_,i)=>document.getElementById('sm-'+i)?.value.trim()).filter(Boolean);
+  if(!hasSoberTracking()){
+    prefs.customHabits=(prefs.customHabits||[]).map((_,i)=>document.getElementById('ch-'+i)?.value.trim()).filter(Boolean);
+  }
   (prefs.tiers||[]).forEach((_,i)=>{
-    prefs.tiers[i].name=document.getElementById('tier-name-'+i)?.value||prefs.tiers[i].name;
-    prefs.tiers[i].days=parseInt(document.getElementById('tier-days-'+i)?.value)||prefs.tiers[i].days;
-    prefs.tiers[i].desc=document.getElementById('tier-desc-'+i)?.value||prefs.tiers[i].desc;
-    prefs.tiers[i].reward=document.getElementById('tier-reward-'+i)?.value||prefs.tiers[i].reward;
+    prefs.tiers[i].name=document.getElementById('te-name-'+i)?.value||prefs.tiers[i].name;
+    prefs.tiers[i].days=parseInt(document.getElementById('te-days-'+i)?.value)||prefs.tiers[i].days;
+    prefs.tiers[i].desc=document.getElementById('te-desc-'+i)?.value||prefs.tiers[i].desc;
+    prefs.tiers[i].reward=document.getElementById('te-reward-'+i)?.value||prefs.tiers[i].reward;
   });
+  bgEmoji=prefs.bgEmoji;
   await savePrefs();
   closeSettings();
+  initBg();
   buildTaskList();
+  buildBodySection();
+  buildMindSection();
   buildTierList();
-  updateDayLabel();
-  const ind=document.getElementById('savingIndicator');
-  ind.classList.add('show');
-  setTimeout(()=>ind.classList.remove('show'),2000);
+  updateAccentColor();
+  if(prefs.name)document.getElementById('appTitleEl').textContent=prefs.name+"'s Flowstate";
+  const ind=document.getElementById('savingIndicator');ind.classList.add('show');setTimeout(()=>ind.classList.remove('show'),2000);
 }
 
-// Init
+// ─── INIT ─────────────────────────────────────────────────────
 function init(){
   const now=new Date();
   document.getElementById('dateDisplay').textContent=now.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
@@ -894,49 +1118,91 @@ function init(){
   if(prefs.name)document.getElementById('appTitleEl').textContent=prefs.name+"'s Flowstate";
   const day=now.getDate();
   if(day===1||day===15)document.getElementById('orderReminder').style.display='flex';
-  updateDayLabel();
-  buildTaskList();
-  buildTierList();
-  buildGrid();
-  updateProgress();
-  startQuoteRotation();
-  initChart();
-  updateTiers();
+  const maxDays=parseInt(prefs.goalLength)||90;
+  document.getElementById('daySubLabel').textContent='of '+maxDays;
+  document.getElementById('streakGridTitle').textContent=maxDays+'-day streak';
+  buildTaskList();buildBodySection();buildMindSection();buildTierList();
+  buildGrid();updateProgress();startQuoteRotation();initChart();updateTiers();
+  updateAccentColor();initBg();
 }
 
-function updateDayLabel(){
-  const gl=prefs.goalLength||'90 days';
-  const num=parseInt(gl)||90;
-  document.getElementById('daySubLabel').textContent='of '+num;
-  document.getElementById('streakGrid') && buildGrid(num);
-}
-
-// Dynamic task list
+// ─── DYNAMIC SECTIONS ─────────────────────────────────────────
 function buildTaskList(){
-  const t=prefs.taskTargets||{src:2,out:2,fol:2,ana:10};
-  const defaults=[
-    {id:'src',label:'Suppliers / brands sourced',target:t.src,badge:'biz'},
-    {id:'out',label:'Outreaches sent',target:t.out,badge:'biz'},
-    {id:'fol',label:'Follow-ups sent',target:t.fol,badge:'biz'},
-    {id:'ana',label:'Product analyses',target:t.ana,badge:'biz'},
-    {id:'trn',label:'1 hr training completed',target:null,badge:'biz'},
-    {id:'jus',label:'Justin sync',target:null,badge:'biz'},
-  ];
-  const custom=(prefs.customTasks||[]).map((ct,i)=>({id:'ct'+i,label:ct.name,target:ct.target,badge:'custom'}));
-  const all=[...defaults,...custom];
   const el=document.getElementById('taskList');
-  el.innerHTML=all.map((task,idx)=>`
-    <div class="task-row${idx===all.length-1?' last-task':''}">
-      <div class="task-check" id="chk-${task.id}" onclick="toggleCheck('${task.id}','done')"></div>
-      <div class="task-label" id="lbl-${task.id}">${task.label}</div>
-      <span class="task-badge badge-${task.badge}">${task.badge}</span>
-      ${task.target?`<input class="task-input" id="inp-${task.id}" type="number" min="0" max="999" placeholder="0" oninput="updateProgress()"/><div class="task-target">/ ${task.target}</div>`:''}
+  const tasks=prefs.tasks||[];
+  el.innerHTML=tasks.map((t,i)=>`
+    <div class="task-row" style="${i===tasks.length-1?'border-bottom:none;padding-bottom:0;':''}">
+      <div class="task-check" id="chk-${t.id}" onclick="toggleCheck('${t.id}','done')"></div>
+      <div class="task-label" id="lbl-${t.id}">${t.label}</div>
+      <span class="task-badge badge-${t.category==='biz'?'biz':'custom'}">${t.category==='biz'?'biz':'custom'}</span>
+      ${t.target?`<input class="task-input" id="inp-${t.id}" type="number" min="0" max="999" placeholder="0" oninput="updateProgress()"/><div class="task-target">/ ${t.target}</div>`:''}
     </div>`).join('');
-  document.querySelectorAll('#taskList .task-row:last-child').forEach(r=>r.style.borderBottom='none');
   updateProgress();
 }
 
-// Dynamic tier list
+function buildBodySection(){
+  const bodyEl=document.getElementById('bodyTaskList');
+  const bodyTasks=prefs.bodyTasks||[
+    {id:'gym',label:'Gym / movement completed',category:'body'},
+    {id:'water',label:'Hydration (1 gallon)',category:'body'},
+    {id:'sleep',label:'7+ hours sleep',category:'body'},
+  ];
+  bodyEl.innerHTML=bodyTasks.map((t,i)=>`
+    <div class="task-row" style="${i===bodyTasks.length-1?'border-bottom:none;padding-bottom:0;':''}">
+      <div class="task-check" id="chk-${t.id}" onclick="toggleCheck('${t.id}','gym-done')"></div>
+      <div class="task-label" id="lbl-${t.id}">${t.label}</div>
+      <span class="task-badge badge-body">body</span>
+    </div>`).join('');
+  const gymRow=document.getElementById('gymTypeRow');
+  gymRow.innerHTML=(prefs.movementTypes||[]).map(m=>`<button class="gym-btn" onclick="selectGym(this,'${m}')">${m}</button>`).join('');
+}
+
+function buildMindSection(){
+  const section=document.getElementById('mindSection');
+  const title=document.getElementById('mindSectionTitle');
+  const content=document.getElementById('mindContent');
+  const note=document.getElementById('soberNote');
+  const metricLabel=document.getElementById('soberMetricLabel');
+  const streakLabel=document.getElementById('soberStreakLabel');
+  const notifLabel=document.getElementById('mindNotifLabel');
+
+  if(hasSoberTracking()){
+    const items=getSoberItems();
+    title.textContent='Mind — sobriety';
+    metricLabel.textContent='Sober';
+    streakLabel.textContent='Sobriety';
+    notifLabel.textContent='Sobriety check-in';
+    state.soberItems={};
+    items.forEach(item=>{state.soberItems[item.id]=false;});
+    content.innerHTML=`<div class="sober-checks">${items.map(item=>`
+      <div class="sober-item" id="sober-${item.id}" onclick="toggleSoberItem('${item.id}')">
+        <span style="font-size:20px;">${item.emoji}</span>
+        <div><div class="sober-item-text">${item.label}</div><div class="sober-item-sub">${item.sub}</div></div>
+      </div>`).join('')}</div>`;
+    note.textContent='Your body is infrastructure. Protect it like capital.';
+  }else{
+    const habits=prefs.customHabits||[];
+    title.textContent='Mind — habits';
+    metricLabel.textContent='Habits';
+    streakLabel.textContent='Habits';
+    notifLabel.textContent='Habit check-in';
+    if(habits.length===0){
+      content.innerHTML=`<div style="font-size:13px;color:var(--text2);">Add habits in settings ⚙️ to track them here.</div>`;
+      note.textContent='';
+    }else{
+      state.soberItems={};
+      habits.forEach((_,i)=>{state.soberItems['habit_'+i]=false;});
+      content.innerHTML=`<div>${habits.map((h,i)=>`
+        <div class="custom-habit-row">
+          <div class="task-check" id="sober-habit_${i}" onclick="toggleSoberItem('habit_${i}')"></div>
+          <div style="font-size:14px;color:var(--text);flex:1;">${h}</div>
+          <span class="task-badge badge-custom">habit</span>
+        </div>`).join('')}</div>`;
+      note.textContent='Small wins compound. Lock these in daily.';
+    }
+  }
+}
+
 function buildTierList(){
   const el=document.getElementById('tierList');
   el.innerHTML=(prefs.tiers||[]).map((t,i)=>`
@@ -953,14 +1219,13 @@ function buildTierList(){
 
 function updateTiers(){
   (prefs.tiers||[]).forEach((t,i)=>{
-    const el=document.getElementById('tier'+i+'Status');
-    if(!el)return;
+    const el=document.getElementById('tier'+i+'Status');if(!el)return;
     const u=state.streak>=t.days;
-    el.textContent=u?'Unlocked':'Locked';
-    el.className='tier-status '+(u?'unlocked':'locked');
+    el.textContent=u?'Unlocked':'Locked';el.className='tier-status '+(u?'unlocked':'locked');
   });
 }
 
+// ─── QUOTES ───────────────────────────────────────────────────
 let quoteIndex=0;
 function startQuoteRotation(){
   quoteIndex=Math.floor(Math.random()*universalQuotes.length);showQuote();
@@ -972,6 +1237,7 @@ function showQuote(){
   document.getElementById('rotatingAuthor').textContent='— '+q.author;
 }
 
+// ─── CHART ────────────────────────────────────────────────────
 function initChart(){
   const ctx=document.getElementById('progressChart').getContext('2d');
   const data=chartData.streak.length?chartData.streak:Array(14).fill(0);
@@ -989,15 +1255,38 @@ function switchChart(type,btn){
   chartInstance=new Chart(document.getElementById('progressChart').getContext('2d'),{type:'bar',data:{labels:Array.from({length:14},(_,i)=>'D'+(i+1)),datasets:[{data,backgroundColor:bg,borderColor:color,borderWidth:1.5,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#444',font:{size:10}}},y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#444',font:{size:10}},beginAtZero:true}}}});
 }
 
-function buildGrid(total){
-  const n=total||parseInt(prefs.goalLength)||90;
+function buildGrid(){
+  const n=parseInt(prefs.goalLength)||90;
   const g=document.getElementById('streakGrid');g.innerHTML='';
   for(let i=0;i<n;i++){const d=document.createElement('div');d.className='sdot'+(i<state.streak?' filled':'')+(i===state.streak?' today':'');g.appendChild(d);}
 }
 
+// ─── INTERACTIONS ─────────────────────────────────────────────
 function selectMood(btn){document.querySelectorAll('#moodRow .mood-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');}
-function selectGym(btn,val){document.querySelectorAll('#gymTypeRow .gym-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');state.gymType=val;if(val!=='Rest day'){document.getElementById('chk-gym').className='task-check gym-done';document.getElementById('lbl-gym').classList.add('done-text');}updateProgress();}
-function toggleSober(id){const el=document.getElementById(id);el.classList.toggle('clean');if(id==='soberAlcohol')state.soberAlcohol=el.classList.contains('clean');if(id==='soberSmoke')state.soberSmoke=el.classList.contains('clean');}
+
+function selectGym(btn,val){
+  document.querySelectorAll('#gymTypeRow .gym-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');state.gymType=val;
+  if(val!=='Rest day'){
+    const chk=document.getElementById('chk-gym');const lbl=document.getElementById('lbl-gym');
+    if(chk){chk.className='task-check gym-done';}
+    if(lbl)lbl.classList.add('done-text');
+  }
+  updateProgress();
+}
+
+function toggleSoberItem(id){
+  const el=document.getElementById('sober-'+id);
+  if(!el)return;
+  el.classList.toggle('clean');
+  state.soberItems[id]=el.classList.contains('clean');
+}
+
+function isFullySober(){
+  const items=Object.values(state.soberItems);
+  if(items.length===0)return true;
+  return items.every(v=>v===true);
+}
 
 function selectResult(type){
   document.getElementById('winBtn').className='result-btn'+(type==='win'?' win-selected':'');
@@ -1024,56 +1313,53 @@ function toggleCheck(id,cls){
   updateProgress();
 }
 
-function getTaskIds(){
-  const t=prefs.taskTargets||{src:2,out:2,fol:2,ana:10};
-  const defaults=['src','out','fol','ana','trn','jus'];
-  const custom=(prefs.customTasks||[]).map((_,i)=>'ct'+i);
-  return{ids:[...defaults,...custom],targets:{src:t.src,out:t.out,fol:t.fol,ana:t.ana,...Object.fromEntries((prefs.customTasks||[]).map((ct,i)=>['ct'+i,ct.target]))}};
-}
-
 function updateProgress(){
-  const{ids,targets}=getTaskIds();
+  const tasks=prefs.tasks||[];
   let done=0;
-  ids.forEach(id=>{
-    const chk=document.getElementById('chk-'+id);
-    const inp=document.getElementById('inp-'+id);
+  tasks.forEach(t=>{
+    const chk=document.getElementById('chk-'+t.id);
+    const inp=document.getElementById('inp-'+t.id);
     if(!chk)return;
     let completed=chk.classList.contains('done')||chk.classList.contains('gym-done');
-    if(inp&&targets[id]){
+    if(inp&&t.target){
       const val=parseInt(inp.value)||0;
-      if(val>=targets[id]){chk.className='task-check done';const l=document.getElementById('lbl-'+id);if(l)l.classList.add('done-text');completed=true;}
+      if(val>=t.target){chk.className='task-check done';const l=document.getElementById('lbl-'+t.id);if(l)l.classList.add('done-text');completed=true;}
     }
     if(completed)done++;
   });
-  const pct=Math.round((done/ids.length)*100);
+  const total=tasks.length||1;
+  const pct=Math.round((done/total)*100);
   document.getElementById('progressBar').style.width=pct+'%';
-  document.getElementById('progressLabel').textContent=done+' of '+ids.length+' tasks complete';
+  document.getElementById('progressLabel').textContent=done+' of '+total+' tasks complete';
   document.getElementById('completedPct').textContent=pct+'%';
   const btn=document.getElementById('submitBtn');
-  if(done===ids.length&&ids.length>0){
+  if(done===total&&total>0){
     btn.classList.add('ready');
-    btn.textContent=state.streak>0?'Win — day '+(state.streak+1)+' locked in':'Lock in day 1';
+    btn.textContent=state.streak>0?`Win — day ${state.streak+1} locked in`:'Lock in day 1';
   }else{
     btn.classList.remove('ready');
     btn.textContent='I failed today';
   }
 }
 
+// ─── SUBMIT ───────────────────────────────────────────────────
 async function submitDay(){
   updateProgress();
-  const{ids}=getTaskIds();
+  const tasks=prefs.tasks||[];
   let done=0;
-  ids.forEach(id=>{const chk=document.getElementById('chk-'+id);if(chk&&(chk.classList.contains('done')||chk.classList.contains('gym-done')))done++;});
-  const pct=Math.round((done/ids.length)*100);
+  tasks.forEach(t=>{const chk=document.getElementById('chk-'+t.id);if(chk&&(chk.classList.contains('done')||chk.classList.contains('gym-done')))done++;});
+  const pct=tasks.length?Math.round((done/tasks.length)*100):0;
   const isWin=state.selectedResult==='win'||pct>=80;
-  const gymDone=document.getElementById('chk-gym').classList.contains('gym-done')||document.getElementById('chk-gym').classList.contains('done');
-  const fullySober=state.soberAlcohol&&state.soberSmoke;
-  if(isWin){state.streak=(state.streak||0)+1;}else{state.streak=0;}
-  if(gymDone){state.gymStreak=(state.gymStreak||0)+1;state.gymDays=(state.gymDays||0)+1;}else{state.gymStreak=0;}
-  if(fullySober){state.soberStreak=(state.soberStreak||0)+1;state.soberDays=(state.soberDays||0)+1;}else{state.soberStreak=0;}
+  const gymDone=document.getElementById('chk-gym')?.classList.contains('gym-done')||document.getElementById('chk-gym')?.classList.contains('done');
+  const fullySober=isFullySober();
+
+  if(isWin)state.streak=(state.streak||0)+1;else state.streak=0;
+  if(gymDone){state.gymStreak=(state.gymStreak||0)+1;state.gymDays=(state.gymDays||0)+1;}else state.gymStreak=0;
+  if(fullySober){state.soberStreak=(state.soberStreak||0)+1;state.soberDays=(state.soberDays||0)+1;}else state.soberStreak=0;
   const maxDays=parseInt(prefs.goalLength)||90;
   state.dayCount=Math.min((state.dayCount||1)+1,maxDays);
-  updateTiers();buildGrid();
+
+  updateTiers();buildGrid();updateAccentColor();
   document.getElementById('streakBadge').textContent='🔥 '+state.streak+' day streak';
   document.getElementById('soberDays').textContent=state.soberDays;
   document.getElementById('gymDays').textContent=state.gymDays;
@@ -1081,53 +1367,44 @@ async function submitDay(){
   document.getElementById('gymStreak').textContent=state.gymStreak;
   document.getElementById('soberStreak').textContent=state.soberStreak;
   document.getElementById('dayCount').textContent=state.dayCount;
+
   await saveToDB({streak:state.streak,gymStreak:state.gymStreak,soberStreak:state.soberStreak,soberDays:state.soberDays,gymDays:state.gymDays,dayCount:state.dayCount,isWin,fullySober,gymDone});
-  const bizConsequences=getConsequences();
-  const soberConsequences=getSoberConsequences();
-  const card=document.getElementById('overlayCard');
-  const ovAction=document.getElementById('ovAction');
-  const topTier=prefs.tiers&&prefs.tiers.length>0?prefs.tiers[prefs.tiers.length-1]:null;
-  const isTopTier=topTier&&state.streak>=topTier.days;
-  const newTier=prefs.tiers&&prefs.tiers.find(t=>t.days===state.streak);
+
+  const bizC=getConsequences();const sobC=getSoberConsequences();
+  const card=document.getElementById('overlayCard');const ovAction=document.getElementById('ovAction');
+  const topTier=prefs.tiers?.length?prefs.tiers[prefs.tiers.length-1]:null;
+  const newTier=prefs.tiers?.find(t=>t.days===state.streak);
+
   if(!fullySober&&!isWin){
-    const sc=soberConsequences[Math.floor(Math.random()*soberConsequences.length)];
-    const bc=bizConsequences[Math.floor(Math.random()*bizConsequences.length)];
-    card.className='overlay-card brutal';
-    document.getElementById('ovIcon').textContent='💀';
-    document.getElementById('ovTitle').textContent='Business miss. Sobriety miss. Both.';
+    const sc=sobC[Math.floor(Math.random()*sobC.length)];const bc=bizC[Math.floor(Math.random()*bizC.length)];
+    card.className='overlay-card brutal';document.getElementById('ovIcon').textContent='💀';
+    document.getElementById('ovTitle').textContent='Miss across the board.';
     document.getElementById('ovText').textContent=bc.text+'\n\n'+sc.text;
     ovAction.textContent=bc.action+' '+sc.action;ovAction.style.display='block';
-  }else if(!fullySober){
-    const sc=soberConsequences[Math.floor(Math.random()*soberConsequences.length)];
-    card.className='overlay-card sober';
-    document.getElementById('ovIcon').textContent='🔄';
+  }else if(!fullySober&&hasSoberTracking()){
+    const sc=sobC[Math.floor(Math.random()*sobC.length)];
+    card.className='overlay-card sober';document.getElementById('ovIcon').textContent='🔄';
     document.getElementById('ovTitle').textContent='Sobriety streak reset.';
-    document.getElementById('ovText').textContent=sc.text;
-    ovAction.textContent=sc.action;ovAction.style.display='block';
+    document.getElementById('ovText').textContent=sc.text;ovAction.textContent=sc.action;ovAction.style.display='block';
   }else if(!isWin){
-    const bc=bizConsequences[Math.floor(Math.random()*bizConsequences.length)];
-    card.className='overlay-card brutal';
-    document.getElementById('ovIcon').textContent='🔴';
+    const bc=bizC[Math.floor(Math.random()*bizC.length)];
+    card.className='overlay-card brutal';document.getElementById('ovIcon').textContent='🔴';
     document.getElementById('ovTitle').textContent=bc.level==='Brutal'?'No sugar coating.':'Miss logged.';
-    document.getElementById('ovText').textContent=bc.text;
-    ovAction.textContent=bc.action;ovAction.style.display='block';
-  }else if(isTopTier&&state.streak===topTier.days){
-    card.className='overlay-card';
-    document.getElementById('ovIcon').textContent='👑';
+    document.getElementById('ovText').textContent=bc.text;ovAction.textContent=bc.action;ovAction.style.display='block';
+  }else if(topTier&&state.streak>=topTier.days&&state.streak===topTier.days){
+    card.className='overlay-card crown';document.getElementById('ovIcon').textContent='👑';
     document.getElementById('ovTitle').textContent='You built the machine.';
     document.getElementById('ovText').textContent=`${getName()}, you did it.\n\nBusiness. Body. Mind. All locked in.\n\n${topTier.reward}\n\nThis was bought by discipline, not luck.`;
     ovAction.style.display='none';
   }else if(newTier){
-    card.className='overlay-card';
-    document.getElementById('ovIcon').textContent='🏆';
+    card.className='overlay-card';document.getElementById('ovIcon').textContent='🏆';
     document.getElementById('ovTitle').textContent=newTier.name+' unlocked.';
-    document.getElementById('ovText').textContent=`${state.streak} days in. ${newTier.reward}`;
+    document.getElementById('ovText').textContent=`${state.streak} days in.\n\n${newTier.reward}`;
     ovAction.style.display='none';
   }else{
-    card.className='overlay-card';
-    document.getElementById('ovIcon').textContent='💰';
+    card.className='overlay-card';document.getElementById('ovIcon').textContent='💰';
     document.getElementById('ovTitle').textContent='Day '+state.dayCount+' locked in.';
-    const parts=[];if(gymDone)parts.push('body moved');if(fullySober)parts.push('mind clean');parts.push('business executed');
+    const parts=[];if(gymDone)parts.push('body moved');if(fullySober&&hasSoberTracking())parts.push('mind clean');parts.push('business executed');
     document.getElementById('ovText').textContent=parts.join(' · ')+'\n\n"This was bought by discipline, not luck."\n\n🔥 '+state.streak+'-day streak.';
     ovAction.style.display='none';
   }
@@ -1136,19 +1413,18 @@ async function submitDay(){
 
 function closeOverlay(){document.getElementById('overlay').classList.remove('show');}
 
-// Boot
+// ─── BOOT ─────────────────────────────────────────────────────
 async function bootApp(){
   try{
     const{data:{session}}=await sb.auth.getSession();
-    if(session&&session.user){currentUser=session.user;await afterLogin();return;}
+    if(session?.user){currentUser=session.user;await afterLogin();return;}
   }catch(e){}
   showScreen('authScreen');
 }
 
 sb.auth.onAuthStateChange(async(event,session)=>{
-  if((event==='SIGNED_IN'||event==='TOKEN_REFRESHED')&&session&&session.user&&!currentUser){
-    currentUser=session.user;
-    await afterLogin();
+  if((event==='SIGNED_IN'||event==='TOKEN_REFRESHED')&&session?.user&&!currentUser){
+    currentUser=session.user;await afterLogin();
   }
 });
 
