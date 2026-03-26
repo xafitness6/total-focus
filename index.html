@@ -740,7 +740,7 @@ async function afterLogin(){
   await loadPrefs();await loadFromDB();
   bgEmoji=prefs.bgEmoji||'none';
   const savedBg=localStorage.getItem('fs_bg_image');if(savedBg)applyBgImage(savedBg);
-  if(prefs.onboarding_complete)showMainApp();
+  if(prefs.onboarding_complete){   window.location.href='https://flowstate-ai-pi.vercel.app/dashboard.html';   return; }
   else{onboardAnswers={};currentStep=0;tempTasks=[];tempMovement=['Weights','Cardio','HIIT','Walk / run','Stretch / yoga','Rest day'];buildOnboarding();showScreen('onboardScreen');}
 }
 
